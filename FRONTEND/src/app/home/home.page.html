@@ -1,0 +1,25 @@
+<ion-header>
+  
+  <ion-toolbar>
+    <ion-title>
+      Desaparecidos
+    </ion-title>
+
+    <ion-icon  slot="end" name="arrow-round-forward" (click)="proximaPagina()"> </ion-icon>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content padding>
+  
+  <ion-card *ngFor="let usuario of usuarios">
+    <ion-img src="../../assets/Pessoas/pessoa-geral.jpg"></ion-img>
+    <ion-card-content>
+      <!-- <ion-card-title> {{usuario.nome}} {{usuario.sobre_nome}} </ion-card-title> -->
+      <ion-card-subtitle>Status: {{usuario.Titulo}}</ion-card-subtitle>
+      <p>{{usuario.Descricao}}</p>
+    </ion-card-content>
+
+  </ion-card>
+
+</ion-content>
