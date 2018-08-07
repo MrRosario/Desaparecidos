@@ -1,25 +1,37 @@
 <ion-header>
-  
-  <ion-toolbar>
-    <ion-title>
-      Desaparecidos
-    </ion-title>
+  <ion-toolbar color="success">
 
-    <ion-icon  slot="end" name="arrow-round-forward" (click)="proximaPagina()"> </ion-icon>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+
+      <ion-title class="titulo">
+        Desaparecidos
+      </ion-title>
+
+      <ion-buttons slot="end">
+          <ion-icon class="icone" name="search"></ion-icon>
+      </ion-buttons>
+
   </ion-toolbar>
-
 </ion-header>
 
 <ion-content padding>
   
   <ion-card *ngFor="let usuario of usuarios">
+
     <ion-img src="../../assets/Pessoas/pessoa-geral.jpg"></ion-img>
+
     <ion-card-content>
-      <!-- <ion-card-title> {{usuario.nome}} {{usuario.sobre_nome}} </ion-card-title> -->
       <ion-card-subtitle>Status: {{usuario.Titulo}}</ion-card-subtitle>
       <p>{{usuario.Descricao}}</p>
     </ion-card-content>
 
+    <div class="container-btn">
+        <ion-button color="success" slot="start" fill="clear" size="small">Ver</ion-button>
+        <ion-button color="success" fill="clear" size="small">Comentar</ion-button>
+        <ion-button color="success" slot="end" fill="clear" size="small">Compartilhar</ion-button>
+    </div>
   </ion-card>
 
 </ion-content>

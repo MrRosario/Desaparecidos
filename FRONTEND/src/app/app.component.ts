@@ -6,9 +6,33 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 @Component({
   selector: 'app-root',
-  templateUrl: 'app.component.html'
+  templateUrl: 'app.component.html',
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  public appPages = [
+    {
+      title: 'Publicar',
+      url: '/home',
+      icon: 'globe'
+    },
+    {
+      title: 'Perfil',
+      url: '/perfil',
+      icon: 'person'
+    },
+    {
+      title: 'Pesquisar',
+      url: '/pesquisar',
+      icon: 'search'
+    },
+    {
+      title: 'Sair',
+      url: '/logout',
+      icon: 'log-out'
+    }
+  ];
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
