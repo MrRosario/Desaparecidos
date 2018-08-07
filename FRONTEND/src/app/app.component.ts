@@ -13,7 +13,7 @@ export class AppComponent {
   public appPages = [
     {
       title: 'Publicar',
-      url: '/home',
+      url: '/publicacao',
       icon: 'globe'
     },
     {

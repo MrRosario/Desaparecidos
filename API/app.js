@@ -30,7 +30,7 @@ app.use(bodyParser.json());
 
 
 app.get('/', (req, res) => {
-    let sql = `SELECT Usuarios.UsuarioID as Usuario, Posts.Titulo, Posts.Descricao, Posts.Imagem1, Posts.Imagem2, 
+    let sql = `SELECT Posts.PostId, Usuarios.UsuarioID as Usuario, Posts.Titulo, Posts.Descricao, Posts.Imagem1, Posts.Imagem2, 
     Posts.Imagem3 FROM Posts INNER JOIN Usuarios ON Usuarios.UsuarioID = Posts.UsuarioID`;
     con.query(sql, (err, result) => {
         if(err){
@@ -43,6 +43,20 @@ app.get('/', (req, res) => {
     });
 });
 
+app.get('/:id', (req, res) => {
+    let id = req.params.id;
+    let sql = `SELECT Posts.PostId, Usuarios.UsuarioID as Usuario, Posts.Titulo, Posts.Descricao, Posts.Imagem1, Posts.Imagem2, 
+    Posts.Imagem3 FROM Posts INNER JOIN Usuarios ON Usuarios.UsuarioID = Posts.UsuarioID where Posts.PostId = ${id}`;
+    con.query(sql, (err, result) => {
+        if(err){
+            throw err;
+        } 
+        else{ 
+            return res.send(result);
+        }
+        
+    });
+});
 
 app.listen(porta,() => {
     console.log(`Servidor funcionando na porta ${porta}`);

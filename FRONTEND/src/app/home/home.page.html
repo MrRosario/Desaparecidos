@@ -28,7 +28,9 @@
     </ion-card-content>
 
     <div class="container-btn">
-        <ion-button color="success" slot="start" fill="clear" size="small">Ver</ion-button>
+        <ion-button color="success" (click)="detalhes(usuario.PostId)" slot="start" fill="clear" size="small">
+          Ver
+        </ion-button>
         <ion-button color="success" fill="clear" size="small">Comentar</ion-button>
         <ion-button color="success" slot="end" fill="clear" size="small">Compartilhar</ion-button>
     </div>

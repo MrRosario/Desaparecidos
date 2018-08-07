@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-icon slot="start" class="icone" (click)="paginaAnterior()" name="arrow-round-back">Voltar</ion-icon>
+    <p *ngFor="let post of dados">{{post.Titulo}}</p>
+    <ion-buttons slot="end">
+        <ion-button slot="end" fill="clear" size="small">
+            <ion-icon class="icone" name="share"></ion-icon>
+        </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngFor="let post of dados" id="publicacao-container">
+    <div id="img-container">Imagens</div>
+
+    <div id="controles">
+      <ion-icon name="eye"></ion-icon> 
+        <span>10</span>
+      <ion-icon name="share"></ion-icon> 
+        <span>2</span>
+    </div>
+
+    <div id="conteudo">
+      <h4>{{post.Titulo}}</h4>
+      <p>{{post.Descricao}}</p>
+    </div>
+
+    <div id="botoes">
+      
+        <ion-buttons>
+          <ion-button color="primary">
+            Chat
+          </ion-button>
+          <ion-button color="warning">
+            Ligar
+          </ion-button>
+          <ion-button color="success">
+              Email
+          </ion-button>
+        </ion-buttons>
+
+    </div>
+  </div>
+</ion-content>

@@ -21,5 +21,10 @@ export class HomePage {
   proximaPagina(){
     this.router.navigateByUrl('/perfil');
   }
+
+  detalhes(id){
+    console.log(id);
+    this.router.navigate(['/publicacao/' + id]);
+  }
   
 }
