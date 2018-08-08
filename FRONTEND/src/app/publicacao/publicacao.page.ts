@@ -12,6 +12,8 @@ export class PublicacaoPage implements OnInit {
 
 
   dados: any = [];
+  comentario: any = [];
+
   url: string = 'http://localhost:3000/';
 
   constructor(private _Activatedroute: ActivatedRoute, 
@@ -20,11 +22,17 @@ export class PublicacaoPage implements OnInit {
               public usrService: UsuariosService) { }
 
   ngOnInit() {
-    this.http.get(this.url + this._Activatedroute.snapshot.params['id'])
+    this.usrService.getPost(this._Activatedroute.snapshot.params['id'])
         .subscribe((resultado: any) => {
-        this.dados = resultado;
-        console.log(resultado);
-      });
+             this.dados = resultado;
+             console.log(resultado);
+        });
+        
+    this.usrService.getComentario(this._Activatedroute.snapshot.params['id'])
+        .subscribe((resultado: any) => {
+             this.comentario = resultado;
+             console.log(resultado);
+        });    
   }
 
   paginaAnterior(){

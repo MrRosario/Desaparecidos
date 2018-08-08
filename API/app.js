@@ -58,6 +58,23 @@ app.get('/:id', (req, res) => {
     });
 });
 
+app.get('/comentarios/:id', (req, res) => {
+    let id = req.params.id;
+    let sql = `select C.ComentarioID, P.PostID, U.Nome as Nome_Usuario, U.Sobre_nome, C.Comentario FROM Comentarios C
+    INNER JOIN Usuarios U ON C.UsuarioID = U.UsuarioID
+    INNER JOIN Posts P ON C.PostID = P.PostID where P.PostId = ${id}`;
+
+    con.query(sql, (err, result) => {
+        if(err){
+            throw err;
+        } 
+        else{ 
+            return res.send(result);
+        }
+        
+    });
+});
+
 app.listen(porta,() => {
     console.log(`Servidor funcionando na porta ${porta}`);
 });

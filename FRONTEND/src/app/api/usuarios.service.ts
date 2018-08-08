@@ -14,4 +14,12 @@ export class UsuariosService {
     return this._http.get(this.url);
   }
 
+  getPost(id){
+    return this._http.get(this.url + id);
+  }
+
+  getComentario(id){
+    return this._http.get(this.url + 'comentarios/' + id);
+  }
+
 }
