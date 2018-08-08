@@ -26,18 +26,19 @@
       <p>{{post.Descricao}}</p>
     </div>
 
-    <div class="comentarios">
-
-      <div id="">
+    <div id="comentarios">
+      <div class="comentario" *ngFor="let comment of comments">
           <ion-item>
-            <ion-avatar slot="start">
+            <ion-avatar class="comentario-avatar" slot="start">
               <ion-img src="../assets/Pessoas/pessoa-geral.jpg"></ion-img>
             </ion-avatar>
-            <span>Fulano de Tal</span> <br>
-            <p>Esse eh meu primeiro comentario</p>
+
+            <div class="container-nome-coment">
+              <p class="nome_usuario">{{comment.Nome_Usuario}} {{comment.Sobre_nome}}</p>
+              <p class="comentario_usuario">{{comment.Comentario}}</p>
+            </div>
           </ion-item>
       </div>
-
     </div>
 
     <div id="botoes">

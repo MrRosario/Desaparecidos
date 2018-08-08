@@ -12,7 +12,7 @@ export class PublicacaoPage implements OnInit {
 
 
   dados: any = [];
-  comentario: any = [];
+  comments: any = [];
 
   url: string = 'http://localhost:3000/';
 
@@ -27,10 +27,10 @@ export class PublicacaoPage implements OnInit {
              this.dados = resultado;
              console.log(resultado);
         });
-        
+
     this.usrService.getComentario(this._Activatedroute.snapshot.params['id'])
         .subscribe((resultado: any) => {
-             this.comentario = resultado;
+             this.comments = resultado;
              console.log(resultado);
         });    
   }

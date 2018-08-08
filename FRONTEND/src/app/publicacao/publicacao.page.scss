@@ -27,3 +27,31 @@
     color: white;
     text-align: center;
 }
+
+#publicacao-container #comentarios{
+    
+}
+#publicacao-container #comentarios .comentario{
+    display: flex;
+}
+#publicacao-container #comentarios .comentario .comentario-avatar {
+    position: relative;
+    top: -20px;
+}
+#publicacao-container #comentarios .comentario .comentario-avatar ion-img{
+    width: 45px;
+    height: 45px;
+}
+#publicacao-container #comentarios .comentario .container-nome-coment{
+    // background-color: gray;
+    border-radius: 10px;
+    padding: 0px 10px 0px 10px;
+}
+#publicacao-container #comentarios .comentario .container-nome-coment .nome_usuario{
+    position: relative;
+    top: -10px;
+}
+#publicacao-container #comentarios .comentario .container-nome-coment .comentario_usuario{
+    position: relative;
+    top: -20px;
+}
