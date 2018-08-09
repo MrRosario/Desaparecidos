@@ -15,6 +15,59 @@ CREATE TABLE Usuarios(
     PRIMARY KEY (UsuarioID)
 );
 
+CREATE TABLE Posts(
+	PostID int NOT NULL AUTO_INCREMENT,
+    Titulo varchar(50) NOT NULL,
+    Descricao text NOT NULL,
+    Visto_encontrado varchar(100),
+    Telefone varchar(20), 
+    Email varchar(100),  
+    Imagem1 varchar(255), 
+    Imagem2 varchar(255),  
+    Imagem3 varchar(255), 
+    Criado_aos datetime NOT NULL,
+    UsuarioID int,
+    PRIMARY KEY (PostID),
+    FOREIGN KEY (UsuarioID) REFERENCES Usuarios(UsuarioID)
+);
+
+CREATE TABLE Comentarios(
+	ComentarioID int NOT NULL AUTO_INCREMENT,
+    Comentario text,
+    PostID int NOT NULL,
+    UsuarioID int NOT NULL,
+    Criado_aos datetime NOT NULL,
+    PRIMARY KEY (ComentarioID),
+    FOREIGN KEY (PostID) REFERENCES Posts(PostID),
+    FOREIGN KEY (UsuarioID) REFERENCES Usuarios(UsuarioID)
+);
+
+select C.ComentarioID, P.PostID, U.Nome as Nome_Usuario, U.Sobre_nome, C.Comentario FROM Comentarios C
+INNER JOIN Usuarios U ON C.UsuarioID = U.UsuarioID
+INNER JOIN Posts P ON C.PostID = P.PostID;
+
+select C.ComentarioID, P.PostID, U.Nome as Nome_Usuario, U.Sobre_nome, C.Comentario FROM Comentarios C
+INNER JOIN Usuarios U ON C.UsuarioID = U.UsuarioID
+INNER JOIN Posts P ON C.PostID = P.PostID where P.PostID = 2;
+
+
+
+
+-- Inserir dados na tabela comentarios
+insert into Comentarios(Comentario, PostID, UsuarioID, Criado_aos) 
+				values ('Estou comovida com essa historia, vou compartilhar', 1, 1, CURDATE());
+insert into Comentarios(Comentario, PostID, UsuarioID, Criado_aos) 
+				values ('Ja vi uma historia parecida', 1, 1, CURDATE());      
+insert into Comentarios(Comentario, PostID, UsuarioID, Criado_aos) 
+				values ('Se alguem poder ajudar', 2, 3, CURDATE());
+insert into Comentarios(Comentario, PostID, UsuarioID, Criado_aos) 
+				values ('Vamos ajudar', 2, 3, CURDATE());    
+insert into Comentarios(Comentario, PostID, UsuarioID, Criado_aos) 
+				values ('Estou compartilhando', 1, 6, CURDATE());
+insert into Comentarios(Comentario, PostID, UsuarioID, Criado_aos) 
+				values ('Compartilhando tambem com os meus amigos, espero que se resolva logo', 1, 5, CURDATE());                
+
+select * from Comentarios;
 -- Inserir dados na tabela Usuarios
 insert into Usuarios(Nome, Sobre_nome, Email, Senha, Criado_aos) 
 	values ('Ana','Saldanha','anas@email.com', '123senha', CURDATE());
@@ -53,23 +106,7 @@ insert into Usuarios (Nome, Sobre_nome, Email, Senha, Criado_aos)
 insert into Usuarios (Nome, Sobre_nome, Email, Senha, Criado_aos) 
 	values ('Ana','Tembo','temboana@email.com', '123senha', CURDATE());
 
-select * from Usuarios;
 
-CREATE TABLE Posts(
-	PostID int NOT NULL AUTO_INCREMENT,
-    Titulo varchar(50) NOT NULL,
-    Descricao text NOT NULL,
-    Visto_encontrado varchar(100),
-    Telefone varchar(20), 
-    Email varchar(100),  
-    Imagem1 varchar(255), 
-    Imagem2 varchar(255),  
-    Imagem3 varchar(255), 
-    Criado_aos datetime NOT NULL,
-    UsuarioID int,
-    PRIMARY KEY (PostID),
-    FOREIGN KEY (UsuarioID) REFERENCES Usuarios(UsuarioID)
-);
 
 -- Fazendo uma Query com as duas tabelas
 SELECT Usuarios.UsuarioID as Usuario, Posts.Titulo, Posts.Descricao, Posts.Imagem1, Posts.Imagem2, 
@@ -131,4 +168,6 @@ VALUES ('Desaparecida', 'Ingrid Vitoria Mendonça Melo desapareceu no dia
 31/07/2018 na cidade de Belo Horizonte-MG.', 
 'Praia de Copa Cabana - Rio de Janeiro', '11111111111','email@email.com','/caminho/photo1.jpg',
 '/caminho/photo2.jpg','/caminho/photo3.jpg', CURDATE(), 8 );
+
+
 

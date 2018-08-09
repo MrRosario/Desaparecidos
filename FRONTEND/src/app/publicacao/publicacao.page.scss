@@ -25,12 +25,26 @@
     bottom: 0;
     width: 100%;
     color: white;
-    text-align: center;
+    background-color: #ffffff;
 }
 
 #publicacao-container #comentarios{
     
 }
+#publicacao-container #comentarios #enviar-mensagem{
+    display: flex;
+    justify-content: space-around;
+    padding: 0px 10px 50px 10px;
+}
+#publicacao-container #comentarios #enviar-mensagem ion-textarea{
+    border: 1px solid #000000;
+    border-radius: 20px;
+    margin-right: 20px;
+}
+#publicacao-container #comentarios #enviar-mensagem ion-textarea:focus{
+    height: 73px;
+    color: red
+}    
 #publicacao-container #comentarios .comentario{
     display: flex;
 }

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router, ActivatedRoute, Event, NavigationStart, NavigationEnd, NavigationError  } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { UsuariosService } from '../api/usuarios.service';
+
+
 
 @Component({
   selector: 'app-publicacao',
@@ -19,7 +21,7 @@ export class PublicacaoPage implements OnInit {
   constructor(private _Activatedroute: ActivatedRoute, 
               private _router: Router, 
               private http: HttpClient,
-              public usrService: UsuariosService) { }
+              public usrService: UsuariosService, activeRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.usrService.getPost(this._Activatedroute.snapshot.params['id'])
