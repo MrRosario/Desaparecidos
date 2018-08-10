@@ -22,4 +22,7 @@ export class UsuariosService {
     return this._http.get(this.url + 'comentarios/' + id);
   }
 
+  cadastrar(dados){
+    return this._http.post(this.url + 'cadastrar/', dados);
+  }
 }

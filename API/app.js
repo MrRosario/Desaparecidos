@@ -25,7 +25,7 @@ app.use(bodyParser.json());
 router.get('/', user.all);
 router.get('/:id', user.user);
 router.get('/comentarios/:id', user.comment);
-router.post('/register',user.register);
+router.post('/cadastrar',user.register);
 router.post('/login',user.login);
 
 app.use('/api', router);

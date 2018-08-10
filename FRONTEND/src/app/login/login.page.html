@@ -1,9 +1,33 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>login</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content padding>
+  <h2 style="text-align: center">Desaparecidos</h2>
+  <ion-img src="../../assets/icon/peoplesearch.jpg"></ion-img>
+
+  <ion-item>
+    <ion-label position="stacked">Email</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label position="stacked">Senha</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+  
+  <div id="container-botoes">
+    <p (click)="criarConta()"> Criar conta >> </p>
+    <p> Esqueci senha >> </p>
+  </div>
+
+  <ion-button color="success" expand="block" fill="outline">
+    login
+  </ion-button>
+
+  <!-- <fieldset style="border:0px; border-top:1px solid black; text-align: center">
+    <legend style="text-transform: uppercase; font-size: 10px">ou se conecte com</legend>
+  </fieldset>
+
+  <div style="display: flex; justify-content: space-between">
+    <ion-button color="primary">Facebook</ion-button>
+    <ion-button color="secondary">Google</ion-button>
+  </div> -->
 
 </ion-content>
