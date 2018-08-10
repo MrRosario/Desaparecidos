@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
 })
 export class UsuariosService {
 
-  url: string = 'http://localhost:3000/';
+  url: string = 'http://localhost:3000/api/';
   constructor(private _http: HttpClient) { }
 
   todosPosts(){

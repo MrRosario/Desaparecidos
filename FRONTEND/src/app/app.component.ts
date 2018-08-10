@@ -27,6 +27,11 @@ export class AppComponent {
       icon: 'search'
     },
     {
+      title: 'Login',
+      url: '/login',
+      icon: 'log-in'
+    },
+    {
       title: 'Sair',
       url: '/logout',
       icon: 'log-out'

@@ -1,80 +1,34 @@
 const express    = require('express');
-const mysql      = require('mysql');
+const user      = require('./Routes/Users');
+const database   = require('./Models/database');
 const cors       = require('cors');
 const bodyParser = require('body-parser');
+// const jwt        = require('jsonwebtoken');
 const porta = process.env.PORT || 3000;
 
+// let token;
+// users.use(cors());
 
-// Criar conexao
-const con = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'root',
-    database : 'Desaparecidos',
-    password : 'mysql1994' 
-});
-
-//Verificar a conexao com o banco Mysql
-con.connect(function(err) {
+database.connection.connect(function(err) {
     if (err) throw err;
     console.log("Conectado ao banco de dados!");
 });
 
 const app = express();
+const router = express.Router();
 
 app.use(cors());
-
-// parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
-// parse application/json
 app.use(bodyParser.json());
 
 
-app.get('/', (req, res) => {
-    let sql = `SELECT Posts.PostId, Usuarios.UsuarioID as Usuario, Posts.Titulo, Posts.Descricao, Posts.Imagem1, Posts.Imagem2, 
-    Posts.Imagem3 FROM Posts INNER JOIN Usuarios ON Usuarios.UsuarioID = Posts.UsuarioID`;
-    con.query(sql, (err, result) => {
-        if(err){
-            throw err;
-        } 
-        else{ 
-            return res.send(result);
-        }
-        
-    });
-});
+router.get('/', user.all);
+router.get('/:id', user.user);
+router.get('/comentarios/:id', user.comment);
+router.post('/register',user.register);
+router.post('/login',user.login);
 
-app.get('/:id', (req, res) => {
-    let id = req.params.id;
-    let sql = `SELECT Posts.PostId, Usuarios.UsuarioID as Usuario, Posts.Titulo, Posts.Descricao, Posts.Imagem1, Posts.Imagem2, 
-    Posts.Imagem3 FROM Posts INNER JOIN Usuarios ON Usuarios.UsuarioID = Posts.UsuarioID where Posts.PostId = ${id}`;
-    con.query(sql, (err, result) => {
-        if(err){
-            throw err;
-        } 
-        else{ 
-            return res.send(result);
-        }
-        
-    });
-});
-
-app.get('/comentarios/:id', (req, res) => {
-    let id = req.params.id;
-    let sql = `select C.ComentarioID, P.PostID, U.Nome as Nome_Usuario, U.Sobre_nome, C.Comentario FROM Comentarios C
-    INNER JOIN Usuarios U ON C.UsuarioID = U.UsuarioID
-    INNER JOIN Posts P ON C.PostID = P.PostID where P.PostId = ${id}`;
-
-    con.query(sql, (err, result) => {
-        if(err){
-            throw err;
-        } 
-        else{ 
-            return res.send(result);
-        }
-        
-    });
-});
-
+app.use('/api', router);
 app.listen(porta,() => {
-    console.log(`Servidor funcionando na porta ${porta}`);
+    console.log(`Servidor funcionando na porta ${porta}`) 
 });

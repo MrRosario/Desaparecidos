@@ -32,12 +32,13 @@ export class HomePage {
   comentar(id, idName: string):void{
 
     this.router.navigate(['/publicacao/' + id ]);
+    console.log(idName);
     //Redirecionamento pro elemento nao funciona 100%
-    try {
-      setTimeout(() => {
-        window.location.hash = idName;
-        document.querySelector(idName).parentElement.scrollIntoView();
-      },60);
-    } catch (e) { console.log(e)}
+    // try {
+    //   setTimeout(() => {
+    //     window.location.hash = idName;
+    //     document.querySelector(idName).parentElement.scrollIntoView();
+    //   },60);
+    // } catch (e) { console.log(e)}
   }
 }
