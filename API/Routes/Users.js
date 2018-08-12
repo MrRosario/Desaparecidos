@@ -1,4 +1,8 @@
+const jwt      = require('jsonwebtoken');
 const database = require('../Models/database');
+const token;
+
+process.env.SECRET_KEY = "jsehmagico";
 
 exports.all = function(req, res){
 
@@ -103,11 +107,8 @@ exports.login = function(req,res){
         //console.log('Resultado: ', results);
         if(results.length > 0){
             if(results[0].Senha == Senha){
-                res.send({
-                    results,
-                "code":200,
-                "success":"Usuario Logado com sucesso"
-                });
+                token = jwt.sign(rows[0], process.env.SECRET_KEY, { expiresIn: 5000 });
+                res.send({ results, "code":200, "success":"Usuario Logado com sucesso" });
             }
             else {
                 res.send({
