@@ -3,7 +3,7 @@ const user      = require('./Routes/Users');
 const database   = require('./Models/database');
 const cors       = require('cors');
 const bodyParser = require('body-parser');
-// const jwt        = require('jsonwebtoken');
+const jwt        = require('jsonwebtoken');
 const porta = process.env.PORT || 3000;
 
 // let token;

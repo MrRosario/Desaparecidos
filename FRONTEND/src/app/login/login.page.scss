@@ -15,10 +15,11 @@ ion-label{
 }
 #container-botoes{
     display: flex;
-    font-size: 12px;
+    font-size: 14px;
     justify-content: flex-end;
     flex-direction: column;
+    line-height: 0.1;
 }
-#container-botoes p{
-    float: right;
+#container-botoes p:first-child{
+    font-weight: bold;
 }

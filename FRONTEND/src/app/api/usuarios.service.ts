@@ -25,4 +25,12 @@ export class UsuariosService {
   cadastrar(dados){
     return this._http.post(this.url + 'cadastrar/', dados);
   }
+
+  login(email: string, senha: string){
+    return this._http.post(this.url + 'login/', { Email: email, Senha: senha });
+  }
+
+  loginOut(){
+
+  }
 }

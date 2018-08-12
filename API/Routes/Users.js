@@ -89,6 +89,8 @@ exports.login = function(req,res){
   const Email= req.body.Email;
   const Senha = req.body.Senha;
 
+  console.log(Email + ' ' + Senha);
+
   database.connection.query('SELECT * FROM Usuarios WHERE Email = ?',[Email], function (error, results, fields) {
     if (error) {
         console.log("Ocorreu um erro ",error);
@@ -98,10 +100,11 @@ exports.login = function(req,res){
         })
     }
     else { 
-        console.log('Resultado: ', results);
+        //console.log('Resultado: ', results);
         if(results.length > 0){
             if(results[0].Senha == Senha){
                 res.send({
+                    results,
                 "code":200,
                 "success":"Usuario Logado com sucesso"
                 });
