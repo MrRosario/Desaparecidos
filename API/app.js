@@ -25,6 +25,7 @@ router.get('/:id', user.user);
 router.get('/comentarios/:id', user.comment);
 router.post('/cadastrar',user.register);
 router.post('/login',user.login);
+router.use(user.tokenAuthorize);
 
 app.use('/api', router);
 app.listen(porta,() => {

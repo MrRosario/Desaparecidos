@@ -1,6 +1,5 @@
 const jwt      = require('jsonwebtoken');
 const database = require('../Models/database');
-const token;
 
 process.env.SECRET_KEY = "jsehmagico";
 
@@ -107,8 +106,11 @@ exports.login = function(req,res){
         //console.log('Resultado: ', results);
         if(results.length > 0){
             if(results[0].Senha == Senha){
-                token = jwt.sign(rows[0], process.env.SECRET_KEY, { expiresIn: 5000 });
-                res.send({ results, "code":200, "success":"Usuario Logado com sucesso" });
+                const token = jwt.sign({ Usuario: results.UsuarioID }, process.env.SECRET_KEY, { expiresIn: 24 * 60 * 60 });
+                
+                res.status(200)
+                    .send({ 'token': token, results } );
+                    //.send({ 'token': token, 'IDusuario': results.UsuarioID, 'Nome': results.Nome, 'SobreNome': results.Sobre_nome } );
             }
             else {
                 res.send({
@@ -125,4 +127,22 @@ exports.login = function(req,res){
         }
     }
   });
+}
+
+exports.tokenAuthorize = function(req, res, next) {
+    const token = req.body.token || req.headers['x-access-token'];
+     if (token) {
+        jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
+            if (err) {
+                console.error('JWT Verification Error', err);
+                return res.status(403).send(err);
+            } else {
+                req.decoded = decoded;
+                return next();
+            }
+        });
+     } 
+     else {
+        res.status(403).send('Token not provided');
+     }
 }

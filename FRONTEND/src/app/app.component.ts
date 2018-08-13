@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { UsuariosService } from './api/usuarios.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +12,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
   public appPages = [
     {
       title: 'Publicar',
@@ -33,23 +36,37 @@ export class AppComponent {
     },
     {
       title: 'Sair',
-      url: '/logout',
+      url: '/home',
       icon: 'log-out'
     }
+
   ];
 
-  constructor(
-    private platform: Platform,
-    private splashScreen: SplashScreen,
-    private statusBar: StatusBar
-  ) {
-    this.initializeApp();
+  public usuarioAtual: string;
+
+  constructor(private platform: Platform, private splashScreen: SplashScreen,
+            private statusBar: StatusBar, public usrService: UsuariosService, private router: Router) {
+
+      this.initializeApp();
+
+      const user = JSON.parse(localStorage.getItem('Usuario'));
+      if(user){
+        this.usuarioAtual = user.results[0].Nome;
+        console.log(this.usuarioAtual);
+      }
   }
 
   initializeApp() {
-    this.platform.ready().then(() => {
+      this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
   }
+
+  logout(){
+    this.usrService.loginOut();
+    //this.router.navigate('/login');
+    this.router.navigate(['/login']);
+  }
+  
 }
