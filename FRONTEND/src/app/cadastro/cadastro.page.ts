@@ -19,7 +19,8 @@ export class CadastroPage implements OnInit {
               private alertController: AlertController,
               private _http: HttpClient,
               private _router: Router,
-              public usrService: UsuariosService) { }
+              public usrService: UsuariosService,
+              private router: Router) { }
 
   ngOnInit() {  }
 
@@ -64,6 +65,10 @@ export class CadastroPage implements OnInit {
       data =>  { this.presentAlert(); console.log('success', data); },
       error => { console.log('Erro', error); }
     );
+  }
+
+  paginaAnterior(){
+    this.router.navigateByUrl('/login');
   }
 
 }

@@ -30,7 +30,7 @@ export class UsuariosService {
   login(email: string, senha: string){
     return this._http.post(this.url + 'login/', { Email: email, Senha: senha })
       .map((user) => {
-        if (user) {
+        if (user && user.token) {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('Usuario', JSON.stringify(user));
         }
@@ -41,6 +41,15 @@ export class UsuariosService {
 
   loginOut(){
     localStorage.removeItem('Usuario');
+  }
+
+  verificarLogin(){
+    const user = JSON.parse(localStorage.getItem('Usuario'));
+      if(user){
+        return user.results[0].Nome;
+      } else{
+        return console.log('Local storage  esta vazio');
+      }
   }
 
 }

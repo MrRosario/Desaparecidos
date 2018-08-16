@@ -18,7 +18,9 @@ export class HomePage {
     usrService.todosPosts().subscribe((resultado) => {
       this.usuarios = resultado;
       console.log(resultado);
-    })
+    });
+    //usrService.verificarLogin()
+    console.log(this.router.url);
   }
 
   proximaPagina(){

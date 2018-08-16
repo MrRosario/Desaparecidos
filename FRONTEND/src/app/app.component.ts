@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Platform, MenuController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { UsuariosService } from './api/usuarios.service';
@@ -45,7 +45,8 @@ export class AppComponent {
   public usuarioAtual: string;
 
   constructor(private platform: Platform, private splashScreen: SplashScreen,
-            private statusBar: StatusBar, public usrService: UsuariosService, private router: Router) {
+            private statusBar: StatusBar, public usrService: UsuariosService, 
+            private router: Router, public menuCtrl: MenuController) {
 
       this.initializeApp();
 
@@ -53,6 +54,15 @@ export class AppComponent {
       if(user){
         this.usuarioAtual = user.results[0].Nome;
         console.log(this.usuarioAtual);
+      } else{
+        console.log('Local storage vazio');
+      }
+
+      if(this.router.url == '/home'){
+        usrService.verificarLogin().subscribe(res => {
+          this.usuarioAtual = res;
+          console.log(res);
+        })
       }
   }
 
@@ -67,6 +77,7 @@ export class AppComponent {
     this.usrService.loginOut();
     //this.router.navigate('/login');
     this.router.navigate(['/login']);
+    this.menuCtrl.close();
   }
   
 }
