@@ -25,17 +25,24 @@ export class PublicacaoPage implements OnInit {
               public usrService: UsuariosService, activeRoute: ActivatedRoute) { }
 
   ngOnInit() {
+    this.obterPosts();
+    this.obterComentario();
+  }
+
+  private obterComentario(){
+    return this.usrService.getComentario(this._Activatedroute.snapshot.params['id'])
+          .subscribe((resultado: any) => {
+           this.comments = resultado;
+           console.log(resultado);
+    });   
+  }
+
+  private obterPosts(){
     this.usrService.getPost(this._Activatedroute.snapshot.params['id'])
         .subscribe((resultado: any) => {
              this.dados = resultado;
              console.log(resultado);
         });
-
-    this.usrService.getComentario(this._Activatedroute.snapshot.params['id'])
-        .subscribe((resultado: any) => {
-             this.comments = resultado;
-             console.log(resultado);
-        });    
   }
 
   paginaAnterior(){
@@ -55,8 +62,8 @@ export class PublicacaoPage implements OnInit {
     };
     
     this.usrService.postComentario(dadosComentario) 
-    .subscribe(
-      data =>  { console.log('success', data); this.comentario = ""; },
+    .subscribe( 
+      data =>  { console.log('success', data); this.comentario = ""; this.obterComentario(); },
       error => { console.log('Erro', error); }
     );
 
