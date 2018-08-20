@@ -16,7 +16,7 @@ export class AppComponent {
   public appPages = [
     {
       title: 'Publicar',
-      url: '/publicacao',
+      url: '/publicar',
       icon: 'globe'
     },
     {
@@ -36,7 +36,7 @@ export class AppComponent {
     },
     {
       title: 'Sair',
-      url: '/home',
+      url: '/login',
       icon: 'log-out'
     }
 

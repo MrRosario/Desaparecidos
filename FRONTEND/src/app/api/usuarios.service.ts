@@ -22,15 +22,23 @@ export class UsuariosService {
   getComentario(id){
     return this._http.get(this.url + 'comentarios/' + id);
   }
+  
+  postComentario(comentario){
+    return this._http.post(this.url + 'comentar/', comentario);
+  }
 
   cadastrar(dados){
     return this._http.post(this.url + 'cadastrar/', dados);
   }
 
+  publicar(dados){
+    return this._http.post(this.url + 'publicar/', dados);
+  }
+  
   login(email: string, senha: string){
     return this._http.post(this.url + 'login/', { Email: email, Senha: senha })
       .map((user) => {
-        if (user && user.token) {
+        if (user) {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('Usuario', JSON.stringify(user));
         }

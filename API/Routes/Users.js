@@ -6,7 +6,7 @@ process.env.SECRET_KEY = "jsehmagico";
 exports.all = function(req, res){
 
     let sql = `SELECT Posts.PostId, Usuarios.UsuarioID as Usuario, Posts.Titulo, Posts.Descricao, Posts.Imagem1, Posts.Imagem2, 
-    Posts.Imagem3 FROM Posts INNER JOIN Usuarios ON Usuarios.UsuarioID = Posts.UsuarioID`;
+    Posts.Imagem3 FROM Posts INNER JOIN Usuarios ON Usuarios.UsuarioID = Posts.UsuarioID ORDER BY Posts.Criado_aos DESC`;
     database.connection.query(sql, (err, result) => {
         if(err){
             console.log("Ocorreu um erro",error);
@@ -53,6 +53,70 @@ exports.comment = function(req, res){
             return res.send(result);
         }
         
+    });
+}
+
+exports.comentar = function(req, res){
+
+    console.log("req",req.body); 
+
+    let Comentarios = {
+      "Comentario": req.body.Comentario,
+      "PostId": req.body.PostId,
+      "UsuarioID": req.body.UsuarioID,
+      "Criado_aos": req.body.Criado_aos
+    }
+
+    database.connection.query('INSERT INTO Comentarios SET ?', Comentarios, function (error, results, fields) {
+
+        if (error) {
+        console.log("Ocorreu um erro",error);
+        res.send({
+            "code":400,
+            "failed":"erro"
+        })
+        }else{
+        console.log('Resultado: ', results);
+        res.send({
+            "code":200,
+            "success":"Comentario feito com sucesso"
+            });
+        }
+    });
+}
+
+exports.publicar = function(req, res){
+
+    console.log("req",req.body); 
+
+    let Publicar = {
+      "Titulo": req.body.Titulo,
+      "Descricao": req.body.Descricao,
+      "Visto_encontrado": req.body.Visto_encontrado,
+      "Telefone": req.body.Telefone,
+      "Email": req.body.Email, 
+      "Imagem1": req.body.Imagem1,
+      "Imagem2": req.body.Imagem2,
+      "Imagem3": req.body.Imagem3,
+      "Criado_aos": req.body.Criado_aos,
+      "UsuarioID": req.body.UsuarioID
+    }
+
+    database.connection.query('INSERT INTO Posts SET ?', Publicar, function (error, results, fields) {
+
+        if (error) {
+        console.log("Ocorreu um erro",error);
+        res.send({
+            "code":400,
+            "failed":"erro"
+        })
+        }else{
+        console.log('Resultado: ', results);
+        res.send({
+            "code":200,
+            "success":"Publicado com sucesso"
+            });
+        }
     });
 }
 

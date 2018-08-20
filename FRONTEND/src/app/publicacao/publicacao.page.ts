@@ -3,8 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UsuariosService } from '../api/usuarios.service';
 
-
-
 @Component({
   selector: 'app-publicacao',
   templateUrl: './publicacao.page.html',
@@ -14,7 +12,10 @@ export class PublicacaoPage implements OnInit {
 
 
   dados: any = [];
+
   comments: any = [];
+
+  comentario: string;
 
   url: string = 'http://localhost:3000/';
 
@@ -39,5 +40,26 @@ export class PublicacaoPage implements OnInit {
 
   paginaAnterior(){
     this._router.navigateByUrl('/home');
+  }
+
+  comentar(){
+    const user = JSON.parse(localStorage.getItem('Usuario'));
+    const IDusuario = user.results[0].UsuarioID;
+    const PostId = this.dados[0].PostId;
+
+    let dadosComentario = {
+      Comentario: this.comentario,
+      PostId: PostId,
+      UsuarioID: IDusuario,
+      Criado_aos: new Date().toISOString().slice(0, 19).replace('T', ' ')
+    };
+    
+    this.usrService.postComentario(dadosComentario) 
+    .subscribe(
+      data =>  { console.log('success', data); this.comentario = ""; },
+      error => { console.log('Erro', error); }
+    );
+
+    console.log(dadosComentario);
   }
 }

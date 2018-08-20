@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: 'publicacao/:id', loadChildren: './publicacao/publicacao.module#PublicacaoPageModule' },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
   { path: 'cadastro', loadChildren: './cadastro/cadastro.module#CadastroPageModule' },
+  { path: 'publicar', loadChildren: './publicar/publicar.module#PublicarPageModule' },
 ];
 
 @NgModule({

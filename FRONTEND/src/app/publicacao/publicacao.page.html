@@ -42,8 +42,11 @@
 
       <div id="enviar-mensagem">
         <!-- <textarea rows="2" placeholder="Describe yourself here..."> </textarea> -->
-        <ion-textarea id="caixa-comentario" placeholder="Escreva um comentário..."></ion-textarea>
-        <ion-button color="success">Publicar</ion-button>
+        <ion-textarea [(ngModel)]="comentario" name="comentario" id="caixa-comentario" placeholder="Escreva um comentário...">
+
+        </ion-textarea>
+
+        <ion-button (click)="comentar()" color="success">Publicar</ion-button>
       </div>
       
     </div>

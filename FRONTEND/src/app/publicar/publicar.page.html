@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-icon slot="start" class="icone" (click)="paginaAnterior()" name="arrow-round-back">Voltar</ion-icon>
+    <ion-title style="text-align:center">Criar Publicação</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-item>
+    <ion-label position="stacked">Titulo*</ion-label>
+    <ion-input [(ngModel)]="Titulo" name="Titulo"> </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Descrição*</ion-label>
+    <ion-textarea rows="5" cols="20" [(ngModel)]="Descricao" name="Descricao"> </ion-textarea>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Visto ultima vez</ion-label>
+    <ion-input [(ngModel)]="Visto_encontrado" name="Visto_encontrado"> </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Telefone</ion-label>
+    <ion-input [(ngModel)]="Telefone" name="Telefone"> </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Email</ion-label>
+    <ion-input [(ngModel)]="Email" name="Email"> </ion-input>
+  </ion-item>
+
+  <ion-button (click)="Publicar()" color="success" expand="block">
+      Publicar
+  </ion-button>
+
+</ion-content>
