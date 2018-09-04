@@ -32,6 +32,37 @@
     <ion-input [(ngModel)]="Email" name="Email"> </ion-input>
   </ion-item>
 
+  <ion-item>
+    <ion-label position="stacked">Imagens</ion-label>
+
+    <div id="container-imagens">
+
+      <div class="imagens" (click)="presentActionSheet()"> 
+         <ion-icon *ngIf="imageSrc === null" class="icone mais" name="images"></ion-icon> 
+         <img *ngIf="imageSrc !== null" [src]="imageSrc"> 
+      </div>
+
+      <!-- <div class="imagens"> 
+        <ion-icon *ngIf="imageSrc === null" class="icone mais" name="images"></ion-icon>
+        <input *ngIf="imageSrc === null" style="opacity:0; height: 60px;" 
+          type="file" (change)="readURL($event);" name="imagem" accept="image/*" capture>
+        <img *ngIf="imageSrc !== null" [src]="imageSrc">
+      </div>  -->
+
+      <!-- <div class="imagens"> 
+        <ion-icon *ngIf="imageSrc === null" class="icone mais" name="images"></ion-icon>
+        <input *ngIf="imageSrc === null" style="opacity:0; height: 60px;" type="file" (change)="readURL($event);" name="imagem" accept="image/*">
+        <img *ngIf="imageSrc !== null" [src]="imageSrc">
+      </div>  -->
+
+      <!-- <div class="imagens"> 
+        <ion-icon *ngIf="image === null" class="icone mais" name="images"></ion-icon>
+        <img *ngIf="image !== null" [src]="image">
+      </div> -->
+    
+    </div>
+  </ion-item>  
+
   <ion-button (click)="Publicar()" color="success" expand="block">
       Publicar
   </ion-button>

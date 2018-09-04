@@ -1,7 +1,9 @@
 {
   "name": "FRONTEND",
   "integrations": {
-    "cordova": {}
+    "cordova": {},
+    "capacitor": {}
   },
-  "type": "angular"
+  "type": "angular",
+  "pro_id": "f23eec2c"
 }

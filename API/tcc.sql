@@ -1,4 +1,4 @@
- -- Criando o banco de dados
+-- Criando o banco de dados
 CREATE DATABASE Desaparecidos;
 
 -- Usar o banco
@@ -30,6 +30,8 @@ CREATE TABLE Posts(
     PRIMARY KEY (PostID),
     FOREIGN KEY (UsuarioID) REFERENCES Usuarios(UsuarioID)
 );
+
+select * from Posts;
 
 CREATE TABLE Comentarios(
 	ComentarioID int NOT NULL AUTO_INCREMENT,
@@ -65,7 +67,9 @@ insert into Comentarios(Comentario, PostID, UsuarioID, Criado_aos)
 insert into Comentarios(Comentario, PostID, UsuarioID, Criado_aos) 
 				values ('Estou compartilhando', 1, 6, CURDATE());
 insert into Comentarios(Comentario, PostID, UsuarioID, Criado_aos) 
-				values ('Compartilhando tambem com os meus amigos, espero que se resolva logo', 1, 5, CURDATE());                
+				values ('Compartilhando tambem com os meus amigos, espero que se resolva logo', 1, 5, CURDATE());      
+insert into Comentarios(Comentario, PostID, UsuarioID, Criado_aos) 
+				values ('CAchei interessante', 1, 5, CURDATE());                   
 
 select * from Comentarios;
 -- Inserir dados na tabela Usuarios
@@ -113,6 +117,7 @@ SELECT Usuarios.UsuarioID as Usuario, Posts.Titulo, Posts.Descricao, Posts.Image
 Posts.Imagem3 FROM Posts INNER JOIN Usuarios ON Usuarios.UsuarioID = Posts.UsuarioID;
 
 select * from Posts;
+select * from Usuarios;
 
 -- Inserir dados da tabela
 INSERT INTO Posts (Titulo, Descricao, Visto_encontrado, Telefone, Email, Imagem1, Imagem2, Imagem3, Criado_aos, UsuarioID)

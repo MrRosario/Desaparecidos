@@ -4,6 +4,26 @@ const database   = require('./Models/database');
 const cors       = require('cors');
 const bodyParser = require('body-parser');
 const porta      = process.env.PORT || 3000;
+const multer  = require('multer')
+
+// cria uma instância do middleware configurada
+// destination: lida com o destino
+// filenane: permite definir o nome do arquivo gravado
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+
+        // error first callback
+        cb(null, 'uploads/');
+    },
+    filename: function (req, file, cb) {
+
+        // error first callback
+        cb(null, file.fieldname + '-' + Date.now())
+    }
+});
+
+// utiliza a storage para configurar a instância do multer
+const upload = multer({ storage });
 
 // users.use(cors());
 

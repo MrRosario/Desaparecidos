@@ -1,0 +1,25 @@
+#container-imagens .imagens{
+    border: 1px solid #000000;
+    background-color: white;
+    width: 60px;
+    height: 60px;
+    margin-left: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+#container-imagens .imagens img{
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    object-fit: cover;
+}
+#container-imagens .imagens:hover{
+    background-color: grey;
+}
+#container-imagens{
+    display: flex;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
