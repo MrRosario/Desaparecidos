@@ -10,6 +10,7 @@ const routes: Routes = [
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
   { path: 'cadastro', loadChildren: './cadastro/cadastro.module#CadastroPageModule' },
   { path: 'publicar', loadChildren: './publicar/publicar.module#PublicarPageModule' },
+  { path: 'pesquisar', loadChildren: './pesquisar/pesquisar.module#PesquisarPageModule' },
 ];
 
 @NgModule({

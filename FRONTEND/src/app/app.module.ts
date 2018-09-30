@@ -11,6 +11,8 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthGuard } from './api/auth.guard';
 import { Camera } from '@ionic-native/camera/ngx';
+//import { FileTransfer } from '@ionic-native/file-transfer';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,6 +23,7 @@ import { Camera } from '@ionic-native/camera/ngx';
     SplashScreen,
     AuthGuard,
     Camera,
+    //FileTransfer,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

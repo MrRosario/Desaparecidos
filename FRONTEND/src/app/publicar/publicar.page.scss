@@ -1,13 +1,18 @@
 #container-imagens .imagens{
     border: 1px solid #000000;
-    background-color: white;
-    width: 60px;
-    height: 60px;
+    border-radius: 3px;
+    width: 70px;
+    height: 70px;
     margin-left: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
+}
+#container-imagens .imagens .eliminarImagem{
+    position: absolute; 
+    z-index: 10;
+    background-color: #fff;
+    border: 1px solid gray;
+    border-radius: 50px;
+    height: 20px;
+    width: 20px;
 }
 #container-imagens .imagens img{
     width: 100%;
@@ -20,6 +25,5 @@
 }
 #container-imagens{
     display: flex;
-    margin-top: 20px;
     margin-bottom: 10px;
 }

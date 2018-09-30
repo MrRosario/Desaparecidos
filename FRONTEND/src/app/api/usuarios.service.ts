@@ -23,6 +23,10 @@ export class UsuariosService {
     return this._http.get(this.url + 'comentarios/' + id);
   }
   
+  getPesquisar(pesquisa){
+    return this._http.get(this.url + 'pesquisar/' + pesquisa)
+  }
+
   postComentario(comentario){
     return this._http.post(this.url + 'comentar/', comentario);
   }

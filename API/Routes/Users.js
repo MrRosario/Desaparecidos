@@ -21,6 +21,21 @@ exports.all = function(req, res){
         
     });
 }
+exports.pesquisar = function(req, res){
+    let titulo = req.params.titulo;
+    
+    database.connection.query('SELECT PostID, Descricao, Visto_encontrado from Posts where Descricao like "%'+titulo+'%"', 
+    function(err, rows, fields) {
+
+    if (err) throw err;
+    let data=[];
+
+    for(i = 0; i < rows.length; i++){
+        data.push(rows[i]);
+      }
+      res.end(JSON.stringify(data));
+    });
+}
 
 exports.user = function(req, res){
     let id = req.params.id;

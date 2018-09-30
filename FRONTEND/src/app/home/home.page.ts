@@ -23,8 +23,9 @@ export class HomePage {
     console.log(this.router.url);
   }
 
-  proximaPagina(){
-    this.router.navigateByUrl('/perfil');
+  paginaPesquisar(){
+    // this.router.navigateByUrl('/pesquisar');
+    console.log("OLa mundo")
   }
 
   detalhes(id){

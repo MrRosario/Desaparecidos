@@ -30,6 +30,11 @@ export class AppComponent {
       icon: 'search'
     },
     {
+      title: 'Mapa',
+      url: '/mapa',
+      icon: 'map'
+    },
+    {
       title: 'Login',
       url: '/login',
       icon: 'log-in'

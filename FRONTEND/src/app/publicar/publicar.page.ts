@@ -18,6 +18,13 @@ export class PublicarPage implements OnInit {
   Email: string;
 
   imageSrc: string = null;
+  imageSrc1: string = null;
+  imageSrc2: string = null;
+
+  imagem4: File;
+
+  fd = new FormData();
+
 
   constructor(private router: Router, 
               public usrService: UsuariosService,
@@ -28,34 +35,35 @@ export class PublicarPage implements OnInit {
 
   ngOnInit() { }
 
+  //  readURL(event: Event): void {
+  //   this.imagem4 = <File>event.target.files[0];
+  //   this.fd.append('file', this.imagem4, this.imagem4.name);
+  // }
+
   takePicture(imageFrom){
 
     const options: CameraOptions = {
-      quality: 100,
+      quality: 50,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       sourceType : imageFrom,
-      allowEdit: true,
       targetWidth: 100,
       targetHeight: 100
     }
  
-    this.camera.getPicture(options)
-      .then((imageData) => {
-        this.imageSrc = 'data:image/jpeg;base64,' + imageData;
-        //alert(this.imageSrc);
-      }, (error) => {
-        console.error(error);
-      })
-      .catch((error) => {
-        console.error(error);
-      })  
+    this.camera.getPicture(options).then((imageData) => {
+        let base64Image = 'data:image/jpeg;base64,' + imageData;
+        this.imageSrc = base64Image;
+        //this.presentLoading();
+    },(err) => {
+      console.error(err);
+    });
   }
   
   async presentActionSheet() {
     const actionSheet = await this.actionSheetController.create({
-      header: "Carregar fotos apartir da...",
+      header: "Carregar foto apartir da...",
       buttons: [ 
         {
           text: 'Câmera',
@@ -84,16 +92,192 @@ export class PublicarPage implements OnInit {
     await actionSheet.present();
   }
 
+  takePicture1(imageFrom){
 
+    const options: CameraOptions = {
+      quality: 50,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      sourceType : imageFrom,
+      targetWidth: 100,
+      targetHeight: 100
+    }
+ 
+    this.camera.getPicture(options).then((imageData) => {
+        let base64Image = 'data:image/jpeg;base64,' + imageData;
+        this.imageSrc1 = base64Image;
+        //this.presentLoading();
+    },(err) => {
+      console.error(err);
+    });
+  }
+  
+  async presentActionSheet1() {
+    const actionSheet = await this.actionSheetController.create({
+      header: "Carregar foto apartir da...",
+      buttons: [ 
+        {
+          text: 'Câmera',
+          icon: 'camera',
+          handler: () => {
+            this.takePicture1(this.camera.PictureSourceType.CAMERA);
+          }
+        }, 
+        {
+          text: 'Galeria',
+          icon: 'photos',
+          handler: () => {
+            this.takePicture1(this.camera.PictureSourceType.PHOTOLIBRARY);
+          }
+        }, 
+        {
+          text: 'Cancelar',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    });
+    await actionSheet.present();
+  }
+
+  takePicture2(imageFrom){
+
+    const options: CameraOptions = {
+      quality: 50,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      sourceType : imageFrom,
+      targetWidth: 100,
+      targetHeight: 100
+    }
+ 
+    this.camera.getPicture(options).then((imageData) => {
+        let base64Image = 'data:image/jpeg;base64,' + imageData;
+        this.imageSrc2 = base64Image;
+        //this.presentLoading();
+    },(err) => {
+      console.error(err);
+    });
+  }
+  
+  async presentActionSheet2() {
+    const actionSheet = await this.actionSheetController.create({
+      header: "Carregar foto apartir da...",
+      buttons: [ 
+        {
+          text: 'Câmera',
+          icon: 'camera',
+          handler: () => {
+            this.takePicture2(this.camera.PictureSourceType.CAMERA);
+          }
+        }, 
+        {
+          text: 'Galeria',
+          icon: 'photos',
+          handler: () => {
+            this.takePicture2(this.camera.PictureSourceType.PHOTOLIBRARY);
+          }
+        }, 
+        {
+          text: 'Cancelar',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    });
+    await actionSheet.present();
+  }
+
+
+
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      header: 'Confirmação',
+      message: 'Tem certeza que quer excluir a imagem?',
+      buttons: [
+        {
+          text: 'NÃO',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'SIM',
+          handler: () => {
+            this.imageSrc = null;
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async presentAlertConfirm1() {
+    const alert = await this.alertController.create({
+      header: 'Confirmação',
+      message: 'Tem certeza que quer excluir a imagem?',
+      buttons: [
+        {
+          text: 'NÃO',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'SIM',
+          handler: () => {
+            this.imageSrc1 = null;
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async presentAlertConfirm2() {
+    const alert = await this.alertController.create({
+      header: 'Confirmação',
+      message: 'Tem certeza que quer excluir a imagem?',
+      buttons: [
+        {
+          text: 'NÃO',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'SIM',
+          handler: () => {
+            this.imageSrc2 = null;
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+  
   paginaAnterior(){
     this.router.navigateByUrl('/home');
   }
 
   async presentLoading() {
     const loading = await this.loadingController.create({
-      content: '',
+      content: 'Carregando...',
       spinner: 'bubbles',
-      duration: 5000,
+      duration: 3000,
       translucent: true
     });
     return await loading.present();
@@ -110,28 +294,30 @@ export class PublicarPage implements OnInit {
 
   Publicar(){
 
-    // const user = JSON.parse(localStorage.getItem('Usuario'));
-    // const IDusuario = user.results[0].UsuarioID;
+    //alert(this.imagem4);
+    //alert(this.fd);
+    const user = JSON.parse(localStorage.getItem('Usuario'));
+    const IDusuario = user.results[0].UsuarioID;
 
-    // let Publicacao = {
-    //   Titulo: this.Titulo,
-    //   Descricao: this.Descricao,
-    //   Visto_encontrado: this.Visto_encontrado,
-    //   Telefone: this.Telefone,
-    //   Email: this.Email,
-    //   Imagem1: this.Imagem1,
-    //   Imagem2: this.Imagem2,
-    //   Imagem3: this.Imagem3,
-    //   UsuarioID: IDusuario,
-    //   Criado_aos: new Date().toISOString().slice(0, 19).replace('T', ' ')
-    // };
+    let Publicacao = {
+      Titulo: this.Titulo,
+      Descricao: this.Descricao,
+      Visto_encontrado: this.Visto_encontrado,
+      Telefone: this.Telefone,
+      Email: this.Email,
+      Imagem1: this.imagem4,
+      Imagem2: this.imagem4,
+      Imagem3: this.imagem4,
+      UsuarioID: IDusuario,
+      Criado_aos: new Date().toISOString().slice(0, 19).replace('T', ' ')
+    };
 
-    // this.usrService.publicar(Publicacao) 
-    // .subscribe(
-    //   data =>  { this.presentAlert(); this.router.navigateByUrl('/home'); console.log('success', data); },
-    //   error => { console.log('Erro', error); }
-    // );
-    //console.log(this.imagem);
+    this.usrService.publicar(Publicacao) 
+    .subscribe(
+      data =>  { this.presentAlert(); this.router.navigateByUrl('/home'); console.log('success', data); },
+      error => { console.log('Erro', error); }
+    );
+
   }
 
 }
