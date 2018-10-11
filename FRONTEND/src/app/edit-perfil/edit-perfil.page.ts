@@ -33,6 +33,14 @@ export class EditPerfilPage implements OnInit {
     console.log(this.value)
   }
 
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Atualizado com sucesso.',
+      duration: 3000
+    });
+    toast.present();
+  }
+
   Atualizar(){
 
     let Update = {
@@ -46,7 +54,12 @@ export class EditPerfilPage implements OnInit {
 
     this.usrService.atualizarPost(Update) 
     .subscribe(
-      data =>  { this.presentAlert(); this.router.navigateByUrl('/perfil'); console.log('success', data); },
+      data =>  { 
+        this.presentToast();
+        this.modalController.dismiss(); 
+        this.router.navigateByUrl('/perfil'); 
+        console.log('success', data); 
+      },
       error => { console.log('Erro', error); }
     );
   }

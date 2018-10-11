@@ -96,7 +96,7 @@ exports.atualizarPost = function(req, res){
         console.log('Resultado: ', results);
         res.send({
             "code":200,
-            "success":"Comentario feito com sucesso"
+            "success":"Atualizado com sucesso"
             });
         }
     });
