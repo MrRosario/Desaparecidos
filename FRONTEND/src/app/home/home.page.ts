@@ -23,10 +23,6 @@ export class HomePage {
     console.log(this.router.url);
   }
 
-  paginaPesquisar(){
-    // this.router.navigateByUrl('/pesquisar');
-    console.log("OLa mundo")
-  }
 
   detalhes(id){
     console.log(id);

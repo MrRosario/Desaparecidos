@@ -11,6 +11,7 @@ const routes: Routes = [
   { path: 'cadastro', loadChildren: './cadastro/cadastro.module#CadastroPageModule' },
   { path: 'publicar', loadChildren: './publicar/publicar.module#PublicarPageModule' },
   { path: 'pesquisar', loadChildren: './pesquisar/pesquisar.module#PesquisarPageModule' },
+  { path: 'mapa', loadChildren: './mapa/mapa.module#MapaPageModule' },
 ];
 
 @NgModule({

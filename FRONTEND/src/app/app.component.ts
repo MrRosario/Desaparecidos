@@ -55,20 +55,20 @@ export class AppComponent {
 
       this.initializeApp();
 
-      const user = JSON.parse(localStorage.getItem('Usuario'));
-      if(user){
-        this.usuarioAtual = user.results[0].Nome;
-        console.log(this.usuarioAtual);
-      } else{
-        console.log('Local storage vazio');
-      }
+      // const user = JSON.parse(localStorage.getItem('Usuario'));
+      // if(user){
+      //   this.usuarioAtual = user.results[0].Nome;
+      //   console.log(this.usuarioAtual);
+      // } else{
+      //   console.log('Local storage vazio');
+      // }
 
-      if(this.router.url == '/home'){
-        usrService.verificarLogin().subscribe(res => {
-          this.usuarioAtual = res;
-          console.log(res);
-        })
-      }
+      // if(this.router.url == '/home'){
+      //   usrService.verificarLogin().subscribe(res => {
+      //     this.usuarioAtual = res;
+      //     console.log(res);
+      //   })
+      // }
   }
 
   initializeApp() {

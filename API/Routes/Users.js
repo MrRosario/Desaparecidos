@@ -24,7 +24,7 @@ exports.all = function(req, res){
 exports.pesquisar = function(req, res){
     let titulo = req.params.titulo;
     
-    database.connection.query('SELECT PostID, Descricao, Visto_encontrado from Posts where Descricao like "%'+titulo+'%"', 
+    database.connection.query('SELECT PostID, CONCAT(SUBSTRING(Descricao, 1, 120) , "... ") as Descricao, Visto_encontrado from Posts where Descricao like "%'+titulo+'%"', 
     function(err, rows, fields) {
 
     if (err) throw err;
