@@ -53,6 +53,23 @@ exports.user = function(req, res){
     });
 }
 
+exports.perfil = function(req, res){
+    let id = req.params.id;
+
+    let sql = `select U.UsuarioID, U.Nome, U.Email, U.Sobre_nome, P.PostID, P.Titulo, P.Descricao, P.Imagem1 
+    FROM Posts P INNER JOIN Usuarios U ON U.UsuarioID = P.UsuarioID where P.UsuarioID = ${id}`;
+    
+    database.connection.query(sql, (err, result) => {
+        if(err){
+            throw err;
+        } 
+        else{ 
+            return res.send(result);
+        }
+        
+    });
+}
+
 exports.comment = function(req, res){
     let id = req.params.id;
 

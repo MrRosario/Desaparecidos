@@ -53,6 +53,7 @@ app.use(bodyParser.json({
 router.get('/', user.all);
 router.get('/:id', user.user);
 router.get('/comentarios/:id', user.comment);
+router.get('/perfil/:id', user.perfil);
 router.get('/pesquisar/:titulo', user.pesquisar);
 router.post('/comentar', user.comentar);
 router.post('/cadastrar', user.register);

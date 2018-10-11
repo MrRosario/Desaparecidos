@@ -18,7 +18,9 @@ export class UsuariosService {
   getPost(id){
     return this._http.get(this.url + id);
   }
-
+  perfil(id){
+    return this._http.get(this.url + 'perfil/' + id);
+  }
   getComentario(id){
     return this._http.get(this.url + 'comentarios/' + id);
   }
@@ -38,7 +40,6 @@ export class UsuariosService {
   publicar(dados){
     return this._http.post(this.url + 'publicar/', dados);
   }
-  
   login(email: string, senha: string){
     return this._http.post(this.url + 'login/', { Email: email, Senha: senha })
       .map((user) => {
