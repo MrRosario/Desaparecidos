@@ -1,8 +1,15 @@
--- Criando o banco de dados
+ -- Criando o banco de dados
 CREATE DATABASE Desaparecidos;
 
 -- Usar o banco
 use Desaparecidos;
+
+DELIMITER //
+CREATE PROCEDURE SelecionarPosts (userID INT)
+BEGIN 
+	select * from Posts WHERE UsuarioID = userID;
+END// 
+DELIMITER ;
 
  -- Criando tabelas
 CREATE TABLE Usuarios(
@@ -31,7 +38,11 @@ CREATE TABLE Posts(
     FOREIGN KEY (UsuarioID) REFERENCES Usuarios(UsuarioID)
 );
 
-select * from Posts;
+CALL SelecionarPosts(1);
+
+select C.ComentarioID, P.PostID, U.Nome as Nome_Usuario, U.Sobre_nome, C.Comentario FROM Comentarios C
+INNER JOIN Usuarios U ON C.UsuarioID = U.UsuarioID
+INNER JOIN Posts P ON C.PostID = P.PostID where P.PostID = 2;
 
 CREATE TABLE Comentarios(
 	ComentarioID int NOT NULL AUTO_INCREMENT,
@@ -47,12 +58,6 @@ CREATE TABLE Comentarios(
 select C.ComentarioID, P.PostID, U.Nome as Nome_Usuario, U.Sobre_nome, C.Comentario FROM Comentarios C
 INNER JOIN Usuarios U ON C.UsuarioID = U.UsuarioID
 INNER JOIN Posts P ON C.PostID = P.PostID;
-
-select C.ComentarioID, P.PostID, U.Nome as Nome_Usuario, U.Sobre_nome, C.Comentario FROM Comentarios C
-INNER JOIN Usuarios U ON C.UsuarioID = U.UsuarioID
-INNER JOIN Posts P ON C.PostID = P.PostID where P.PostID = 2;
-
-
 
 
 -- Inserir dados na tabela comentarios
@@ -115,6 +120,11 @@ insert into Usuarios (Nome, Sobre_nome, Email, Senha, Criado_aos)
 -- Fazendo uma Query com as duas tabelas
 SELECT Usuarios.UsuarioID as Usuario, Posts.Titulo, Posts.Descricao, Posts.Imagem1, Posts.Imagem2, 
 Posts.Imagem3 FROM Posts INNER JOIN Usuarios ON Usuarios.UsuarioID = Posts.UsuarioID;
+
+-- TRAZER ALGUNS DADOS DAS TABELAS Usuario e Posts
+select U.UsuarioID, U.Nome, U.Email, U.Sobre_nome, P.PostID, P.Titulo, P.Descricao, P.Imagem1 
+FROM Posts P INNER JOIN Usuarios U ON U.UsuarioID = P.UsuarioID where P.UsuarioID = 3;
+
 
 select * from Posts;
 select * from Usuarios;
