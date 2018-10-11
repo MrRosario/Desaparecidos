@@ -17,8 +17,6 @@ export class PublicacaoPage implements OnInit {
 
   comentario: string;
 
-  url: string = 'http://localhost:3000/';
-
   constructor(private _Activatedroute: ActivatedRoute, 
               private _router: Router, 
               private http: HttpClient,

@@ -53,6 +53,55 @@ exports.user = function(req, res){
     });
 }
 
+exports.getPostEdit = function(req, res){
+    let id = req.params.id;
+
+    let sql = `SELECT PostId, Titulo, Descricao, Descricao, Visto_encontrado, Telefone, Email 
+        FROM Posts where PostId = ${id}`;
+    database.connection.query(sql, (err, result) => {
+        if(err){
+            throw err;
+        } 
+        else{ 
+            return res.send(result);
+        }
+        
+    });
+}
+
+exports.atualizarPost = function(req, res){
+
+    console.log("req",req.body); 
+
+    let Post = {
+      "Titulo": req.body.Titulo,
+      "Descricao": req.body.Descricao,
+      "Visto_encontrado": req.body.Visto_encontrado,
+      "Telefone": req.body.Telefone,
+      "Email": req.body.Email,
+      "PostId": req.body.PostId
+    }
+
+    database.connection.query(`UPDATE Posts SET Titulo = ?, Descricao = ?, Visto_encontrado = ?, 
+        Telefone = ?, Email = ? WHERE PostID = ?;`,
+    [Post.Titulo, Post.Descricao, Post.Visto_encontrado, Post.Telefone, Post.Email, Post.PostId], function (error, results, fields) {
+
+        if (error) {
+        console.log("Ocorreu um erro",error);
+        res.send({
+            "code":400,
+            "failed":"erro"
+        })
+        }else{
+        console.log('Resultado: ', results);
+        res.send({
+            "code":200,
+            "success":"Comentario feito com sucesso"
+            });
+        }
+    });
+}
+
 exports.perfil = function(req, res){
     let id = req.params.id;
 

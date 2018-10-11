@@ -24,19 +24,21 @@ export class UsuariosService {
   getComentario(id){
     return this._http.get(this.url + 'comentarios/' + id);
   }
-  
+  getPostEdit(id){
+    return this._http.get(this.url + 'dadosPost/' + id);
+  }
+  atualizarPost(dados){
+    return this._http.put(this.url + "atualizarPost/", dados);
+  }
   getPesquisar(pesquisa){
     return this._http.get(this.url + 'pesquisar/' + pesquisa)
   }
-
   postComentario(comentario){
     return this._http.post(this.url + 'comentar/', comentario);
   }
-
   cadastrar(dados){
     return this._http.post(this.url + 'cadastrar/', dados);
   }
-
   publicar(dados){
     return this._http.post(this.url + 'publicar/', dados);
   }

@@ -12,6 +12,7 @@ const routes: Routes = [
   { path: 'publicar', loadChildren: './publicar/publicar.module#PublicarPageModule' },
   { path: 'pesquisar', loadChildren: './pesquisar/pesquisar.module#PesquisarPageModule' },
   { path: 'mapa', loadChildren: './mapa/mapa.module#MapaPageModule' },
+  { path: 'editPerfil', loadChildren: './edit-perfil/edit-perfil.module#EditPerfilPageModule' },
 ];
 
 @NgModule({
