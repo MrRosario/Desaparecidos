@@ -127,7 +127,17 @@ FROM Posts P INNER JOIN Usuarios U ON U.UsuarioID = P.UsuarioID where P.UsuarioI
 
 
 select * from Posts;
+
+delete from Posts where PostID = 2;
+
+UPDATE Posts SET Titulo = "Desapacidooo", 
+Visto_encontrado = "Praia da preguica", Telefone = "2222222" where PostID = 2;
+
 select * from Usuarios;
+-- Desativar verificao de chave estrangeira
+SET FOREIGN_KEY_CHECKS=0;
+
+UPDATE Posts SET Titulo = "Homem encontrado" WHERE PostID = 3;
 
 -- Inserir dados da tabela
 INSERT INTO Posts (Titulo, Descricao, Visto_encontrado, Telefone, Email, Imagem1, Imagem2, Imagem3, Criado_aos, UsuarioID)

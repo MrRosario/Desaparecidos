@@ -35,15 +35,15 @@ export class EditPerfilPage implements OnInit {
     console.log(this.value)
   }
 
-  async presentToast() {
+  async presentToast(mensagem) {
     const toast = await this.toastController.create({
-      message: 'Atualizado com sucesso.',
+      message: mensagem,
       duration: 3000
     });
     toast.present();
   }
 
-  Atualizar(){
+  async Atualizar(){
 
     let Update = {
       Titulo: this.Titulo,
@@ -54,15 +54,25 @@ export class EditPerfilPage implements OnInit {
       PostID: this.value
     }
 
-    this.usrService.atualizarPost(Update) 
-    .subscribe(
-      data =>  { 
-        this.presentToast();
+    const loading = await this.loadingController.create({
+      content: 'Carregando',
+      spinner: 'bubbles'
+    });
+    await loading.present();
+
+    await this.usrService.atualizarPost(Update) 
+    .subscribe( data =>  
+      { 
+        this.presentToast('Atualizado com sucesso!!');
         this.modalController.dismiss(); 
-        this.router.navigate(['/perfil']); 
-        console.log('success', data); 
+        console.log(data); 
+        loading.dismiss();
       },
-      error => { console.log('Erro', error); }
+      error => { 
+        console.log('Erro', error); 
+        loading.dismiss();
+        this.presentToast('Erro ao atualizar!');
+      }
     );
   }
 

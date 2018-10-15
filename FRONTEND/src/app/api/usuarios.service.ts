@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 //import { map } from 'rxjs/operators';
 import 'rxjs/add/operator/map'; 
+
+const httpOptions = {
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
+};
 
 @Injectable({
   providedIn: 'root'
@@ -12,38 +16,38 @@ export class UsuariosService {
   constructor(private _http: HttpClient) { }
 
   todosPosts(){
-    return this._http.get(this.url);
+    return this._http.get(this.url, httpOptions);
   }
 
   getPost(id){
-    return this._http.get(this.url + id);
+    return this._http.get(this.url + id, httpOptions);
   }
   perfil(id){
-    return this._http.get(this.url + 'perfil/' + id);
+    return this._http.get(this.url + 'perfil/' + id, httpOptions);
   }
   getComentario(id){
-    return this._http.get(this.url + 'comentarios/' + id);
+    return this._http.get(this.url + 'comentarios/' + id, httpOptions);
   }
   getPostEdit(id){
-    return this._http.get(this.url + 'dadosPost/' + id);
+    return this._http.get(this.url + 'dadosPost/' + id, httpOptions);
   }
   atualizarPost(dados){
-    return this._http.put(this.url + "atualizarPost/", dados);
+    return this._http.put(this.url + "atualizarPost/", dados, httpOptions);
   }
   apagarPost(id){
-    return this._http.delete(this.url + 'excluir/' + id);
+    return this._http.delete(this.url + 'excluir/' + id, httpOptions);
   }
   getPesquisar(pesquisa){
-    return this._http.get(this.url + 'pesquisar/' + pesquisa)
+    return this._http.get(this.url + 'pesquisar/' + pesquisa, httpOptions)
   }
   postComentario(comentario){
-    return this._http.post(this.url + 'comentar/', comentario);
+    return this._http.post(this.url + 'comentar/', comentario, httpOptions);
   }
   cadastrar(dados){
-    return this._http.post(this.url + 'cadastrar/', dados);
+    return this._http.post(this.url + 'cadastrar/', dados, httpOptions);
   }
   publicar(dados){
-    return this._http.post(this.url + 'publicar/', dados);
+    return this._http.post(this.url + 'publicar/', dados, httpOptions);
   }
   login(email: string, senha: string){
     return this._http.post(this.url + 'login/', { Email: email, Senha: senha })

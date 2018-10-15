@@ -74,6 +74,10 @@ export class PerfilPage implements OnInit {
       component: EditPerfilPage,
       componentProps: { value: PostId }
     });
+    modal.onDidDismiss( ()=>{
+      this.usuario();
+    })
+
     return await modal.present();
   }
 }

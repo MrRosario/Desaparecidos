@@ -75,7 +75,8 @@ exports.excluir = function(req, res){
     let sql = `DELETE FROM Posts where PostId = ${id}`;
     database.connection.query(sql, (err, result) => {
         if(err){
-            throw err;
+            console.log("Ocorreu um erro",err);
+            //throw err;
         } 
         else{ 
             console.log(result);
