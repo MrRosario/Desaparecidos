@@ -69,36 +69,54 @@ exports.getPostEdit = function(req, res){
     });
 }
 
+exports.excluir = function(req, res){
+    let id = req.params.id;
+
+    let sql = `DELETE FROM Posts where PostId = ${id}`;
+    database.connection.query(sql, (err, result) => {
+        if(err){
+            throw err;
+        } 
+        else{ 
+            console.log(result);
+            return res.send(result);
+        }
+        
+    });
+}
+
 exports.atualizarPost = function(req, res){
 
-    console.log("req",req.body); 
-
-    let Post = {
+    //console.log("req",req.body); 
+    let ID = req.body.PostID;
+    
+    let Atualizar = {
       "Titulo": req.body.Titulo,
       "Descricao": req.body.Descricao,
       "Visto_encontrado": req.body.Visto_encontrado,
       "Telefone": req.body.Telefone,
       "Email": req.body.Email,
-      "PostId": req.body.PostId
     }
 
-    database.connection.query(`UPDATE Posts SET Titulo = ?, Descricao = ?, Visto_encontrado = ?, 
-        Telefone = ?, Email = ? WHERE PostID = ?;`,
-    [Post.Titulo, Post.Descricao, Post.Visto_encontrado, Post.Telefone, Post.Email, Post.PostId], function (error, results, fields) {
+    database.connection.query('UPDATE Posts SET Titulo = ?, Descricao = ?, Visto_encontrado = ?, Telefone = ?, Email = ? WHERE PostID = ?',
+        [Atualizar.Titulo, Atualizar.Descricao, Atualizar.Visto_encontrado, Atualizar.Telefone, Atualizar.Email, ID], 
+        function (error, results, fields) {
 
-        if (error) {
-        console.log("Ocorreu um erro",error);
-        res.send({
-            "code":400,
-            "failed":"erro"
-        })
-        }else{
-        console.log('Resultado: ', results);
-        res.send({
-            "code":200,
-            "success":"Atualizado com sucesso"
-            });
-        }
+            if (error) {
+                console.log("Ocorreu um erro",error);
+                res.send({
+                    "code":400,
+                    "failed":"erro"
+                })
+            }
+            else{
+                console.log('Resultado: ', results);
+                console.log('Atualizado com sucesso');
+                res.send({
+                    "code":200,
+                    "success":"Atualizado com sucesso"
+                });
+            }
     });
 }
 

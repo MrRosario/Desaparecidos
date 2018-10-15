@@ -20,16 +20,19 @@
     <ion-card *ngFor="let dado of dados">
         <ion-img src="../../assets/Pessoas/pessoa-geral.jpg"></ion-img>
     
-        <ion-card-content>
-          <ion-card-subtitle>Status: {{dado.Titulo}}</ion-card-subtitle>
-          <p>{{dado.Descricao}}</p>
-        </ion-card-content>
-        
-        <div class="container-btn">
-          <ion-button color="success" (click)="presentModal(dado.PostID)" slot="start" fill="clear" size="small">
-            Editar
-          </ion-button>
-        </div>  
-      </ion-card>
+      <ion-card-content>
+        <ion-card-subtitle>Status: {{dado.Titulo}}</ion-card-subtitle>
+        <p>{{dado.Descricao}}</p>
+      </ion-card-content>
+      
+      <div class="container-btn">
+        <ion-button color="success" (click)="presentModal(dado.PostID)" slot="start" fill="clear" size="small">
+          Editar
+        </ion-button>
+        <ion-button color="danger" (click)="excluirPost(dado.PostID)" slot="start" fill="clear" size="small">
+          Excluir
+        </ion-button>
+      </div>  
+    </ion-card>
 
 </ion-content>

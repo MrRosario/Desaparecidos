@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ModalController, ToastController } from '@ionic/angular';
+import { ModalController, ToastController, LoadingController } from '@ionic/angular';
 import { UsuariosService } from '../api/usuarios.service';
 import { Router } from '@angular/router';
 
@@ -18,8 +18,10 @@ export class EditPerfilPage implements OnInit {
   Telefone: string;
   Email: string;
 
-  constructor(public modalController: ModalController, public usrService: UsuariosService,
-              private router: Router, public toastController: ToastController) { }
+  constructor(public modalController: ModalController, 
+              public usrService: UsuariosService, private router: Router, 
+              public toastController: ToastController, 
+              public loadingController: LoadingController) { }
 
   ngOnInit() {
     this.usrService.getPostEdit(this.value).subscribe( res => {
@@ -57,12 +59,13 @@ export class EditPerfilPage implements OnInit {
       data =>  { 
         this.presentToast();
         this.modalController.dismiss(); 
-        this.router.navigateByUrl('/perfil'); 
+        this.router.navigate(['/perfil']); 
         console.log('success', data); 
       },
       error => { console.log('Erro', error); }
     );
   }
+
   dismiss(){
     this.modalController.dismiss();
   }

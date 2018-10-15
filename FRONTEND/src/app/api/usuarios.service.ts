@@ -30,6 +30,9 @@ export class UsuariosService {
   atualizarPost(dados){
     return this._http.put(this.url + "atualizarPost/", dados);
   }
+  apagarPost(id){
+    return this._http.delete(this.url + 'excluir/' + id);
+  }
   getPesquisar(pesquisa){
     return this._http.get(this.url + 'pesquisar/' + pesquisa)
   }
