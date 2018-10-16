@@ -15,11 +15,6 @@ export class AppComponent {
 
   public appPages = [
     {
-      title: 'Publicar',
-      url: '/publicar',
-      icon: 'globe'
-    },
-    {
       title: 'Minhas publicações',
       url: '/perfil',
       icon: 'person'
@@ -30,14 +25,14 @@ export class AppComponent {
       icon: 'search'
     },
     {
+      title: 'Publicar',
+      url: '/publicar',
+      icon: 'globe'
+    },
+    {
       title: 'Mapa',
       url: '/mapa',
       icon: 'map'
-    },
-    {
-      title: 'Login',
-      url: '/login',
-      icon: 'log-in'
     },
     {
       title: 'Sair',

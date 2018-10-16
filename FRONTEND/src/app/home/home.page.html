@@ -29,7 +29,9 @@
         <ion-button color="success" (click)="comentar(usuario.PostId, '#caixa-comentario')" fill="clear" size="small">
           Comentar
         </ion-button>
-        <ion-button color="success" slot="end" fill="clear" size="small">Compartilhar</ion-button>
+        <ion-button (click)="compartilhar(usuario.Descricao, usuario.Titulo, usuario.PostId)" color="success" slot="end" fill="clear" size="small">
+          Compartilhar
+        </ion-button>
     </div>
   </ion-card>
 
