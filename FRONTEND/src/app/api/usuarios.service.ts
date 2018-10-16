@@ -61,6 +61,14 @@ export class UsuariosService {
     });
   }
 
+  getToken() {
+    return localStorage.getItem("Usuario")
+  }
+
+  isLoggednIn() {
+    return this.getToken() !== null;
+  }
+  
   loginOut(){
     localStorage.removeItem('Usuario');
   }

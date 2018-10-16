@@ -9,15 +9,9 @@
                 <ion-avatar slot="start">
                   <ion-img src="../assets/Pessoas/pessoa-geral.jpg"></ion-img>
                 </ion-avatar>
-                <p *ngIf="usuarioAtual != null">Ola, {{usuarioAtual}}</p>
-                <p *ngIf="usuarioAtual == null">Ola, Visitante</p>
-              </ion-item>
-
-              <ion-item (click)="logout()">
-                <ion-icon slot="start" [name]="log-out"></ion-icon>
-                <ion-label>
-                  <p>Sair</p> 
-                </ion-label>
+                <p>Ola</p>
+                <!-- <p *ngIf="usuarioAtual != null">Ola, {{usuarioAtual}}</p>
+                <p *ngIf="usuarioAtual == null">Ola, Visitante</p> -->
               </ion-item>
 
           </ion-toolbar>

@@ -47,28 +47,30 @@ export class AppComponent {
 
   ];
 
-  public usuarioAtual: string;
+  //usuarioAtual: string;
 
   constructor(private platform: Platform, private splashScreen: SplashScreen,
             private statusBar: StatusBar, public usrService: UsuariosService, 
             private router: Router, public menuCtrl: MenuController) {
+        
+        const user = JSON.parse(localStorage.getItem('Usuario'));
+        //Bug porque local storage adiciona Usario mesmo quando nao ha email e senha
+        //Corrigir depois
 
-      this.initializeApp();
+        if(user){ 
+          this.router.navigate(['/home']);
+        } else{
+          this.router.navigate(['/login']);
+        }
 
-      const user = JSON.parse(localStorage.getItem('Usuario'));
-      if(user){
-        this.usuarioAtual = user.results[0].UsuarioID;
-        console.log(this.usuarioAtual);
-      } else{
-        console.log('Local storage vazio');
-      }
+        this.initializeApp();
 
-      // if(this.router.url == '/home'){
-      //   usrService.verificarLogin().subscribe(res => {
-      //     this.usuarioAtual = res;
-      //     console.log(res);
-      //   })
-      // }
+        // if(this.router.url == '/home'){
+        //  usrService.verificarLogin().subscribe(res => {
+        //    this.usuarioAtual = res;
+        //    console.log(res);
+        //  })
+        // }
   }
 
   initializeApp() {
