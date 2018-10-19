@@ -13,6 +13,7 @@ const routes: Routes = [
   { path: 'pesquisar', loadChildren: './pesquisar/pesquisar.module#PesquisarPageModule' },
   { path: 'mapa', loadChildren: './mapa/mapa.module#MapaPageModule' },
   { path: 'editPerfil', loadChildren: './edit-perfil/edit-perfil.module#EditPerfilPageModule' },
+  { path: 'edit-user', loadChildren: './edit-user/edit-user.module#EditUserPageModule' },
 ];
 
 @NgModule({

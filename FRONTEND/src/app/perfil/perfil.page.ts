@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { UsuariosService } from '../api/usuarios.service';
 import { PopoverController, ModalController, AlertController } from '@ionic/angular';
 import { EditPerfilPage } from '../edit-perfil/edit-perfil.page';
+import { EditUserPage } from '../edit-user/edit-user.page';
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.page.html',
@@ -14,7 +15,9 @@ export class PerfilPage implements OnInit {
   
   nome: string;
   email: string;
+  userID: number;
   localizacao: string;
+  mostrar: boolean = false;
 
   constructor(private router: Router, 
               public usrService: UsuariosService,
@@ -26,6 +29,22 @@ export class PerfilPage implements OnInit {
     this.usuario();
   }
 
+  mostrarBtnEdit(){
+    this.mostrar = !this.mostrar;
+  }
+
+  async modalEditarPerfil(){
+    const modal = await this.modalController.create({
+      component: EditUserPage,
+      componentProps: { value: this.userID }
+    });
+    modal.onDidDismiss( ()=>{
+      this.usuario();
+    })
+
+    return await modal.present();
+  }
+
   usuario(){
     const user = JSON.parse(localStorage.getItem('Usuario'));
       if(user){
@@ -34,6 +53,7 @@ export class PerfilPage implements OnInit {
           this.dados = resultado;
           this.nome = this.dados[0].Nome + " " + this.dados[0].Sobre_nome;
           this.email = this.dados[0].Email;
+          this.userID = this.dados[0].UsuarioID;
           console.log(this.dados);
         });
       }

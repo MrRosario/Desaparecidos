@@ -69,6 +69,21 @@ exports.getPostEdit = function(req, res){
     });
 }
 
+exports.getPerfilEdit = function(req, res){
+    let id = req.params.id;
+
+    let sql = `SELECT UsuarioID, Nome, Sobre_nome, Email FROM Usuarios where UsuarioID = ${id}`;
+    database.connection.query(sql, (err, result) => {
+        if(err){
+            throw err;
+        } 
+        else{ 
+            return res.send(result);
+        }
+        
+    });
+}
+
 exports.excluir = function(req, res){
     let id = req.params.id;
 
@@ -83,6 +98,39 @@ exports.excluir = function(req, res){
             return res.send(result);
         }
         
+    });
+}
+
+exports.atualizarPerfil = function(req, res){
+
+    //console.log("req",req.body); 
+    let ID = req.body.UsuarioID;
+    
+    let Atualizar = {
+      "Nome": req.body.Nome,
+      "Sobre_nome": req.body.Sobre_nome,
+      "Email": req.body.Email
+    }
+
+    database.connection.query('UPDATE Usuarios SET Nome = ?, Sobre_nome = ?, Email = ? WHERE UsuarioID = ?',
+        [Atualizar.Nome, Atualizar.Sobre_nome, Atualizar.Email, ID], 
+        function (error, results, fields) {
+
+            if (error) {
+                console.log("Ocorreu um erro",error);
+                res.send({
+                    "code":400,
+                    "failed":"erro"
+                })
+            }
+            else{
+                console.log('Resultado: ', results);
+                console.log('Atualizado com sucesso');
+                res.send({
+                    "code":200,
+                    "success":"Atualizado com sucesso"
+                });
+            }
     });
 }
 

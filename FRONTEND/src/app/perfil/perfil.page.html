@@ -1,11 +1,16 @@
 <ion-toolbar color="success">
   <ion-icon slot="start" class="icone" (click)="paginaAnterior()" name="arrow-round-back">Voltar</ion-icon>
 
+  <ion-button *ngIf="mostrar" (click)="modalEditarPerfil()" size="small" id="btn-editar" color="light">
+      Editar
+  </ion-button>
+
   <ion-buttons slot="end">
-        <ion-button fill="clear" size="small">
-          <ion-icon class="icone" name="more"></ion-icon>
-        </ion-button>
+      <ion-button (click)="mostrarBtnEdit()" fill="clear" size="small">
+        <ion-icon class="icone" name="more"></ion-icon>
+      </ion-button>
   </ion-buttons>
+
 </ion-toolbar>
 
 <div id="cabecalho">

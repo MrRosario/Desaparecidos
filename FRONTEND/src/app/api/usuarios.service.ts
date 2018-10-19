@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 //import { map } from 'rxjs/operators';
 import 'rxjs/add/operator/map'; 
+import { identifierModuleUrl } from '@angular/compiler';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -31,6 +32,9 @@ export class UsuariosService {
   getPostEdit(id){
     return this._http.get(this.url + 'dadosPost/' + id, httpOptions);
   }
+  getPerfilEdit(id){
+    return this._http.get(this.url + 'dadosPerfil/' + id, httpOptions);
+  }
   atualizarPost(dados){
     return this._http.put(this.url + "atualizarPost/", dados, httpOptions);
   }
@@ -39,6 +43,9 @@ export class UsuariosService {
   }
   getPesquisar(pesquisa){
     return this._http.get(this.url + 'pesquisar/' + pesquisa, httpOptions)
+  }
+  atualizarPerfil(dados){
+    return this._http.put(this.url + "atualizarPerfil", dados, httpOptions)
   }
   postComentario(comentario){
     return this._http.post(this.url + 'comentar/', comentario, httpOptions);
