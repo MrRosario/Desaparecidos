@@ -21,6 +21,27 @@ exports.all = function(req, res){
         
     });
 }
+
+exports.postMap = function(req, res){
+
+    let sql = `SELECT PostId, Titulo, Visto_encontrado, Imagem1 
+        FROM Posts ORDER BY Criado_aos DESC`;
+    database.connection.query(sql, (err, result) => {
+        if(err){
+            console.log("Ocorreu um erro",err);
+            res.send({
+                "code":400,
+                "failed":"erro"
+            })
+        } 
+        else{ 
+            //console.log(result);
+            return res.send(result);
+        }
+        
+    });
+}
+
 exports.pesquisar = function(req, res){
     let titulo = req.params.titulo;
     

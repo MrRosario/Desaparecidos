@@ -9,7 +9,7 @@
                 <ion-avatar slot="start">
                   <ion-img src="../assets/Pessoas/pessoa-geral.jpg"></ion-img>
                 </ion-avatar>
-                <p>Ola</p>
+                <p>Ola, Fulano</p>
                 <!-- <p *ngIf="usuarioAtual != null">Ola, {{usuarioAtual}}</p>
                 <p *ngIf="usuarioAtual == null">Ola, Visitante</p> -->
               </ion-item>
@@ -28,6 +28,12 @@
                 </ion-label>
               </ion-item>
             </ion-menu-toggle>
+
+            <ion-item (click)="logout()">
+              <ion-icon slot="start" name="log-out"></ion-icon>
+              <ion-label> Sair </ion-label>
+            </ion-item>
+            
           </ion-list>
 
         </ion-content>

@@ -33,13 +33,7 @@ export class AppComponent {
       title: 'Mapa',
       url: '/mapa',
       icon: 'map'
-    },
-    {
-      title: 'Sair',
-      url: '/login',
-      icon: 'log-out'
     }
-
   ];
 
   //usuarioAtual: string;
@@ -77,9 +71,9 @@ export class AppComponent {
 
   logout(){
     this.usrService.loginOut();
-    //this.router.navigate('/login');
     this.router.navigate(['/login']);
     this.menuCtrl.close();
+    console.log("Sai com sucesso!!!");
   }
   
 }

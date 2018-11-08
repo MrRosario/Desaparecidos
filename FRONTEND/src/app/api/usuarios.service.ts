@@ -19,7 +19,9 @@ export class UsuariosService {
   todosPosts(){
     return this._http.get(this.url, httpOptions);
   }
-
+  getPostMap(){
+    return this._http.get(this.url + 'postMap/', httpOptions);
+  }
   getPost(id){
     return this._http.get(this.url + id, httpOptions);
   }

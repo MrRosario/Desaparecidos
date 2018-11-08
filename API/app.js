@@ -51,6 +51,7 @@ app.use(bodyParser.json({
 }));
 
 router.get('/', user.all);
+router.get('/postMap/',user.postMap)
 router.get('/:id', user.user);
 router.get('/comentarios/:id', user.comment);
 router.get('/perfil/:id', user.perfil);
