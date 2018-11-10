@@ -207,6 +207,22 @@ exports.perfil = function(req, res){
     });
 }
 
+exports.perfilUsuario = function(req, res){
+    let id = req.params.id;
+
+    let sql = `select UsuarioID, Nome, Sobre_nome, Email FROM Usuarios where UsuarioID = ${id}`;
+    
+    database.connection.query(sql, (err, result) => {
+        if(err){
+            throw err;
+        } 
+        else{ 
+            return res.send(result);
+        }
+        
+    });
+}
+
 exports.comment = function(req, res){
     let id = req.params.id;
 
@@ -257,6 +273,7 @@ exports.comentar = function(req, res){
 exports.publicar = function(req, res){
 
     console.log("req",req.body); 
+    console.log('files', req.files);
 
     let Publicar = {
       "Titulo": req.body.Titulo,
@@ -281,6 +298,7 @@ exports.publicar = function(req, res){
         })
         }else{
         console.log('Resultado: ', results);
+        console.log('files', req.files);
         res.send({
             "code":200,
             "success":"Publicado com sucesso"

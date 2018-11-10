@@ -54,12 +54,6 @@ export class AppComponent {
 
         this.initializeApp();
 
-        // if(this.router.url == '/home'){
-        //  usrService.verificarLogin().subscribe(res => {
-        //    this.usuarioAtual = res;
-        //    console.log(res);
-        //  })
-        // }
   }
 
   initializeApp() {

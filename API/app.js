@@ -6,9 +6,6 @@ const bodyParser = require('body-parser');
 const porta      = process.env.PORT || 3000;
 const multer     = require('multer')
 
-// cria uma instância do middleware configurada
-// destination: lida com o destino do arquivo
-// filenane: permite definir o nome do arquivo gravado
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
 
@@ -22,7 +19,6 @@ const storage = multer.diskStorage({
     }
 });
 
-// utiliza a storage para configurar a instância do multer
 const upload = multer({ 
     storage: storage
 });
@@ -50,11 +46,32 @@ app.use(bodyParser.json({
     limit: '5mb'
 }));
 
+//CHAT
+let http = require('http').Server(app);
+let io           = require('socket.io')(http);
+
+io.on('connection', (socket) => {
+  
+    socket.on('disconnect', function(){
+      io.emit('users-changed', {user: socket.nickname, event: 'left'});   
+    });
+   
+    socket.on('set-nickname', (nickname) => {
+      socket.nickname = nickname;
+      io.emit('users-changed', {user: nickname, event: 'joined'});    
+    });
+    
+    socket.on('add-message', (message) => {
+      io.emit('message', {text: message.text, from: socket.nickname, created: new Date()});    
+    });
+});
+
 router.get('/', user.all);
 router.get('/postMap/',user.postMap)
 router.get('/:id', user.user);
 router.get('/comentarios/:id', user.comment);
 router.get('/perfil/:id', user.perfil);
+router.get('/perfilUsuario/:id', user.perfilUsuario);
 router.get('/dadosPost/:id', user.getPostEdit);
 router.get('/dadosPerfil/:id',user.getPerfilEdit);
 router.put('/atualizarPost/', user.atualizarPost);
@@ -64,7 +81,7 @@ router.get('/pesquisar/:titulo', user.pesquisar);
 router.post('/comentar', user.comentar);
 router.post('/cadastrar', user.register);
 router.post('/login', user.login);
-router.post('/publicar', upload.single('file') ,user.publicar);
+router.post('/publicar', upload.array("uploads[]", 12), user.publicar);
 router.use(user.tokenAuthorize);
 
 app.use('/api', router);

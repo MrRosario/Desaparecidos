@@ -13,10 +13,6 @@ import { AuthGuard } from './api/auth.guard';
 import { Camera } from '@ionic-native/camera/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
-//import { Geolocation } from '@ionic-native/geolocation';
-//import { FileTransfer } from '@ionic-native/file-transfer';
-
-
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -27,7 +23,6 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
     AuthGuard,
     Camera,
     SocialSharing,
-    //Geolocation,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
