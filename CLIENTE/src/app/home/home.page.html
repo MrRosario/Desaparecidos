@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar color="success">
+
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      
+      <ion-title class="titulo">
+        Desaparecidos
+      </ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  
+  <ion-card *ngFor="let usuario of usuarios">
+    <ion-img src="../../assets/Pessoas/pessoa-geral.jpg"></ion-img>
+
+    <ion-card-content>
+      <ion-card-subtitle>Status: {{usuario.Titulo}}</ion-card-subtitle>
+      <p>{{usuario.Descricao}}</p>
+    </ion-card-content>
+
+    <div class="container-btn">
+        <ion-button color="success" (click)="detalhes(usuario.PostId)" slot="start" fill="clear" size="small">
+          <ion-icon class="icone" name="eye"></ion-icon>
+          Ver
+        </ion-button>
+        <ion-button color="success" (click)="comentar(usuario.PostId, '#caixa-comentario')" fill="clear" size="small">
+          <ion-icon class="icone" name="text"></ion-icon>
+          Comentar
+        </ion-button>
+        <ion-button (click)="compartilhar(usuario.Descricao, usuario.Titulo, usuario.PostId)" color="success" slot="end" fill="clear" size="small">
+          <ion-icon class="icone" name="share-alt"></ion-icon>
+          Compartilhar
+        </ion-button>
+    </div>
+  </ion-card>
+
+</ion-content>

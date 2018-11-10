@@ -1,0 +1,48 @@
+<ion-toolbar color="success">
+  <ion-icon slot="start" class="icone" (click)="paginaAnterior()" name="arrow-round-back">Voltar</ion-icon>
+
+  <ion-button *ngIf="mostrar" (click)="modalEditarPerfil()" size="small" id="btn-editar" color="light">
+      Editar
+  </ion-button>
+
+  <ion-buttons slot="end">
+      <ion-button (click)="mostrarBtnEdit()" fill="clear" size="small">
+        <ion-icon class="icone" name="more"></ion-icon>
+      </ion-button>
+  </ion-buttons>
+
+</ion-toolbar>
+
+<div id="cabecalho">
+  <div id="info_perfil">
+    <h2>{{nome}}</h2>
+    <p>{{email}}</p>
+    <p>São Paulo - Brasil</p>
+  </div>
+</div>
+<ion-content padding>
+
+    
+    <div style=" display: flex; justify-content: center; align-items: center;">
+      <h2 style="font-size: 18px;">Você ainda fez nehuma publicação</h2>
+    </div>
+
+    <ion-card *ngFor="let dado of dados">
+        <ion-img src="../../assets/Pessoas/pessoa-geral.jpg"></ion-img>
+    
+      <ion-card-content>
+        <ion-card-subtitle>Status: {{dado.Titulo}}</ion-card-subtitle>
+        <p>{{dado.Descricao}}</p>
+      </ion-card-content>
+      
+      <div class="container-btn">
+        <ion-button color="success" (click)="presentModal(dado.PostID)" slot="start" fill="clear" size="small">
+          Editar
+        </ion-button>
+        <ion-button color="danger" (click)="excluirPost(dado.PostID)" slot="start" fill="clear" size="small">
+          Excluir
+        </ion-button>
+      </div>  
+    </ion-card>
+
+</ion-content>

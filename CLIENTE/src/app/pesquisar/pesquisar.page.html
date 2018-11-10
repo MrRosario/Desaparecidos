@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar >
+    <ion-icon slot="start" class="icone" (click)="paginaAnterior()" name="arrow-round-back">
+      Voltar
+    </ion-icon>
+    <ion-searchbar animated debounce="500" (keyup)="onSearchType($event.target.value)" 
+    placeholder="Pesquise por palavras chaves">
+  
+  </ion-searchbar>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content padding>
+    <ion-list>
+        <ion-item *ngFor="let dado of dados" (click)="detalhes(dado.PostID)">
+          <ion-avatar slot="start">
+            <ion-img src="../../assets/Pessoas/pessoa-geral.jpg"></ion-img>
+          </ion-avatar>
+
+          <p>{{ dado.Descricao }}</p>
+        </ion-item>
+      </ion-list>
+</ion-content>

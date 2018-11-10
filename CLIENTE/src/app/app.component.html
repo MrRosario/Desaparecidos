@@ -1,0 +1,43 @@
+<ion-app>
+  <ion-split-pane>
+    <ion-menu>
+      <ion-header>
+        <ion-toolbar style="height: 100px;" class="cabecalho-menu" color="dark">
+          
+          <div style="display:flex; justify-content:start; align-items:center; height:100px;">
+            <ion-avatar slot="start">
+              <ion-img src="../assets/Pessoas/pessoa-geral.jpg"></ion-img>
+            </ion-avatar>
+            <p style="color: #ffffff; margin-left: 10px">Ola, Fulano</p>
+            <!-- <p *ngIf="usuarioAtual != null">Ola, {{usuarioAtual}}</p>
+            <p *ngIf="usuarioAtual == null">Ola, Visitante</p>  -->
+          </div>
+          
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content>
+
+        <ion-list>
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
+            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
+              <ion-icon slot="start" [name]="p.icon"></ion-icon>
+              <ion-label>
+                {{p.title}}
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-item (click)="logout()">
+            <ion-icon slot="start" name="log-out"></ion-icon>
+            <ion-label> Sair </ion-label>
+          </ion-item>
+          
+        </ion-list>
+
+      </ion-content>
+    </ion-menu>
+
+    <ion-router-outlet main></ion-router-outlet>
+  </ion-split-pane>
+</ion-app>

@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-icon slot="start" class="icone" (click)="paginaAnterior()" name="arrow-round-back">
+    </ion-icon>
+    <ion-title>Titulo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="message-wrap">
+    <div *ngFor="let item of lista" class="message">
+  
+      <div class="msg-detail">
+        <div class="msg-info">
+          <p>
+            {{item.dataEnvio | date:'HH:mm'}}
+          </p>
+        </div>
+        <div class="msg-content">
+          <p class="line-breaker ">{{item.texto}}</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</ion-content>
+
+<ion-footer no-border>
+    <div class="input-wrap">
+      <textarea #chat_input placeholder="Digite aqui..." 
+        [(ngModel)]="mensagem"
+        (focusin)="onFocus()"> 
+      </textarea>
+
+      <ion-button  color="success" slot="end" fill="clear" size="small" (click)="enviar()">
+        <ion-icon class="icone" name="send"></ion-icon>
+      </ion-button>
+    </div>
+  </ion-footer>

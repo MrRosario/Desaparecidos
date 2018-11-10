@@ -1,0 +1,78 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-icon slot="start" class="icone" (click)="paginaAnterior()" name="arrow-round-back">Voltar</ion-icon>
+    <ion-title style="text-align:center">Criar Publicação</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-item>
+    <ion-label position="stacked">Titulo*</ion-label>
+    <ion-input [(ngModel)]="Titulo" name="Titulo"> </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Descrição*</ion-label>
+    <ion-textarea rows="5" cols="20" [(ngModel)]="Descricao" name="Descricao"> </ion-textarea>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Visto ultima vez</ion-label>
+    <ion-input [(ngModel)]="Visto_encontrado" name="Visto_encontrado"> </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Telefone</ion-label>
+    <ion-input [(ngModel)]="Telefone" name="Telefone"> </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Email</ion-label>
+    <ion-input [(ngModel)]="Email" name="Email"> </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">
+      Imagens
+    </ion-label>
+  </ion-item>
+  
+  <div id="container-imagens">
+
+    <div class="imagens"> 
+      <ion-icon *ngIf="imageSrc !== null" (click)="presentAlertConfirm()" class="eliminarImagem" name="close">
+      </ion-icon>
+      <ion-icon style="height: 68px; width: 68px;" *ngIf="imageSrc === null" 
+       class="icone" name="person" (click)="presentActionSheet()"></ion-icon> 
+      <img *ngIf="imageSrc !== null" [src]="imageSrc"> 
+    </div>
+
+    <div class="imagens"> 
+      <ion-icon *ngIf="imageSrc1 !== null" (click)="presentAlertConfirm1()" class="eliminarImagem" name="close">
+      </ion-icon>
+      <ion-icon style="height: 68px; width: 68px;" *ngIf="imageSrc1 === null" 
+       (click)="presentActionSheet1()" class="icone" name="person"></ion-icon> 
+      <img *ngIf="imageSrc1 !== null" [src]="imageSrc1"> 
+    </div>
+
+    <div class="imagens">  
+      <ion-icon *ngIf="imageSrc2 !== null" (click)="presentAlertConfirm2()" class="eliminarImagem" name="close">
+      </ion-icon>
+      <ion-icon style="height: 68px; width: 68px;" *ngIf="imageSrc2 === null" 
+       (click)="presentActionSheet2()" class="icone" name="person"></ion-icon> 
+      <img *ngIf="imageSrc2 !== null" [src]="imageSrc2"> 
+    </div>
+
+    <!-- <div class="imagens">  
+      <input type="file" (change)="readURL($event);" name="imagem" accept="image/*">
+      <img [src]="imagem4">
+    </div>  -->
+
+  </div>
+
+  <ion-button (click)="Publicar()" color="success" expand="block">
+      Publicar
+  </ion-button>
+
+</ion-content>
