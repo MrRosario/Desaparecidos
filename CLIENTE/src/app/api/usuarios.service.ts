@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { AngularFireDatabase } from '@angular/fire/database';
+import * as firebase from 'firebase/app';
+import { FirebaseApp } from 'angularfire2';
+import AuthProvider = firebase.auth.AuthProvider;
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -14,32 +17,69 @@ export class UsuariosService {
 
   url: string = 'http://localhost:3000/api/';
 
-  constructor(private _http: HttpClient, private afDB: AngularFireDatabase) { }
+  constructor(
+    private _http: HttpClient,
+    private fb: FirebaseApp, 
+    private afDB: AngularFireDatabase) { }
 
-  enviarMensagem(mensagem){
+  enviarMensagem(dados){
     const user = JSON.parse(localStorage.getItem('Usuario'));
     const myID = user.results[0].UsuarioID;
 
-    return this.afDB.list(`/chat/${myID}`).push({
-      texto: mensagem.texto,
+    return this.afDB.list(`/Chat/`).push({
+      MeuNome: dados.MeuNome,
+      texto: dados.texto,
       meuID: myID,
-      destinario_Id: mensagem.destinario_Id,
-      dataEnvio: mensagem.dataEnvio
+      destinatario_Id: dados.destinario_Id,
+      dataEnvio: dados.dataEnvio
     });
   }
 
-  minhasMensagens(){
+  listaUsuarios(){
+
     const user = JSON.parse(localStorage.getItem('Usuario'));
     const myID = user.results[0].UsuarioID;
 
-    return this.afDB.list(`/chat/${myID}`)
-    .snapshotChanges()
-    .pipe(
-      map(changes => {
-      return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    }))
+    return this.afDB.list(`/chat`).valueChanges();
   }
 
+  minhasMensagens(destinatariID){
+    console.log("Destinatario" + destinatariID);
+    return this.afDB.list(`/chat`, ref => 
+      ref
+        .orderByChild('destinario_Id')
+        .equalTo(destinatariID)
+      ).valueChanges();
+  }
+
+  // mensagensRecebidas(meuID){
+  //   console.log("Eu: " + meuID);
+  //   return this.afDB.list(`/chat/`, ref => 
+  //     ref
+  //       .orderByChild('destinario_Id')
+  //       .equalTo(meuID)
+  //     ).valueChanges();
+  // }
+
+  mensagensTrocadas(otherUserId){
+    const user = JSON.parse(localStorage.getItem('Usuario'));
+    const myID = user.results[0].UsuarioID;
+
+    let ref = firebase.database().ref();
+
+    ref.child(`/chat/${myID}`).on('child_added', (snapshot) => {
+      //console.log(snapshot.val());
+      // let eu = snapshot.val();
+      // let dataEnvio = eu.dataEnvio;
+
+      ref.child(`/chat/${otherUserId}`).orderByChild("destinario_Id").equalTo(otherUserId)
+        .on('child_added', (snap) => {
+          //return console.log(snapshot.val());
+          return console.log(snap.val());
+      });
+    });
+  }
+  
   todosPosts(){
     return this._http.get(this.url, httpOptions);
   }
@@ -82,9 +122,77 @@ export class UsuariosService {
   cadastrar(dados){
     return this._http.post(this.url + 'cadastrar/', dados, httpOptions);
   }
+
   publicar(dados){
-    return this._http.post(this.url + 'publicar/', dados, httpOptions);
+
+    const user = JSON.parse(localStorage.getItem('Usuario'));
+    const myID = user.results[0].UsuarioID;
+
+    let Publicacao = {
+      Titulo: dados.Titulo,
+      Descricao: dados.Descricao,
+      Visto_encontrado: dados.Visto_encontrado,
+      Telefone: dados.Telefone,
+      Email: dados.Email,
+      Imagem1: dados.imageSrc,
+      Imagem2: dados.imageSrc1,
+      Imagem3: dados.imageSrc2,
+      CaminhoIMG1:'',
+      CaminhoIMG2:'',
+      CaminhoIMG3:'',
+      UsuarioID: dados.IDusuario,
+      Criado_aos: dados.Criado_aos
+    };
+
+    let storageRef = this.fb.storage().ref();
+    let basePath = '/ImagensPosts/' + myID;
+    Publicacao.CaminhoIMG1 = basePath + '/' + 'Post-' + new Date().getTime() + '.jpg';
+    let uploadTaskIMG1 = storageRef.child(Publicacao.CaminhoIMG1)
+      .putString(Publicacao.Imagem1,'data_url', { contentType: 'image/jpeg' });
+
+    Publicacao.CaminhoIMG2 = basePath + '/' + 'Post-' + new Date().getTime() + '.jpg';
+    let uploadTaskIMG2 = storageRef.child(Publicacao.CaminhoIMG2)
+      .putString(Publicacao.Imagem2,'data_url', { contentType: 'image/jpeg' });
+
+    Publicacao.Imagem3 = basePath + '/' + 'Post-' + new Date().getTime() + '.jpg';
+    let uploadTaskIMG3 = storageRef.child(Publicacao.Imagem3)
+      .putString(Publicacao.Imagem3,'data_url', { contentType: 'image/jpeg' });
+
+    return new Promise((resolve, reject) => { 
+      uploadTaskIMG1.on(firebase.storage.TaskEvent.STATE_CHANGED, (snapshot: any) => {
+        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is ' + progress + '% done');
+      switch (snapshot.state) {
+        case firebase.storage.TaskState.PAUSED: // or 'paused'
+          console.log('Upload is paused');
+          break;
+        case firebase.storage.TaskState.RUNNING: // or 'running'
+          console.log('Upload is running');
+          break;
+      }    
+    },
+    (error) => {
+        reject(error);
+    },
+    () => { 
+
+      uploadTaskIMG1.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+        Publicacao.Imagem1  = downloadURL;
+        console.log('File available at', downloadURL);
+      });
+
+      setTimeout( () => {
+        console.log(Publicacao.Imagem1);
+        this._http.post(this.url + 'publicar/', Publicacao, httpOptions);
+        resolve(uploadTaskIMG1.snapshot);
+      }, 2000);
+      
+      });
+    });  
+    return 
   }
+
+
   login(email: string, senha: string){
     return this._http.post(this.url + 'login/', { Email: email, Senha: senha })
       .pipe(

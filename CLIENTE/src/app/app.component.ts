@@ -29,6 +29,11 @@ export class AppComponent {
       icon: 'globe'
     },
     {
+      title: 'Chats',
+      url: '/sala',
+      icon: 'text'
+    },
+    {
       title: 'Mapa',
       url: '/mapa',
       icon: 'map'

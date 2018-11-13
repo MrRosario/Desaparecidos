@@ -17,24 +17,25 @@
   <div id="info_perfil">
     <h2>{{nome}}</h2>
     <p>{{email}}</p>
-    <p>São Paulo - Brasil</p>
+    <!-- <p>São Paulo - Brasil</p> -->
   </div>
 </div>
+
 <ion-content padding>
-
     
-    <div style=" display: flex; justify-content: center; align-items: center;">
-      <h2 style="font-size: 18px;">Você ainda fez nehuma publicação</h2>
-    </div>
-
+  <div *ngIf="dados.length == 0" style=" display: flex; justify-content: center; align-items: center;">
+    <h2 style="font-size: 18px;">Você ainda fez nehuma publicação</h2>
+  </div>
+    
+  <div *ngIf="dados.length > 0">
     <ion-card *ngFor="let dado of dados">
-        <ion-img src="../../assets/Pessoas/pessoa-geral.jpg"></ion-img>
-    
+      <ion-img src="../../assets/Pessoas/pessoa-geral.jpg"></ion-img>
+  
       <ion-card-content>
         <ion-card-subtitle>Status: {{dado.Titulo}}</ion-card-subtitle>
         <p>{{dado.Descricao}}</p>
       </ion-card-content>
-      
+    
       <div class="container-btn">
         <ion-button color="success" (click)="presentModal(dado.PostID)" slot="start" fill="clear" size="small">
           Editar
@@ -44,5 +45,6 @@
         </ion-button>
       </div>  
     </ion-card>
-
+  </div>
+    
 </ion-content>

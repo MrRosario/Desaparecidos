@@ -68,7 +68,9 @@
       <input type="file" (change)="readURL($event);" name="imagem" accept="image/*">
       <img [src]="imagem4">
     </div>  -->
-
+    
+    <input type='file' (change)="onSelectFile($event)">  
+    
   </div>
 
   <ion-button (click)="Publicar()" color="success" expand="block">

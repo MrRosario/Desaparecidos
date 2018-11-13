@@ -21,11 +21,6 @@ export class PublicarPage implements OnInit {
   imageSrc1: string = null;
   imageSrc2: string = null;
 
-  imagem4: File;
-
-  fd = new FormData();
-
-
   constructor(private router: Router, 
               public usrService: UsuariosService,
               public loadingController: LoadingController,
@@ -34,11 +29,6 @@ export class PublicarPage implements OnInit {
               private camera: Camera) { }
 
   ngOnInit() { }
-
-  //  readURL(event: Event): void {
-  //   this.imagem4 = <File>event.target.files[0];
-  //   this.fd.append('file', this.imagem4, this.imagem4.name);
-  // }
 
   takePicture(imageFrom){
 
@@ -61,6 +51,17 @@ export class PublicarPage implements OnInit {
     });
   }
   
+  onSelectFile(event) { // called each time file input changes
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+
+      reader.readAsDataURL(event.target.files[0]); // read file as data url
+         
+      reader.onload = (event) => { // called once readAsDataURL is completed
+        this.imageSrc = event.target.result;
+      }
+    }
+  } 
   async presentActionSheet() {
     const actionSheet = await this.actionSheetController.create({
       header: "Carregar foto apartir da...",
@@ -196,8 +197,6 @@ export class PublicarPage implements OnInit {
     await actionSheet.present();
   }
 
-
-
   async presentAlertConfirm() {
     const alert = await this.alertController.create({
       header: 'Confirmação',
@@ -294,8 +293,6 @@ export class PublicarPage implements OnInit {
 
   Publicar(){
 
-    //alert(this.imagem4);
-    //alert(this.fd);
     const user = JSON.parse(localStorage.getItem('Usuario'));
     const IDusuario = user.results[0].UsuarioID;
 
@@ -305,15 +302,15 @@ export class PublicarPage implements OnInit {
       Visto_encontrado: this.Visto_encontrado,
       Telefone: this.Telefone,
       Email: this.Email,
-      Imagem1: this.imagem4,
-      Imagem2: this.imagem4,
-      Imagem3: this.imagem4,
+      Imagem1: this.imageSrc,
+      Imagem2: this.imageSrc1,
+      Imagem3: this.imageSrc2,
       UsuarioID: IDusuario,
       Criado_aos: new Date().toISOString().slice(0, 19).replace('T', ' ')
     };
 
     this.usrService.publicar(Publicacao) 
-    .subscribe(
+    .then(
       data =>  { this.presentAlert(); this.router.navigateByUrl('/home'); console.log('success', data); },
       error => { console.log('Erro', error); }
     );

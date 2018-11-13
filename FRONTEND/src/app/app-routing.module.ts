@@ -14,6 +14,7 @@ const routes: Routes = [
   { path: 'mapa', loadChildren: './mapa/mapa.module#MapaPageModule' },
   { path: 'editPerfil', loadChildren: './edit-perfil/edit-perfil.module#EditPerfilPageModule' },
   { path: 'edit-user', loadChildren: './edit-user/edit-user.module#EditUserPageModule' },
+  { path: 'sala', loadChildren: './sala/sala.module#SalaPageModule' },
 ];
 
 @NgModule({
