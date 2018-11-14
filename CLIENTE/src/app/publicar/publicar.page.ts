@@ -1,7 +1,7 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsuariosService } from '../api/usuarios.service';
-import { LoadingController, AlertController, ActionSheetController} from '@ionic/angular';
+import { LoadingController, AlertController, ActionSheetController, ToastController} from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 @Component({
@@ -21,14 +21,47 @@ export class PublicarPage implements OnInit {
   imageSrc1: string = null;
   imageSrc2: string = null;
 
-  constructor(private router: Router, 
-              public usrService: UsuariosService,
-              public loadingController: LoadingController,
-              private alertController: AlertController,
-              public actionSheetController: ActionSheetController,
-              private camera: Camera) { }
+  index: number = 0;
+  ArrayImagens: any = [];
+
+  constructor(
+    private router: Router, 
+    private usrService: UsuariosService,
+    private loadingController: LoadingController,
+    private alertController: AlertController,
+    private actionSheetController: ActionSheetController,
+    private toastController: ToastController,
+    private camera: Camera) { }
 
   ngOnInit() { }
+
+  onSelectFile(event) { 
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+
+      reader.readAsDataURL(event.target.files[0]); // read file as data url
+         
+      reader.onload = (event) => { // called once readAsDataURL is completed
+        this.imageSrc = event.target.result;
+        this.ArrayImagens[0] = event.target.result;
+        console.log(this.ArrayImagens);
+      }
+    }
+  } 
+
+  onSelectFile2(event) { 
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+
+      reader.readAsDataURL(event.target.files[0]); // read file as data url
+         
+      reader.onload = (event) => { // called once readAsDataURL is completed
+        this.imageSrc1 = event.target.result;
+        this.ArrayImagens[1] = event.target.result;
+        console.log(this.ArrayImagens);
+      }
+    }
+  } 
 
   takePicture(imageFrom){
 
@@ -45,23 +78,54 @@ export class PublicarPage implements OnInit {
     this.camera.getPicture(options).then((imageData) => {
         let base64Image = 'data:image/jpeg;base64,' + imageData;
         this.imageSrc = base64Image;
-        //this.presentLoading();
+        this.ArrayImagens[0] = base64Image;
     },(err) => {
       console.error(err);
     });
   }
   
-  onSelectFile(event) { // called each time file input changes
-    if (event.target.files && event.target.files[0]) {
-      var reader = new FileReader();
+  takePicture1(imageFrom){
 
-      reader.readAsDataURL(event.target.files[0]); // read file as data url
-         
-      reader.onload = (event) => { // called once readAsDataURL is completed
-        this.imageSrc = event.target.result;
-      }
+    const options: CameraOptions = {
+      quality: 50,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      sourceType : imageFrom,
+      targetWidth: 100,
+      targetHeight: 100
     }
-  } 
+ 
+    this.camera.getPicture(options).then((imageData) => {
+        let base64Image = 'data:image/jpeg;base64,' + imageData;
+        this.imageSrc1 = base64Image;
+        this.ArrayImagens[1] = base64Image;
+    },(err) => {
+      console.error(err);
+    });
+  }
+  
+  takePicture2(imageFrom){
+
+    const options: CameraOptions = {
+      quality: 50,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      sourceType : imageFrom,
+      targetWidth: 100,
+      targetHeight: 100
+    }
+ 
+    this.camera.getPicture(options).then((imageData) => {
+        let base64Image = 'data:image/jpeg;base64,' + imageData;
+        this.imageSrc2 = base64Image;
+        this.ArrayImagens[2] = base64Image;
+    },(err) => {
+      console.error(err);
+    });
+  }
+  
   async presentActionSheet() {
     const actionSheet = await this.actionSheetController.create({
       header: "Carregar foto apartir da...",
@@ -93,27 +157,6 @@ export class PublicarPage implements OnInit {
     await actionSheet.present();
   }
 
-  takePicture1(imageFrom){
-
-    const options: CameraOptions = {
-      quality: 50,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-      sourceType : imageFrom,
-      targetWidth: 100,
-      targetHeight: 100
-    }
- 
-    this.camera.getPicture(options).then((imageData) => {
-        let base64Image = 'data:image/jpeg;base64,' + imageData;
-        this.imageSrc1 = base64Image;
-        //this.presentLoading();
-    },(err) => {
-      console.error(err);
-    });
-  }
-  
   async presentActionSheet1() {
     const actionSheet = await this.actionSheetController.create({
       header: "Carregar foto apartir da...",
@@ -145,27 +188,6 @@ export class PublicarPage implements OnInit {
     await actionSheet.present();
   }
 
-  takePicture2(imageFrom){
-
-    const options: CameraOptions = {
-      quality: 50,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-      sourceType : imageFrom,
-      targetWidth: 100,
-      targetHeight: 100
-    }
- 
-    this.camera.getPicture(options).then((imageData) => {
-        let base64Image = 'data:image/jpeg;base64,' + imageData;
-        this.imageSrc2 = base64Image;
-        //this.presentLoading();
-    },(err) => {
-      console.error(err);
-    });
-  }
-  
   async presentActionSheet2() {
     const actionSheet = await this.actionSheetController.create({
       header: "Carregar foto apartir da...",
@@ -197,101 +219,25 @@ export class PublicarPage implements OnInit {
     await actionSheet.present();
   }
 
-  async presentAlertConfirm() {
-    const alert = await this.alertController.create({
-      header: 'Confirmação',
-      message: 'Tem certeza que quer excluir a imagem?',
-      buttons: [
-        {
-          text: 'NÃO',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: (blah) => {
-            console.log('Confirm Cancel: blah');
-          }
-        }, {
-          text: 'SIM',
-          handler: () => {
-            this.imageSrc = null;
-          }
-        }
-      ]
-    });
-
-    await alert.present();
-  }
-
-  async presentAlertConfirm1() {
-    const alert = await this.alertController.create({
-      header: 'Confirmação',
-      message: 'Tem certeza que quer excluir a imagem?',
-      buttons: [
-        {
-          text: 'NÃO',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: (blah) => {
-            console.log('Confirm Cancel: blah');
-          }
-        }, {
-          text: 'SIM',
-          handler: () => {
-            this.imageSrc1 = null;
-          }
-        }
-      ]
-    });
-
-    await alert.present();
-  }
-
-  async presentAlertConfirm2() {
-    const alert = await this.alertController.create({
-      header: 'Confirmação',
-      message: 'Tem certeza que quer excluir a imagem?',
-      buttons: [
-        {
-          text: 'NÃO',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: (blah) => {
-            console.log('Confirm Cancel: blah');
-          }
-        }, {
-          text: 'SIM',
-          handler: () => {
-            this.imageSrc2 = null;
-          }
-        }
-      ]
-    });
-    await alert.present();
-  }
-  
   paginaAnterior(){
     this.router.navigateByUrl('/home');
   }
 
-  async presentLoading() {
+  async presentToast(mensagem) {
+    const toast = await this.toastController.create({
+      message: mensagem,
+      duration: 3000
+    });
+    toast.present();
+  }
+
+  async Publicar(){
+  
     const loading = await this.loadingController.create({
-      message: 'Carregando...',
+      message: 'Cadastrando...',
       spinner: 'bubbles',
-      duration: 3000,
-      translucent: true
     });
-    return await loading.present();
-  }
-
-  async presentAlert() {
-    const alert = await this.alertController.create({
-      header: 'Mensagem',
-      message: 'Cadastrado com sucesso.',
-      buttons: ['OK']
-    });
-    await alert.present();
-  }
-
-  Publicar(){
+    await loading.present();
 
     const user = JSON.parse(localStorage.getItem('Usuario'));
     const IDusuario = user.results[0].UsuarioID;
@@ -302,19 +248,23 @@ export class PublicarPage implements OnInit {
       Visto_encontrado: this.Visto_encontrado,
       Telefone: this.Telefone,
       Email: this.Email,
-      Imagem1: this.imageSrc,
-      Imagem2: this.imageSrc1,
-      Imagem3: this.imageSrc2,
+      Imagem1: '',
+      Imagem2:  '',
+      Imagem3:  '',
       UsuarioID: IDusuario,
       Criado_aos: new Date().toISOString().slice(0, 19).replace('T', ' ')
     };
 
-    this.usrService.publicar(Publicacao) 
-    .then(
-      data =>  { this.presentAlert(); this.router.navigateByUrl('/home'); console.log('success', data); },
-      error => { console.log('Erro', error); }
-    );
-
+    this.usrService.publicar(Publicacao, this.ArrayImagens).then( (data) => { 
+      loading.dismiss();
+      this.presentToast('Cadastro feito com sucesso!');
+      this.router.navigateByUrl('/home'); 
+      console.log('success', data); 
+    },(error) => { 
+      loading.dismiss();
+      this.presentToast('Erro ao fazer o cadastro!');
+      console.log('Erro', error); 
+    });
   }
 
 }

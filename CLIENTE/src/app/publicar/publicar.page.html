@@ -39,38 +39,25 @@
   </ion-item>
   
   <div id="container-imagens">
-
-    <div class="imagens"> 
-      <ion-icon *ngIf="imageSrc !== null" (click)="presentAlertConfirm()" class="eliminarImagem" name="close">
-      </ion-icon>
-      <ion-icon style="height: 68px; width: 68px;" *ngIf="imageSrc === null" 
-       class="icone" name="person" (click)="presentActionSheet()"></ion-icon> 
-      <img *ngIf="imageSrc !== null" [src]="imageSrc"> 
+    <div class="imagens" (click)="presentActionSheet()"> 
+      <ion-icon style="height: 68px; width: 68px;" *ngIf="imageSrc == null" class="icone" name="person"></ion-icon> 
+      <img *ngIf="imageSrc != null" [src]="imageSrc"> 
     </div>
 
-    <div class="imagens"> 
-      <ion-icon *ngIf="imageSrc1 !== null" (click)="presentAlertConfirm1()" class="eliminarImagem" name="close">
-      </ion-icon>
-      <ion-icon style="height: 68px; width: 68px;" *ngIf="imageSrc1 === null" 
-       (click)="presentActionSheet1()" class="icone" name="person"></ion-icon> 
-      <img *ngIf="imageSrc1 !== null" [src]="imageSrc1"> 
+    <div class="imagens" (click)="presentActionSheet1()"> 
+      <ion-icon style="height: 68px; width: 68px;" *ngIf="imageSrc1 == null" class="icone" name="person"></ion-icon> 
+      <img *ngIf="imageSrc1 != null" [src]="imageSrc1"> 
     </div>
 
-    <div class="imagens">  
-      <ion-icon *ngIf="imageSrc2 !== null" (click)="presentAlertConfirm2()" class="eliminarImagem" name="close">
-      </ion-icon>
-      <ion-icon style="height: 68px; width: 68px;" *ngIf="imageSrc2 === null" 
-       (click)="presentActionSheet2()" class="icone" name="person"></ion-icon> 
-      <img *ngIf="imageSrc2 !== null" [src]="imageSrc2"> 
+    <div class="imagens" (click)="presentActionSheet2()">  
+      <ion-icon style="height: 68px; width: 68px;" *ngIf="imageSrc2 == null" class="icone" name="person"></ion-icon> 
+      <img *ngIf="imageSrc2 != null" [src]="imageSrc2"> 
     </div>
-
-    <!-- <div class="imagens">  
-      <input type="file" (change)="readURL($event);" name="imagem" accept="image/*">
-      <img [src]="imagem4">
-    </div>  -->
     
-    <input type='file' (change)="onSelectFile($event)">  
+    <input style="position:absolute" type='file' (change)="onSelectFile($event)">
     
+    <input style="position:absolute; left: 160px;" type='file' (change)="onSelectFile2($event)">
+
   </div>
 
   <ion-button (click)="Publicar()" color="success" expand="block">

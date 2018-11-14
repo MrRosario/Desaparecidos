@@ -5,7 +5,7 @@ import { AngularFireDatabase } from '@angular/fire/database';
 import * as firebase from 'firebase/app';
 import { FirebaseApp } from 'angularfire2';
 import AuthProvider = firebase.auth.AuthProvider;
-
+import 'firebase/storage';
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
@@ -123,73 +123,65 @@ export class UsuariosService {
     return this._http.post(this.url + 'cadastrar/', dados, httpOptions);
   }
 
-  publicar(dados){
+  publicar(dados, ArrayImagens){
 
     const user = JSON.parse(localStorage.getItem('Usuario'));
     const myID = user.results[0].UsuarioID;
+    
+    return ArrayImagens.forEach(element => {
 
-    let Publicacao = {
-      Titulo: dados.Titulo,
-      Descricao: dados.Descricao,
-      Visto_encontrado: dados.Visto_encontrado,
-      Telefone: dados.Telefone,
-      Email: dados.Email,
-      Imagem1: dados.imageSrc,
-      Imagem2: dados.imageSrc1,
-      Imagem3: dados.imageSrc2,
-      CaminhoIMG1:'',
-      CaminhoIMG2:'',
-      CaminhoIMG3:'',
-      UsuarioID: dados.IDusuario,
-      Criado_aos: dados.Criado_aos
-    };
-
-    let storageRef = this.fb.storage().ref();
-    let basePath = '/ImagensPosts/' + myID;
-    Publicacao.CaminhoIMG1 = basePath + '/' + 'Post-' + new Date().getTime() + '.jpg';
-    let uploadTaskIMG1 = storageRef.child(Publicacao.CaminhoIMG1)
-      .putString(Publicacao.Imagem1,'data_url', { contentType: 'image/jpeg' });
-
-    Publicacao.CaminhoIMG2 = basePath + '/' + 'Post-' + new Date().getTime() + '.jpg';
-    let uploadTaskIMG2 = storageRef.child(Publicacao.CaminhoIMG2)
-      .putString(Publicacao.Imagem2,'data_url', { contentType: 'image/jpeg' });
-
-    Publicacao.Imagem3 = basePath + '/' + 'Post-' + new Date().getTime() + '.jpg';
-    let uploadTaskIMG3 = storageRef.child(Publicacao.Imagem3)
-      .putString(Publicacao.Imagem3,'data_url', { contentType: 'image/jpeg' });
-
-    return new Promise((resolve, reject) => { 
-      uploadTaskIMG1.on(firebase.storage.TaskEvent.STATE_CHANGED, (snapshot: any) => {
-        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log('Upload is ' + progress + '% done');
-      switch (snapshot.state) {
-        case firebase.storage.TaskState.PAUSED: // or 'paused'
-          console.log('Upload is paused');
-          break;
-        case firebase.storage.TaskState.RUNNING: // or 'running'
-          console.log('Upload is running');
-          break;
-      }    
-    },
-    (error) => {
-        reject(error);
-    },
-    () => { 
-
-      uploadTaskIMG1.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-        Publicacao.Imagem1  = downloadURL;
-        console.log('File available at', downloadURL);
-      });
-
-      setTimeout( () => {
-        console.log(Publicacao.Imagem1);
-        this._http.post(this.url + 'publicar/', Publicacao, httpOptions);
-        resolve(uploadTaskIMG1.snapshot);
-      }, 2000);
+      let Publicacao = {
+        Titulo: dados.Titulo,
+        Descricao: dados.Descricao,
+        Visto_encontrado: dados.Visto_encontrado,
+        Telefone: dados.Telefone,
+        Email: dados.Email,
+        Imagem1: '',
+        Imagem2: '',
+        Imagem3: '',
+        UsuarioID: dados.IDusuario,
+        Criado_aos: dados.Criado_aos
+      };
+  
+      let storageRef = this.fb.storage().ref();
+      let basePath = '/ImagensPosts/' + myID;
+  
+      let Caminho = basePath + '/' + 'Post-' + new Date().getTime() + '.jpg';
+      let uploadTask = storageRef.child(Caminho).putString(element,'data_url', { contentType: 'image/jpeg' });
       
-      });
-    });  
-    return 
+      
+        uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, (snapshot: any) => {
+          var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log('Upload is ' + progress + '% done');
+          switch (snapshot.state) {
+            case firebase.storage.TaskState.PAUSED: // or 'paused'
+              console.log('Upload is paused');
+              break;
+            case firebase.storage.TaskState.RUNNING: // or 'running'
+              console.log('Upload is running');
+              break;
+          }    
+        },(error) => {
+              //reject(error);
+              console.log(error)
+        },() => { 
+          uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+            Publicacao.Imagem1 = downloadURL;
+            console.log('1: ', downloadURL);
+            console.log('2: ', downloadURL);
+            //Publicacao.Imagem2 = downloadURL;
+            //Publicacao.Imagem3 = downloadURL;
+            //console.log('File available at', downloadURL);
+          });
+          
+          setTimeout( () => {
+            console.log(Publicacao.Imagem1);
+            this._http.post(this.url + 'publicar/', Publicacao, httpOptions);
+            //resolve(uploadTask.snapshot);
+          }, 2000);
+
+        }); 
+    });   
   }
 
 

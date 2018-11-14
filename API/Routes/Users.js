@@ -284,9 +284,6 @@ exports.publicar = function(req, res){
       "Imagem1": req.body.Imagem1,
       "Imagem2": req.body.Imagem2,
       "Imagem3": req.body.Imagem3,
-      'CaminhoIMG1': req.body.CaminhoIMG1,
-      'CaminhoIMG2': req.body.CaminhoIMG2,
-      'CaminhoIMG3': req.body.CaminhoIMG3,
       "Criado_aos": req.body.Criado_aos,
       "UsuarioID": req.body.UsuarioID
     }
