@@ -15,7 +15,7 @@
 <ion-content padding>
   
   <ion-card *ngFor="let usuario of usuarios">
-    <ion-img src="../../assets/Pessoas/pessoa-geral.jpg"></ion-img>
+    <ion-img [src]="usuario.Imagem1"></ion-img>
 
     <ion-card-content>
       <ion-card-subtitle>Status: {{usuario.Titulo}}</ion-card-subtitle>

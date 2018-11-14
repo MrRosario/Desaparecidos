@@ -3,6 +3,10 @@ import { Router } from '@angular/router';
 import { UsuariosService } from '../api/usuarios.service';
 import { LoadingController, AlertController, ActionSheetController, ToastController} from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import * as firebase from 'firebase/app';
+import { FirebaseApp } from 'angularfire2';
+import AuthProvider = firebase.auth.AuthProvider;
+import 'firebase/storage';
 
 @Component({
   selector: 'app-publicar',
@@ -24,6 +28,11 @@ export class PublicarPage implements OnInit {
   index: number = 0;
   ArrayImagens: any = [];
 
+  user:any = JSON.parse(localStorage.getItem('Usuario'));
+  myID:any = this.user.results[0].UsuarioID;
+    
+  ImagensRef = ['','','']; 
+
   constructor(
     private router: Router, 
     private usrService: UsuariosService,
@@ -31,11 +40,13 @@ export class PublicarPage implements OnInit {
     private alertController: AlertController,
     private actionSheetController: ActionSheetController,
     private toastController: ToastController,
+    private fb: FirebaseApp, 
     private camera: Camera) { }
 
   ngOnInit() { }
 
   onSelectFile(event) { 
+    let that = this;
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
 
@@ -44,12 +55,41 @@ export class PublicarPage implements OnInit {
       reader.onload = (event) => { // called once readAsDataURL is completed
         this.imageSrc = event.target.result;
         this.ArrayImagens[0] = event.target.result;
-        console.log(this.ArrayImagens);
+
+        let storageRef = this.fb.storage().ref();
+        let basePath = '/ImagensPosts/' + this.myID;
+        let Caminho = basePath + '/' + 'Post-' + new Date().getTime() + '.jpg';
+        let uploadTask = storageRef.child(Caminho).putString(this.imageSrc,'data_url', { contentType: 'image/jpeg' });
+        
+        uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, (snapshot: any) => {
+          var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log('Upload is ' + progress + '% done');
+          switch (snapshot.state) {
+            case firebase.storage.TaskState.PAUSED: // or 'paused'
+              console.log('Upload is paused');
+              break;
+            case firebase.storage.TaskState.RUNNING: // or 'running'
+              console.log('Upload is running');
+              break;
+          }    
+        },(error) => {
+            //reject(error);
+            console.log(error)
+          },() => { 
+            uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+              that.ImagensRef[0] = downloadURL;
+              console.log(that.ImagensRef);
+              console.log('Imagem carregada com sucesso');
+              console.log(downloadURL);
+            });
+            //resolve(uploadTask.snapshot);
+          });  
       }
     }
   } 
 
   onSelectFile2(event) { 
+    let that = this;
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
 
@@ -58,7 +98,33 @@ export class PublicarPage implements OnInit {
       reader.onload = (event) => { // called once readAsDataURL is completed
         this.imageSrc1 = event.target.result;
         this.ArrayImagens[1] = event.target.result;
-        console.log(this.ArrayImagens);
+        
+        let storageRef = this.fb.storage().ref();
+        let basePath = '/ImagensPosts/' + this.myID;
+        let Caminho = basePath + '/' + 'Post-' + new Date().getTime() + '.jpg';
+        let uploadTask = storageRef.child(Caminho).putString(this.imageSrc1,'data_url', { contentType: 'image/jpeg' });
+        
+        uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, (snapshot: any) => {
+          var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log('Upload is ' + progress + '% done');
+          switch (snapshot.state) {
+            case firebase.storage.TaskState.PAUSED: // or 'paused'
+              console.log('Upload is paused');
+              break;
+            case firebase.storage.TaskState.RUNNING: // or 'running'
+              console.log('Upload is running');
+              break;
+          }    
+        },(error) => {
+            console.log(error)
+          },() => { 
+            uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+              that.ImagensRef[1] = downloadURL;
+              console.log(that.ImagensRef);
+              console.log('Imagem carregada com sucesso');
+              console.log(downloadURL);
+            });
+          });  
       }
     }
   } 
@@ -255,7 +321,15 @@ export class PublicarPage implements OnInit {
       Criado_aos: new Date().toISOString().slice(0, 19).replace('T', ' ')
     };
 
-    this.usrService.publicar(Publicacao, this.ArrayImagens).then( (data) => { 
+    Publicacao.Imagem1 = this.ImagensRef[0];
+    Publicacao.Imagem2 = this.ImagensRef[1];
+    Publicacao.Imagem3 = this.ImagensRef[2];
+
+    console.log(Publicacao.Imagem1);
+    console.log(Publicacao.Imagem2);
+    console.log(Publicacao.Imagem3);
+
+    this.usrService.publicar(Publicacao).subscribe( (data) => { 
       loading.dismiss();
       this.presentToast('Cadastro feito com sucesso!');
       this.router.navigateByUrl('/home'); 

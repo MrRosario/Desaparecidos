@@ -6,6 +6,7 @@ import * as firebase from 'firebase/app';
 import { FirebaseApp } from 'angularfire2';
 import AuthProvider = firebase.auth.AuthProvider;
 import 'firebase/storage';
+import { Observable } from 'rxjs';
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
@@ -123,67 +124,9 @@ export class UsuariosService {
     return this._http.post(this.url + 'cadastrar/', dados, httpOptions);
   }
 
-  publicar(dados, ArrayImagens){
-
-    const user = JSON.parse(localStorage.getItem('Usuario'));
-    const myID = user.results[0].UsuarioID;
-    
-    return ArrayImagens.forEach(element => {
-
-      let Publicacao = {
-        Titulo: dados.Titulo,
-        Descricao: dados.Descricao,
-        Visto_encontrado: dados.Visto_encontrado,
-        Telefone: dados.Telefone,
-        Email: dados.Email,
-        Imagem1: '',
-        Imagem2: '',
-        Imagem3: '',
-        UsuarioID: dados.IDusuario,
-        Criado_aos: dados.Criado_aos
-      };
-  
-      let storageRef = this.fb.storage().ref();
-      let basePath = '/ImagensPosts/' + myID;
-  
-      let Caminho = basePath + '/' + 'Post-' + new Date().getTime() + '.jpg';
-      let uploadTask = storageRef.child(Caminho).putString(element,'data_url', { contentType: 'image/jpeg' });
-      
-      
-        uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, (snapshot: any) => {
-          var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log('Upload is ' + progress + '% done');
-          switch (snapshot.state) {
-            case firebase.storage.TaskState.PAUSED: // or 'paused'
-              console.log('Upload is paused');
-              break;
-            case firebase.storage.TaskState.RUNNING: // or 'running'
-              console.log('Upload is running');
-              break;
-          }    
-        },(error) => {
-              //reject(error);
-              console.log(error)
-        },() => { 
-          uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-            Publicacao.Imagem1 = downloadURL;
-            console.log('1: ', downloadURL);
-            console.log('2: ', downloadURL);
-            //Publicacao.Imagem2 = downloadURL;
-            //Publicacao.Imagem3 = downloadURL;
-            //console.log('File available at', downloadURL);
-          });
-          
-          setTimeout( () => {
-            console.log(Publicacao.Imagem1);
-            this._http.post(this.url + 'publicar/', Publicacao, httpOptions);
-            //resolve(uploadTask.snapshot);
-          }, 2000);
-
-        }); 
-    });   
+  publicar(dados){
+    return this._http.post(this.url + 'publicar/', dados, httpOptions);
   }
-
 
   login(email: string, senha: string){
     return this._http.post(this.url + 'login/', { Email: email, Senha: senha })
