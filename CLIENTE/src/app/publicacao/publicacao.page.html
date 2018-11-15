@@ -5,13 +5,13 @@
 
     <ion-buttons slot="end">
 
-        <ion-button slot="start" fill="clear" size="small" (click)="chat()">
+        <ion-button *ngIf="usuarioID != usrDestID" slot="start" fill="clear" size="small" (click)="chat()">
             <ion-icon class="icone" name="text"></ion-icon> 
         </ion-button>
 
-        <ion-button slot="end" fill="clear" size="small">
+        <!-- <ion-button slot="end" fill="clear" size="small">
             <ion-icon class="icone" name="share"></ion-icon>
-        </ion-button>
+        </ion-button> -->
     </ion-buttons>
 
   </ion-toolbar>

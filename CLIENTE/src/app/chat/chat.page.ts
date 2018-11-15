@@ -30,12 +30,7 @@ export class ChatPage implements OnInit {
     private _router: Router, 
     public usrService: UsuariosService) { }
 
-  ngOnInit() {
-    
-    console.log(typeof(this.meuID));
-    console.log(typeof(this.usrDestinarioID));
-    
-    //Retorna usuario e exibe na header
+  ngOnInit() {  
     this.usrService.getPerfilEdit(this.usrDestinarioID).subscribe( (res:any) =>{
       //console.log(res);
       this.Nome = `${res[0].Nome} ${res[0].Sobre_nome}`; 
@@ -59,10 +54,22 @@ export class ChatPage implements OnInit {
 
     this.usrService.mensagens().subscribe( (res:any) => {
       console.log(res);
-      this.lista = res.filter( (elem) => {
-        return elem.destinatario_Id == this.usrDestinarioID 
+      this.scrollToBottom()
+      this.lista = res.filter( (elem, index, array) => {
+        //console.log()
+        //console.log(index)
+        //console.log(elem)
+        //console.log(array[index])
+        //console.log(array[index + 1])
+        //console.log(array.indexOf(elem) == index)
+        //return array[]
+        //console.log(array.destinatario_Id == this.usrDestinarioID && array[index+1].destinatario_Id == this.meuID)
+        return ((elem.destinatario_Id == this.usrDestinarioID && elem.myID == this.meuID) || (elem.destinatario_Id == this.meuID && elem.myID == this.usrDestinarioID));
+        //return console.log(resultado)
+        //return elem.destinatario_Id == this.meuID  
+        //return (elem["destinatario_Id"] == this.usrDestinarioID && elem["destinatario_Id"] == this.meuID);
       })
-    })
+    });
    
   }
 

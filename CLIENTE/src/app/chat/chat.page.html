@@ -17,7 +17,7 @@
             {{item.dataEnvio | date:'HH:mm'}}
           </p>
         </div>
-        <div class="msg-content" style="background-color:rgb(188, 219, 219)">
+        <div class="msg-content" style="background-color:#ffffff">
           <p class="line-breaker ">{{item.texto}}</p>
         </div>
       </div>
@@ -28,25 +28,12 @@
             {{item.dataEnvio | date:'HH:mm'}}
           </p>
         </div>
-        <div class="msg-content" style="background-color: goldenrod">
-          <p class="line-breaker ">{{item.texto}}</p>
+        <div class="msg-content" style="background-color: darkseagreen">
+          <p class="line-breaker" style="text-align: left;">{{item.texto}}</p>
         </div>
       </div>
 
     </div>
-
-    <!-- <div *ngFor="let iten of outraLista" class="message">
-      <div class="msg-detail">
-        <div class="msg-info">
-          <p>
-            {{iten.dataEnvio | date:'HH:mm'}}
-          </p>
-        </div>
-        <div class="msg-content">
-          <p class="line-breaker ">{{iten.texto}}</p>
-        </div>
-      </div>
-    </div> -->
   </div>
 
 </ion-content>

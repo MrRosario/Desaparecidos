@@ -18,6 +18,9 @@ export class PublicacaoPage implements OnInit {
 
   usrDestID: number;
 
+  user = JSON.parse(localStorage.getItem('Usuario'));
+  loggInUserID = this.user.results[0].UsuarioID.toString();
+
   slideOpts = {
     effect: 'slide',
     speed: 300
@@ -31,19 +34,9 @@ export class PublicacaoPage implements OnInit {
               public usrService: UsuariosService, activeRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.obterPosts();
-    this.obterComentario();
-  }
+    console.log(this.loggInUserID);
+    console.log(this.usrDestID);
 
-  private obterComentario(){
-    return this.usrService.getComentario(this._Activatedroute.snapshot.params['id'])
-          .subscribe((resultado: any) => {
-           this.comments = resultado;
-           console.log(resultado);
-    });   
-  }
-
-  private obterPosts(){
     this.usrService.getPost(this._Activatedroute.snapshot.params['id'])
       .subscribe((resultado: any) => {
           this.dados = resultado;
@@ -51,7 +44,8 @@ export class PublicacaoPage implements OnInit {
           this.Imagens.push(resultado[0].Imagem1);
           this.Imagens.push(resultado[0].Imagem2);
           this.Imagens.push(resultado[0].Imagem3);
-
+          
+          console.log(resultado);
           console.log(this.Imagens);
 
           let index = this.Imagens.indexOf('');
@@ -63,6 +57,16 @@ export class PublicacaoPage implements OnInit {
           console.log(this.Imagens);
           console.log(resultado);
       });
+
+    this.obterComentario();
+  }
+
+  private obterComentario(){
+    return this.usrService.getComentario(this._Activatedroute.snapshot.params['id'])
+          .subscribe((resultado: any) => {
+           this.comments = resultado;
+           console.log(resultado);
+    });   
   }
 
   paginaAnterior(){
