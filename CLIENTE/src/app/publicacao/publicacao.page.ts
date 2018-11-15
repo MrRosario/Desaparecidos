@@ -18,6 +18,13 @@ export class PublicacaoPage implements OnInit {
 
   usrDestID: number;
 
+  slideOpts = {
+    effect: 'slide',
+    speed: 300
+  };
+
+  Imagens: any = [];
+  
   constructor(private _Activatedroute: ActivatedRoute, 
               private _router: Router, 
               private http: HttpClient,
@@ -38,11 +45,24 @@ export class PublicacaoPage implements OnInit {
 
   private obterPosts(){
     this.usrService.getPost(this._Activatedroute.snapshot.params['id'])
-        .subscribe((resultado: any) => {
-             this.dados = resultado;
-             this.usrDestID = resultado[0].Usuario;
-             console.log(resultado);
-        });
+      .subscribe((resultado: any) => {
+          this.dados = resultado;
+          this.usrDestID = resultado[0].Usuario;
+          this.Imagens.push(resultado[0].Imagem1);
+          this.Imagens.push(resultado[0].Imagem2);
+          this.Imagens.push(resultado[0].Imagem3);
+
+          console.log(this.Imagens);
+
+          let index = this.Imagens.indexOf('');
+
+          if (index > -1) {
+            this.Imagens.splice(index, 2);
+          }
+          
+          console.log(this.Imagens);
+          console.log(resultado);
+      });
   }
 
   paginaAnterior(){

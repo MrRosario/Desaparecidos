@@ -14,20 +14,27 @@ export class ChatPage implements OnInit {
   @ViewChild(Content) content: Content;
   @ViewChild('chat_input') messageInput: ElementRef;
 
-  usrDestinarioID = this._Activatedroute.snapshot.params['id'];
+  usrDestinarioID:number = this._Activatedroute.snapshot.params['id'];
+
+  user = JSON.parse(localStorage.getItem('Usuario'));
+  meuID = this.user.results[0].UsuarioID.toString();
+
   mensagem: string;
   lista: any = [];
   Nome: string;
-  MeuNome: string;
+  myName: string;
+  outraLista: string;
+
   constructor(
     private _Activatedroute: ActivatedRoute, 
     private _router: Router, 
     public usrService: UsuariosService) { }
 
   ngOnInit() {
-    const user = JSON.parse(localStorage.getItem('Usuario'));
-    const meuID = user.results[0].UsuarioID;
-  
+    
+    console.log(typeof(this.meuID));
+    console.log(typeof(this.usrDestinarioID));
+    
     //Retorna usuario e exibe na header
     this.usrService.getPerfilEdit(this.usrDestinarioID).subscribe( (res:any) =>{
       //console.log(res);
@@ -35,9 +42,10 @@ export class ChatPage implements OnInit {
     });
 
     //Retorna meu usuario
-    this.usrService.getPerfilEdit(meuID).subscribe( (res:any) =>{
-      //console.log(res);
-      this.MeuNome = `${res[0].Nome} ${res[0].Sobre_nome}`;
+    this.usrService.getPerfilEdit(this.meuID).subscribe( (res:any) =>{
+      console.log(res);
+      this.myName = `${res[0].Nome} ${res[0].Sobre_nome}`;
+      console.log(this.myName);
     });
 
     let ref = firebase.database().ref();
@@ -49,32 +57,23 @@ export class ChatPage implements OnInit {
     //   this.scrollToBottom();
     // });
 
-    // this.usrService.mensagensRecebidas(meuID).subscribe((res:any) => {
-    //   //this.lista = res;
-    //   console.log(res);
-    //   this.scrollToBottom();
-    // });
-
-    console.log('Meu Id: ' + meuID);
-    
-    //Mensgens Enviadas
-    ref.child(`/Chat/`).orderByChild("destinatario_Id").equalTo(meuID)
-      .on('child_added', (snapshot) => {
-        console.log(snapshot.val());
-    });
-    //Mensagens Recebidas
-    // ref.child(`/Chat/`).orderByChild("destinatario_Id").equalTo(this.usrDestinarioID)
-    //   .on('child_added', (snap) => {
-    //     console.log(snap.val());
-    // });
+    this.usrService.mensagens().subscribe( (res:any) => {
+      console.log(res);
+      this.lista = res.filter( (elem) => {
+        return elem.destinatario_Id == this.usrDestinarioID 
+      })
+    })
+   
   }
 
   enviar(){
+   
     let msg = {
-        MeuNome: this.MeuNome,
-        texto: this.mensagem,
-        destinario_Id: this._Activatedroute.snapshot.params['id'],
-        dataEnvio: new Date().toISOString()   
+      MeuNome: this.myName,
+      myID: this.meuID,
+      texto: this.mensagem,
+      destinario_Id: this._Activatedroute.snapshot.params['id'],
+      dataEnvio: new Date().toISOString()   
     }
 
     this.usrService.enviarMensagem(msg).then( () => {
@@ -84,8 +83,8 @@ export class ChatPage implements OnInit {
     },(err)=>{
       console.log('erro ao enviar mensagem')
     })
-
   }
+
   onFocus() {
     //this.content.resize();
     this.scrollToBottom();

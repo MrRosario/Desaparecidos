@@ -26,14 +26,11 @@ ion-content .scroll-content {
           }
         }
         .msg-content {
-          position: relative;
           margin-top: 5px;
-          border-radius: 5px;
-          padding: 8px;
+          border-radius: 6px;
+          padding: 10px;
           border: 1px solid #ddd;
-          color: #fff;
-          width: auto;
-          max-width: 80%;
+          width: 70%;
         }
 
       }

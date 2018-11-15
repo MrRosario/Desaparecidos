@@ -20,9 +20,11 @@
 <ion-content>
   <div *ngFor="let post of dados" id="publicacao-container">
     
-    <div id="img-container">
-      Imagens
-    </div>
+      <ion-slides style="height: 200px;" pager="true" [options]="slideOpts">
+        <ion-slide *ngFor="let imagem of Imagens">
+          <img class="img-slide" [src]="imagem">
+        </ion-slide>
+      </ion-slides>
 
     <!-- <div id="controles">
       <ion-icon name="eye"></ion-icon> 

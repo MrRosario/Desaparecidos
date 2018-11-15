@@ -7,6 +7,7 @@ import { FirebaseApp } from 'angularfire2';
 import AuthProvider = firebase.auth.AuthProvider;
 import 'firebase/storage';
 import { Observable } from 'rxjs';
+
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
@@ -24,13 +25,10 @@ export class UsuariosService {
     private afDB: AngularFireDatabase) { }
 
   enviarMensagem(dados){
-    const user = JSON.parse(localStorage.getItem('Usuario'));
-    const myID = user.results[0].UsuarioID;
-
-    return this.afDB.list(`/Chat/`).push({
+    return this.afDB.list(`/chat/`).push({
       MeuNome: dados.MeuNome,
+      myID: dados.myID,
       texto: dados.texto,
-      meuID: myID,
       destinatario_Id: dados.destinario_Id,
       dataEnvio: dados.dataEnvio
     });
@@ -43,43 +41,46 @@ export class UsuariosService {
 
     return this.afDB.list(`/chat`).valueChanges();
   }
+  mensagens(){
+    return this.afDB.list(`/chat`).valueChanges();
+  }
 
   minhasMensagens(destinatariID){
     console.log("Destinatario" + destinatariID);
-    return this.afDB.list(`/chat`, ref => 
+    return this.afDB.list(`/chat/`, ref => 
       ref
-        .orderByChild('destinario_Id')
+        .orderByChild('destinatario_Id')
         .equalTo(destinatariID)
       ).valueChanges();
   }
 
-  // mensagensRecebidas(meuID){
-  //   console.log("Eu: " + meuID);
-  //   return this.afDB.list(`/chat/`, ref => 
-  //     ref
-  //       .orderByChild('destinario_Id')
-  //       .equalTo(meuID)
-  //     ).valueChanges();
-  // }
-
-  mensagensTrocadas(otherUserId){
-    const user = JSON.parse(localStorage.getItem('Usuario'));
-    const myID = user.results[0].UsuarioID;
-
-    let ref = firebase.database().ref();
-
-    ref.child(`/chat/${myID}`).on('child_added', (snapshot) => {
-      //console.log(snapshot.val());
-      // let eu = snapshot.val();
-      // let dataEnvio = eu.dataEnvio;
-
-      ref.child(`/chat/${otherUserId}`).orderByChild("destinario_Id").equalTo(otherUserId)
-        .on('child_added', (snap) => {
-          //return console.log(snapshot.val());
-          return console.log(snap.val());
-      });
-    });
+  mensagensRecebidas(meuID){
+    console.log("Eu: " + meuID);
+    return this.afDB.list(`/chat/`, ref => 
+      ref
+        .orderByChild('destinatario_Id')
+        .equalTo(meuID)
+      ).valueChanges();
   }
+
+  // mensagensTrocadas(otherUserId){
+  //   const user = JSON.parse(localStorage.getItem('Usuario'));
+  //   const myID = user.results[0].UsuarioID;
+
+  //   let ref = firebase.database().ref();
+
+  //   ref.child(`/chat/${myID}`).on('child_added', (snapshot) => {
+  //     //console.log(snapshot.val());
+  //     // let eu = snapshot.val();
+  //     // let dataEnvio = eu.dataEnvio;
+
+  //     ref.child(`/chat/${otherUserId}`).orderByChild("destinario_Id").equalTo(otherUserId)
+  //       .on('child_added', (snap) => {
+  //         //return console.log(snapshot.val());
+  //         return console.log(snap.val());
+  //     });
+  //   });
+  // }
   
   todosPosts(){
     return this._http.get(this.url, httpOptions);
