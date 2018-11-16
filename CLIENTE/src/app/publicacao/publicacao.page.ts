@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UsuariosService } from '../api/usuarios.service';
@@ -9,6 +9,8 @@ import { UsuariosService } from '../api/usuarios.service';
   styleUrls: ['./publicacao.page.scss'],
 })
 export class PublicacaoPage implements OnInit {
+
+  @ViewChild('comment_input') commentInput: ElementRef;
 
   dados: any = [];
 
@@ -59,6 +61,19 @@ export class PublicacaoPage implements OnInit {
       });
 
     this.obterComentario();
+    this.caixaComentario();
+
+    let x = document.querySelector("#comment_input");
+    if (x){
+        x.scrollIntoView();
+    }
+  }
+
+  caixaComentario(){
+    if (this.commentInput && this.commentInput.nativeElement) {
+      this.commentInput.nativeElement.focus();
+      console.log('Focus funcionando');
+    }
   }
 
   private obterComentario(){

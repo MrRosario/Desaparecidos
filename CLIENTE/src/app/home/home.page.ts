@@ -4,6 +4,7 @@ import { UsuariosService } from '../api/usuarios.service';
 import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -14,21 +15,33 @@ export class HomePage {
 
   usuarios: any = [];
   private sub: Subscription;
+  sharedUrl: string = "https://facebook.com/"
 
-  constructor(private router: Router, 
-              public usrService: UsuariosService,
-              private socialSharing: SocialSharing) { 
+  constructor(
+    private router: Router, 
+    public usrService: UsuariosService,
+    private socialSharing: SocialSharing,
+    public toastController: ToastController
+    ) { 
     usrService.todosPosts().subscribe((resultado) => {
       this.usuarios = resultado;
       console.log(resultado);
     });
   }
 
-  compartilhar(Mensagem, Titulo, id){
-    this.socialSharing.share(Mensagem, Titulo, `localhost:8100/publicacao/${id}`).then(() => {
+  async presentToast(mensagem) {
+    const toast = await this.toastController.create({
+      message: mensagem,
+      duration: 3000
+    });
+    toast.present();
+  }
+
+  compartilhar(Mensagem){
+    this.socialSharing.share(Mensagem, "Localização de pessoas", null, this.sharedUrl).then((data) => {
       // Success!
     }).catch(() => {
-      // Error!
+      this.presentToast("Erro ao compartilhar");
     });
   }
 
@@ -36,11 +49,13 @@ export class HomePage {
     console.log(id);
     this.router.navigate(['/publicacao/' + id]);
   }
-  comentar(id, idName: string):void{
 
+  comentar(id):void{
     this.router.navigate(['/publicacao/' + id ]);
-    console.log(idName);
-   
+    let x = document.querySelector("#comment_input");
+    if (x){
+        x.scrollIntoView();
+    }
   }
   
 }

@@ -45,16 +45,108 @@ export class PublicarPage implements OnInit {
 
   ngOnInit() { }
 
-  onSelectFile(event) { 
-    let that = this;
-    if (event.target.files && event.target.files[0]) {
-      var reader = new FileReader();
+  // onSelectFile(event) { 
+  //   let that = this;
+  //   if (event.target.files && event.target.files[0]) {
+  //     var reader = new FileReader();
 
-      reader.readAsDataURL(event.target.files[0]); // read file as data url
+  //     reader.readAsDataURL(event.target.files[0]); // read file as data url
          
-      reader.onload = (event) => { // called once readAsDataURL is completed
-        this.imageSrc = event.target.result;
-        this.ArrayImagens[0] = event.target.result;
+  //     reader.onload = (event) => { // called once readAsDataURL is completed
+  //       this.imageSrc = event.target.result;
+  //       this.ArrayImagens[0] = event.target.result;
+
+  //       let storageRef = this.fb.storage().ref();
+  //       let basePath = '/ImagensPosts/' + this.myID;
+  //       let Caminho = basePath + '/' + 'Post-' + new Date().getTime() + '.jpg';
+  //       let uploadTask = storageRef.child(Caminho).putString(this.imageSrc,'data_url', { contentType: 'image/jpeg' });
+        
+  //       uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, (snapshot: any) => {
+  //         var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+  //         console.log('Upload is ' + progress + '% done');
+  //         switch (snapshot.state) {
+  //           case firebase.storage.TaskState.PAUSED: // or 'paused'
+  //             console.log('Upload is paused');
+  //             break;
+  //           case firebase.storage.TaskState.RUNNING: // or 'running'
+  //             console.log('Upload is running');
+  //             break;
+  //         }    
+  //       },(error) => {
+  //           //reject(error);
+  //           console.log(error)
+  //         },() => { 
+  //           uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+  //             that.ImagensRef[0] = downloadURL;
+  //             console.log(that.ImagensRef);
+  //             console.log('Imagem carregada com sucesso');
+  //             console.log(downloadURL);
+  //           });
+  //           //resolve(uploadTask.snapshot);
+  //         });  
+  //     }
+  //   }
+  // } 
+
+  // onSelectFile2(event) { 
+  //   let that = this;
+  //   if (event.target.files && event.target.files[0]) {
+  //     var reader = new FileReader();
+
+  //     reader.readAsDataURL(event.target.files[0]); // read file as data url
+         
+  //     reader.onload = (event) => { // called once readAsDataURL is completed
+  //       this.imageSrc1 = event.target.result;
+  //       this.ArrayImagens[1] = event.target.result;
+        
+  //       let storageRef = this.fb.storage().ref();
+  //       let basePath = '/ImagensPosts/' + this.myID;
+  //       let Caminho = basePath + '/' + 'Post-' + new Date().getTime() + '.jpg';
+  //       let uploadTask = storageRef.child(Caminho).putString(this.imageSrc1,'data_url', { contentType: 'image/jpeg' });
+        
+  //       uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, (snapshot: any) => {
+  //         var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+  //         console.log('Upload is ' + progress + '% done');
+  //         switch (snapshot.state) {
+  //           case firebase.storage.TaskState.PAUSED: // or 'paused'
+  //             console.log('Upload is paused');
+  //             break;
+  //           case firebase.storage.TaskState.RUNNING: // or 'running'
+  //             console.log('Upload is running');
+  //             break;
+  //         }    
+  //       },(error) => {
+  //           console.log(error)
+  //         },() => { 
+  //           uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+  //             that.ImagensRef[1] = downloadURL;
+  //             console.log(that.ImagensRef);
+  //             console.log('Imagem carregada com sucesso');
+  //             console.log(downloadURL);
+  //           });
+  //         });  
+  //     }
+  //   }
+  // } 
+
+  takePicture(imageFrom){
+
+    let that = this;
+    
+    const options: CameraOptions = {
+      quality: 50,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      sourceType : imageFrom,
+      targetWidth: 100,
+      targetHeight: 100
+    }
+ 
+    this.camera.getPicture(options).then((imageData) => {
+        let base64Image = 'data:image/jpeg;base64,' + imageData;
+        this.imageSrc = base64Image;
+        this.ArrayImagens[0] = base64Image;
 
         let storageRef = this.fb.storage().ref();
         let basePath = '/ImagensPosts/' + this.myID;
@@ -84,21 +176,30 @@ export class PublicarPage implements OnInit {
             });
             //resolve(uploadTask.snapshot);
           });  
-      }
-    }
-  } 
-
-  onSelectFile2(event) { 
+    },(err) => {
+      console.error(err);
+    });
+  }
+  
+  takePicture1(imageFrom){
+    
     let that = this;
-    if (event.target.files && event.target.files[0]) {
-      var reader = new FileReader();
 
-      reader.readAsDataURL(event.target.files[0]); // read file as data url
-         
-      reader.onload = (event) => { // called once readAsDataURL is completed
-        this.imageSrc1 = event.target.result;
-        this.ArrayImagens[1] = event.target.result;
-        
+    const options: CameraOptions = {
+      quality: 50,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      sourceType : imageFrom,
+      targetWidth: 100,
+      targetHeight: 100
+    }
+ 
+    this.camera.getPicture(options).then((imageData) => {
+        let base64Image = 'data:image/jpeg;base64,' + imageData;
+        this.imageSrc1 = base64Image;
+        this.ArrayImagens[1] = base64Image;
+
         let storageRef = this.fb.storage().ref();
         let basePath = '/ImagensPosts/' + this.myID;
         let Caminho = basePath + '/' + 'Post-' + new Date().getTime() + '.jpg';
@@ -125,53 +226,15 @@ export class PublicarPage implements OnInit {
               console.log(downloadURL);
             });
           });  
-      }
-    }
-  } 
 
-  takePicture(imageFrom){
-
-    const options: CameraOptions = {
-      quality: 50,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-      sourceType : imageFrom,
-      targetWidth: 100,
-      targetHeight: 100
-    }
- 
-    this.camera.getPicture(options).then((imageData) => {
-        let base64Image = 'data:image/jpeg;base64,' + imageData;
-        this.imageSrc = base64Image;
-        this.ArrayImagens[0] = base64Image;
-    },(err) => {
-      console.error(err);
-    });
-  }
-  
-  takePicture1(imageFrom){
-
-    const options: CameraOptions = {
-      quality: 50,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-      sourceType : imageFrom,
-      targetWidth: 100,
-      targetHeight: 100
-    }
- 
-    this.camera.getPicture(options).then((imageData) => {
-        let base64Image = 'data:image/jpeg;base64,' + imageData;
-        this.imageSrc1 = base64Image;
-        this.ArrayImagens[1] = base64Image;
     },(err) => {
       console.error(err);
     });
   }
   
   takePicture2(imageFrom){
+
+    let that = this;
 
     const options: CameraOptions = {
       quality: 50,
@@ -187,6 +250,34 @@ export class PublicarPage implements OnInit {
         let base64Image = 'data:image/jpeg;base64,' + imageData;
         this.imageSrc2 = base64Image;
         this.ArrayImagens[2] = base64Image;
+
+        let storageRef = this.fb.storage().ref();
+        let basePath = '/ImagensPosts/' + this.myID;
+        let Caminho = basePath + '/' + 'Post-' + new Date().getTime() + '.jpg';
+        let uploadTask = storageRef.child(Caminho).putString(this.imageSrc2,'data_url', { contentType: 'image/jpeg' });
+        
+        uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, (snapshot: any) => {
+          var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log('Upload is ' + progress + '% done');
+          switch (snapshot.state) {
+            case firebase.storage.TaskState.PAUSED: // or 'paused'
+              console.log('Upload is paused');
+              break;
+            case firebase.storage.TaskState.RUNNING: // or 'running'
+              console.log('Upload is running');
+              break;
+          }    
+        },(error) => {
+            console.log(error)
+          },() => { 
+            uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+              that.ImagensRef[2] = downloadURL;
+              console.log(that.ImagensRef);
+              console.log('Imagem carregada com sucesso');
+              console.log(downloadURL);
+            });
+          });  
+
     },(err) => {
       console.error(err);
     });

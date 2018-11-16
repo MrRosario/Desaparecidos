@@ -23,15 +23,15 @@
     </ion-card-content>
 
     <div class="container-btn">
-        <ion-button color="success" (click)="detalhes(usuario.PostId)" slot="start" fill="clear" size="small">
+        <ion-button color="success" style="font-size: 11px;" (click)="detalhes(usuario.PostId)" slot="start" fill="clear" size="small">
           <ion-icon class="icone" name="eye"></ion-icon>
           Ver
         </ion-button>
-        <ion-button color="success" (click)="comentar(usuario.PostId, '#caixa-comentario')" fill="clear" size="small">
+        <ion-button color="success" style="font-size: 11px;" (click)="comentar(usuario.PostId)" fill="clear" size="small">
           <ion-icon class="icone" name="text"></ion-icon>
           Comentar
         </ion-button>
-        <ion-button (click)="compartilhar(usuario.Descricao, usuario.Titulo, usuario.PostId)" color="success" slot="end" fill="clear" size="small">
+        <ion-button style="font-size: 11px;" (click)="compartilhar(usuario.Descricao)" color="success" slot="end" fill="clear" size="small">
           <ion-icon class="icone" name="share-alt"></ion-icon>
           Compartilhar
         </ion-button>
