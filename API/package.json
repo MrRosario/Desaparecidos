@@ -4,7 +4,8 @@
   "description": "Sistema de localizacao de pessoas desaparecidas",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
   },
   "author": "Eugenio Rosario",
   "license": "ISC",
@@ -13,8 +14,6 @@
     "cors": "^2.8.4",
     "express": "^4.16.3",
     "jsonwebtoken": "^8.3.0",
-    "multer": "^1.3.1",
-    "mysql": "^2.16.0",
-    "socket.io": "^2.1.1"
+    "mysql": "^2.16.0"
   }
 }

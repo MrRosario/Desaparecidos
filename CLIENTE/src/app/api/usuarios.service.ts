@@ -17,7 +17,9 @@ const httpOptions = {
 })
 export class UsuariosService {
 
-  url: string = 'http://localhost:3000/api/';
+  //url: string = '/';
+  //url: string = 'http://localhost:3000/api/';
+  url: string = 'https://desaparecido.herokuapp.com/api/'
 
   constructor(
     private _http: HttpClient,

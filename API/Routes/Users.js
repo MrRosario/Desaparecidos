@@ -7,7 +7,7 @@ exports.all = function(req, res){
 
     let sql = `SELECT Posts.PostId, Usuarios.UsuarioID as Usuario, Posts.Titulo, Posts.Descricao, Posts.Imagem1, Posts.Imagem2, 
     Posts.Imagem3 FROM Posts INNER JOIN Usuarios ON Usuarios.UsuarioID = Posts.UsuarioID ORDER BY Posts.Criado_aos DESC`;
-    database.connection.query(sql, (err, result) => {
+    database.query(sql, (err, result) => {
         if(err){
             console.log("Ocorreu um erro",error);
             res.send({
@@ -26,7 +26,7 @@ exports.postMap = function(req, res){
 
     let sql = `SELECT PostId, Titulo, Visto_encontrado, Imagem1 
         FROM Posts ORDER BY Criado_aos DESC`;
-    database.connection.query(sql, (err, result) => {
+    database.query(sql, (err, result) => {
         if(err){
             console.log("Ocorreu um erro",err);
             res.send({
@@ -45,7 +45,7 @@ exports.postMap = function(req, res){
 exports.pesquisar = function(req, res){
     let titulo = req.params.titulo;
     
-    database.connection.query('SELECT PostID, CONCAT(SUBSTRING(Descricao, 1, 120) , "... ") as Descricao, Visto_encontrado from Posts where Descricao like "%'+titulo+'%"', 
+    database.query('SELECT PostID, CONCAT(SUBSTRING(Descricao, 1, 120) , "... ") as Descricao, Visto_encontrado from Posts where Descricao like "%'+titulo+'%"', 
     function(err, rows, fields) {
 
     if (err) throw err;
@@ -63,7 +63,7 @@ exports.user = function(req, res){
 
     let sql = `SELECT Posts.PostId, Usuarios.UsuarioID as Usuario, Posts.Titulo, Posts.Descricao, Posts.Imagem1, Posts.Imagem2, 
     Posts.Imagem3 FROM Posts INNER JOIN Usuarios ON Usuarios.UsuarioID = Posts.UsuarioID where Posts.PostId = ${id}`;
-    database.connection.query(sql, (err, result) => {
+    database.query(sql, (err, result) => {
         if(err){
             throw err;
         } 
@@ -79,7 +79,7 @@ exports.getPostEdit = function(req, res){
 
     let sql = `SELECT PostId, Titulo, Descricao, Descricao, Visto_encontrado, Telefone, Email 
         FROM Posts where PostId = ${id}`;
-    database.connection.query(sql, (err, result) => {
+    database.query(sql, (err, result) => {
         if(err){
             throw err;
         } 
@@ -94,7 +94,7 @@ exports.getPerfilEdit = function(req, res){
     let id = req.params.id;
 
     let sql = `SELECT UsuarioID, Nome, Sobre_nome, Email FROM Usuarios where UsuarioID = ${id}`;
-    database.connection.query(sql, (err, result) => {
+    database.query(sql, (err, result) => {
         if(err){
             throw err;
         } 
@@ -109,7 +109,7 @@ exports.excluir = function(req, res){
     let id = req.params.id;
 
     let sql = `DELETE FROM Posts where PostId = ${id}`;
-    database.connection.query(sql, (err, result) => {
+    database.query(sql, (err, result) => {
         if(err){
             console.log("Ocorreu um erro",err);
             //throw err;
@@ -133,7 +133,7 @@ exports.atualizarPerfil = function(req, res){
       "Email": req.body.Email
     }
 
-    database.connection.query('UPDATE Usuarios SET Nome = ?, Sobre_nome = ?, Email = ? WHERE UsuarioID = ?',
+    database.query('UPDATE Usuarios SET Nome = ?, Sobre_nome = ?, Email = ? WHERE UsuarioID = ?',
         [Atualizar.Nome, Atualizar.Sobre_nome, Atualizar.Email, ID], 
         function (error, results, fields) {
 
@@ -168,7 +168,7 @@ exports.atualizarPost = function(req, res){
       "Email": req.body.Email,
     }
 
-    database.connection.query('UPDATE Posts SET Titulo = ?, Descricao = ?, Visto_encontrado = ?, Telefone = ?, Email = ? WHERE PostID = ?',
+    database.query('UPDATE Posts SET Titulo = ?, Descricao = ?, Visto_encontrado = ?, Telefone = ?, Email = ? WHERE PostID = ?',
         [Atualizar.Titulo, Atualizar.Descricao, Atualizar.Visto_encontrado, Atualizar.Telefone, Atualizar.Email, ID], 
         function (error, results, fields) {
 
@@ -196,7 +196,7 @@ exports.perfil = function(req, res){
     let sql = `select U.UsuarioID, U.Nome, U.Email, U.Sobre_nome, P.PostID, P.Titulo, P.Descricao, P.Imagem1 
     FROM Posts P INNER JOIN Usuarios U ON U.UsuarioID = P.UsuarioID where P.UsuarioID = ${id}`;
     
-    database.connection.query(sql, (err, result) => {
+    database.query(sql, (err, result) => {
         if(err){
             throw err;
         } 
@@ -212,7 +212,7 @@ exports.perfilUsuario = function(req, res){
 
     let sql = `select UsuarioID, Nome, Sobre_nome, Email FROM Usuarios where UsuarioID = ${id}`;
     
-    database.connection.query(sql, (err, result) => {
+    database.query(sql, (err, result) => {
         if(err){
             throw err;
         } 
@@ -230,7 +230,7 @@ exports.comment = function(req, res){
     INNER JOIN Usuarios U ON C.UsuarioID = U.UsuarioID
     INNER JOIN Posts P ON C.PostID = P.PostID where P.PostId = ${id}`;
 
-    database.connection.query(sql, (err, result) => {
+    database.query(sql, (err, result) => {
         if(err){
             throw err;
         } 
@@ -252,7 +252,7 @@ exports.comentar = function(req, res){
       "Criado_aos": req.body.Criado_aos
     }
 
-    database.connection.query('INSERT INTO Comentarios SET ?', Comentarios, function (error, results, fields) {
+    database.query('INSERT INTO Comentarios SET ?', Comentarios, function (error, results, fields) {
 
         if (error) {
         console.log("Ocorreu um erro",error);
@@ -288,7 +288,7 @@ exports.publicar = function(req, res){
       "UsuarioID": req.body.UsuarioID
     }
 
-    database.connection.query('INSERT INTO Posts SET ?', Publicar, function (error, results, fields) {
+    database.query('INSERT INTO Posts SET ?', Publicar, function (error, results, fields) {
 
         if (error) {
         console.log("Ocorreu um erro",error);
@@ -320,7 +320,7 @@ exports.register = function(req,res) {
       "Criado_aos": req.body.Criado_aos
     }
 
-    database.connection.query('INSERT INTO Usuarios SET ?', Usuarios, function (error, results, fields) {
+    database.query('INSERT INTO Usuarios SET ?', Usuarios, function (error, results, fields) {
 
         if (error) {
         console.log("Ocorreu um erro",error);
@@ -345,7 +345,7 @@ exports.login = function(req,res){
 
   console.log(Email + ' ' + Senha);
 
-  database.connection.query('SELECT * FROM Usuarios WHERE Email = ?',[Email], function (error, results, fields) {
+  database.query('SELECT * FROM Usuarios WHERE Email = ?',[Email], function (error, results, fields) {
     if (error) {
         console.log("Ocorreu um erro ",error);
         res.send({
