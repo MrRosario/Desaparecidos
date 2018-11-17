@@ -16,6 +16,7 @@ export class HomePage {
   usuarios: any = [];
   private sub: Subscription;
   sharedUrl: string = "https://facebook.com/"
+  meuID: any = null;
 
   constructor(
     private router: Router, 
@@ -27,6 +28,12 @@ export class HomePage {
       this.usuarios = resultado;
       console.log(resultado);
     });
+
+    const user = JSON.parse(localStorage.getItem('Usuario'));
+
+    if(user){
+      this.meuID = user.results[0].UsuarioID.toString();
+    }
   }
 
   async presentToast(mensagem) {

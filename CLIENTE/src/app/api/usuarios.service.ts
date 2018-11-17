@@ -17,8 +17,6 @@ const httpOptions = {
 })
 export class UsuariosService {
 
-  //url: string = '/';
-  //url: string = 'http://localhost:3000/api/';
   url: string = 'https://desaparecido.herokuapp.com/api/'
 
   constructor(
@@ -112,7 +110,7 @@ export class UsuariosService {
     return this._http.put(this.url + "atualizarPost/", dados, httpOptions);
   }
   apagarPost(id){
-    return this._http.delete(this.url + 'excluir/' + id, httpOptions);
+    return this._http.delete(this.url + "excluir/" + id, httpOptions);
   }
   getPesquisar(pesquisa){
     return this._http.get(this.url + 'pesquisar/' + pesquisa, httpOptions)

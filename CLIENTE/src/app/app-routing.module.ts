@@ -14,7 +14,8 @@ const routes: Routes = [
   { path: 'mapa', loadChildren: './mapa/mapa.module#MapaPageModule' },
   { path: 'publicar', loadChildren: './publicar/publicar.module#PublicarPageModule' },
   { path: 'chat/:id', loadChildren: './chat/chat.module#ChatPageModule' },
-  { path: 'sala', loadChildren: './sala/sala.module#SalaPageModule' }
+  { path: 'sala', loadChildren: './sala/sala.module#SalaPageModule' },
+  { path: 'termos', loadChildren: './termos/termos.module#TermosPageModule' }
 ];
 
 @NgModule({

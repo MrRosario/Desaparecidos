@@ -2,16 +2,16 @@
   <ion-split-pane>
     <ion-menu>
       <ion-header>
-        <ion-toolbar style="height: 100px;" class="cabecalho-menu" color="dark">
-          
-          <div style="display:flex; justify-content:start; align-items:center; height:100px;">
+        <ion-toolbar class="cabecalho-menu" color="success">
+          <!-- <ion-title>Ola</ion-title> -->
+          <!-- <div style="display:flex; justify-content:start; align-items:center; height:100px;">
             <ion-avatar slot="start">
               <ion-img src="../assets/Pessoas/pessoa-geral.jpg"></ion-img>
-            </ion-avatar>
+            </ion-avatar> style="height: 100px;"
             <p style="color: #ffffff; margin-left: 10px">Ola, Fulano</p>
-            <!-- <p *ngIf="usuarioAtual != null">Ola, {{usuarioAtual}}</p>
-            <p *ngIf="usuarioAtual == null">Ola, Visitante</p>  -->
-          </div>
+             <p *ngIf="usuarioAtual != null">Ola, {{usuarioAtual}}</p>
+            <p *ngIf="usuarioAtual == null">Ola, Visitante</p>  
+          </div> -->
           
         </ion-toolbar>
       </ion-header>
@@ -20,7 +20,7 @@
 
         <ion-list>
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
+            <ion-item [routerDirection]="'root'" (click)="abrirPagina(p.url)">
               <ion-icon slot="start" [name]="p.icon"></ion-icon>
               <ion-label>
                 {{p.title}}

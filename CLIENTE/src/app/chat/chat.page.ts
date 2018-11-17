@@ -115,8 +115,8 @@ export class ChatPage implements OnInit {
     textarea.scrollTop = textarea.scrollHeight;
   }
 
-  // paginaAnterior(){
-  //   console.log(this.usrDestID);
-  //   this._router.navigate(['/publicacao/' + this.usrDestID]);
-  // }
+  paginaAnterior(){
+    //console.log(this.usrDestID);
+    this._router.navigate(['/home']);
+  }
 }

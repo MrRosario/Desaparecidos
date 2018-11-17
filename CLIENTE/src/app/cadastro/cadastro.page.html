@@ -27,7 +27,14 @@
       <ion-input [(ngModel)]="senha" name="senha"> </ion-input>
     </ion-item>    
 
-    <ion-button color="success" (click)="cadastrar()" expand="block" fill="outline">
+    <div style="display: flex; justify-content: start; margin-top: 20px;">
+      <ion-checkbox (ionChange)="botao($event)" slot="start" color="success"></ion-checkbox>
+        <p (click)="termos()" style="font-weight: bold; margin-left: 15px; text-decoration: underline; font-size: 10px;">
+          Concordo com os termos e condições de uso
+        </p> 
+    </div>
+
+    <ion-button [disabled]="btnAtivo" style="margin-top: 20px" color="success" (click)="cadastrar()" expand="block" fill="outline">
       Criar conta
     </ion-button>
 

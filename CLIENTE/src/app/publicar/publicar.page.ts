@@ -134,13 +134,11 @@ export class PublicarPage implements OnInit {
     let that = this;
     
     const options: CameraOptions = {
-      quality: 50,
+      quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
-      sourceType : imageFrom,
-      targetWidth: 100,
-      targetHeight: 100
+      sourceType : imageFrom
     }
  
     this.camera.getPicture(options).then((imageData) => {
@@ -190,9 +188,7 @@ export class PublicarPage implements OnInit {
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
-      sourceType : imageFrom,
-      targetWidth: 100,
-      targetHeight: 100
+      sourceType : imageFrom
     }
  
     this.camera.getPicture(options).then((imageData) => {
@@ -241,9 +237,7 @@ export class PublicarPage implements OnInit {
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
-      sourceType : imageFrom,
-      targetWidth: 100,
-      targetHeight: 100
+      sourceType : imageFrom
     }
  
     this.camera.getPicture(options).then((imageData) => {

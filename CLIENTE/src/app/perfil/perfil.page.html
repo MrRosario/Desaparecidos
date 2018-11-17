@@ -17,7 +17,6 @@
   <div id="info_perfil">
     <h2>{{nome}}</h2>
     <p>{{email}}</p>
-    <!-- <p>São Paulo - Brasil</p> -->
   </div>
 </div>
 
@@ -29,7 +28,7 @@
     
   <div *ngIf="dados.length > 0">
     <ion-card *ngFor="let dado of dados">
-      <ion-img src="../../assets/Pessoas/pessoa-geral.jpg"></ion-img>
+      <ion-img [src]="dado.Imagem1"></ion-img>
   
       <ion-card-content>
         <ion-card-subtitle>Status: {{dado.Titulo}}</ion-card-subtitle>
@@ -40,9 +39,9 @@
         <ion-button color="success" (click)="presentModal(dado.PostID)" slot="start" fill="clear" size="small">
           Editar
         </ion-button>
-        <ion-button color="danger" (click)="excluirPost(dado.PostID)" slot="start" fill="clear" size="small">
+        <!-- <ion-button color="danger" (click)="excluirPost(dado.PostID)" slot="start" fill="clear" size="small">
           Excluir
-        </ion-button>
+        </ion-button> -->
       </div>  
     </ion-card>
   </div>

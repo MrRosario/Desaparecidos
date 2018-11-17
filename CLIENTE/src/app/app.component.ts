@@ -5,33 +5,44 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { UsuariosService } from './api/usuarios.service';
 import { Router } from '@angular/router';
-
+import { ToastController } from '@ionic/angular';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
 
+  usuario = JSON.parse(localStorage.getItem('Usuario'));
+  valor:boolean = false;
+
+  if(usuario){
+    //this.meuID = usuario.results[0].UsuarioID.toString();
+    this.valor = true;
+  }
   public appPages = [
     {
       title: 'Minhas publicações',
       url: '/perfil',
-      icon: 'person'
+      icon: 'person',
+      loggedIn: this.valor
     },
     {
       title: 'Pesquisar',
       url: '/pesquisar',
-      icon: 'search'
+      icon: 'search',
+      loggedIn: this.valor
     },
     {
       title: 'Publicar',
       url: '/publicar',
-      icon: 'globe'
+      icon: 'globe',
+      loggedIn: this.valor
     },
     {
       title: 'Chats',
       url: '/sala',
-      icon: 'text'
+      icon: 'text',
+      loggedIn: this.valor
     },
     {
       title: 'Mapa',
@@ -40,9 +51,15 @@ export class AppComponent {
     }
   ];
 
-  constructor(private platform: Platform, private splashScreen: SplashScreen,
-            private statusBar: StatusBar, public usrService: UsuariosService, 
-            private router: Router, public menuCtrl: MenuController) {
+  constructor(
+    private platform: Platform, 
+    private splashScreen: SplashScreen,
+    public toastController: ToastController, 
+    private statusBar: StatusBar, 
+    public usrService: UsuariosService, 
+    private router: Router, 
+    public menuCtrl: MenuController
+    ) {
         
         const user = JSON.parse(localStorage.getItem('Usuario'));
         //Bug porque local storage adiciona Usario mesmo quando nao ha email e senha
@@ -55,7 +72,6 @@ export class AppComponent {
         }
 
         this.initializeApp();
-
   }
 
   initializeApp() {
@@ -72,4 +88,30 @@ export class AppComponent {
     console.log("Sai com sucesso!!!");
   }
   
+  async presentToast(mensagem) {
+    const toast = await this.toastController.create({
+      message: mensagem,
+      position: 'bottom',
+      duration: 4000
+    });
+    toast.present();
+  }
+
+  abrirPagina(pagina){
+    const user = JSON.parse(localStorage.getItem('Usuario'));
+    if(user){
+      this.router.navigate([`${pagina}`]);
+      console.log(pagina);
+    }
+    else if (pagina == '/mapa'){
+      this.router.navigate(['/mapa']);
+    }
+    else if (pagina == '/pesquisar'){
+      this.router.navigate(['/pesquisar']);
+    }
+    else{
+      this.presentToast('Faça o login para acessar esta funcionalidade');
+    }
+  }
+
 }

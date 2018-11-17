@@ -55,7 +55,7 @@ export class MapaPage implements OnInit {
     let mapOptions = {
       center: latLng,
       zoom: 3,
-      disableDefaultUI: false,
+      disableDefaultUI: true,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
  

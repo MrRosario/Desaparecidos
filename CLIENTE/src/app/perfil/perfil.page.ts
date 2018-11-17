@@ -12,12 +12,19 @@ import { EditUserPage } from '../edit-user/edit-user.page';
 })
 export class PerfilPage implements OnInit {
 
-  dados: any = [];
+  user = JSON.parse(localStorage.getItem('Usuario'));
+  id = this.user.results[0].UsuarioID;
+
+  dados: any = this.usrService.perfil(this.id).subscribe((res:any) => {
+    if(res != null){
+      this.dados = res;
+      console.log(this.dados);
+    }  
+  });
   
   nome: string;
   email: string;
   userID: number;
-  localizacao: string;
   mostrar: boolean = false;
 
   constructor(private router: Router, 
@@ -59,14 +66,6 @@ export class PerfilPage implements OnInit {
         this.userID = res[0].UsuarioID;
       }
     });
-
-    this.usrService.perfil(id).subscribe((res:any) => {
-      if(res != null){
-        this.dados = res;
-        console.log(this.dados);
-      }  
-    });
-      
   }
   paginaAnterior(){
     this.router.navigateByUrl('/home');
@@ -86,8 +85,7 @@ export class PerfilPage implements OnInit {
         }, {
           text: 'SIM',
           handler: () => {
-            this.usrService.apagarPost(PostID).subscribe( 
-            res => {
+            this.usrService.apagarPost(PostID).subscribe( (res:any) => {
               this.usuario();
               console.log('success', res);
             })

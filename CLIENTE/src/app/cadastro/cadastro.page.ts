@@ -3,6 +3,8 @@ import { LoadingController, ToastController, } from '@ionic/angular';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { UsuariosService } from '../api/usuarios.service';
+import { ModalController } from '@ionic/angular';
+import { TermosPage } from '../termos/termos.page';
 
 @Component({
   selector: 'app-cadastro',
@@ -14,6 +16,8 @@ export class CadastroPage implements OnInit {
   sobre_nome: string;
   email: string;
   senha: string;
+  isChecked: boolean = true;
+  btnAtivo: boolean = false;
 
   constructor(
     public loadingController: LoadingController,
@@ -21,10 +25,20 @@ export class CadastroPage implements OnInit {
     private _http: HttpClient,
     private _router: Router,
     public usrService: UsuariosService,
+    public modalController: ModalController, 
     private router: Router) { }
 
   ngOnInit() {  }
-
+  
+  botao(evento){
+    console.log(evento);
+    if(evento.detail == true){
+      this.btnAtivo = false; 
+    }
+    else if(evento.detail == false){
+      this.btnAtivo = true;
+    }
+  }
 
   async presentToast(mensagem) {
     const toast = await this.toastController.create({
@@ -64,6 +78,13 @@ export class CadastroPage implements OnInit {
       this.presentToast('Erro ao fazer o cadastro');
       console.log('Erro', error); 
     });
+  }
+
+  async termos(){
+    const modal = await this.modalController.create({
+      component: TermosPage
+    });
+    return await modal.present();
   }
 
   paginaAnterior(){
