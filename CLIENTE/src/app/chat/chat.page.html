@@ -39,14 +39,14 @@
 </ion-content>
 
 <ion-footer no-border>
-    <div class="input-wrap">
-      <textarea #chat_input placeholder="Digite aqui..." 
-        [(ngModel)]="mensagem"
-        (focusin)="onFocus()"> 
-      </textarea>
+  <div class="input-wrap">
+    <textarea #chat_input placeholder="Digite aqui..." 
+      [(ngModel)]="mensagem"
+      (focusin)="onFocus()"> 
+    </textarea>
 
-      <ion-button  color="success" slot="end" fill="clear" size="small" (click)="enviar()">
-        <ion-icon class="icone" name="send"></ion-icon>
-      </ion-button>
-    </div>
-  </ion-footer>
+    <ion-button  color="success" slot="end" fill="clear" size="small" (click)="enviar()">
+      <ion-icon class="icone" name="send"></ion-icon>
+    </ion-button>
+  </div>
+</ion-footer>

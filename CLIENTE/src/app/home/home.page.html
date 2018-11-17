@@ -14,6 +14,11 @@
 
 <ion-content padding>
   
+  <div *ngIf="usuarios.length == 0" style="display: flex; justify-content: center; height: 300px; align-items: center;">
+    <ion-spinner color="success" style="width: 80px !important; height: 60px !important;" name="crescent">
+    </ion-spinner>
+  </div>
+
   <ion-card *ngFor="let usuario of usuarios">
     <ion-img [src]="usuario.Imagem1"></ion-img>
 
