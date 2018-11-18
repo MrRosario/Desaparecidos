@@ -24,9 +24,9 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   declarations: [
-    PerfilPage
-    //EditPerfilPage, 
-    //EditUserPage
+    PerfilPage,
+    EditPerfilPage, 
+    EditUserPage
   ],
   entryComponents: [EditPerfilPage, EditUserPage]
 })

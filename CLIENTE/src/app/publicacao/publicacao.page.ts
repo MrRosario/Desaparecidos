@@ -20,8 +20,7 @@ export class PublicacaoPage implements OnInit {
 
   usrDestID: number;
 
-  user = JSON.parse(localStorage.getItem('Usuario'));
-  loggInUserID = this.user.results[0].UsuarioID.toString();
+  LoggedIn: boolean = false;
 
   slideOpts = {
     effect: 'slide',
@@ -36,8 +35,13 @@ export class PublicacaoPage implements OnInit {
               public usrService: UsuariosService, activeRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    console.log(this.loggInUserID);
     console.log(this.usrDestID);
+
+    const user = JSON.parse(localStorage.getItem('Usuario'));
+        
+    if(user){
+      this.LoggedIn = true;
+     }
 
     this.usrService.getPost(this._Activatedroute.snapshot.params['id'])
       .subscribe((resultado: any) => {
