@@ -23,7 +23,6 @@ export class CadastroPage implements OnInit {
     public loadingController: LoadingController,
     private toastController: ToastController,
     private _http: HttpClient,
-    private _router: Router,
     public usrService: UsuariosService,
     public modalController: ModalController, 
     private router: Router) { }
@@ -51,7 +50,7 @@ export class CadastroPage implements OnInit {
   async cadastrar(){
 
     const loading = await this.loadingController.create({
-      message: 'Carregando...',
+      message: 'Cadastrando...',
       spinner: 'bubbles',
     });
 
@@ -67,11 +66,15 @@ export class CadastroPage implements OnInit {
 
     console.log(JSON.stringify(usuario));
 
-    this.usrService.cadastrar(usuario) 
-    .subscribe( data => { 
-      loading.dismiss();
-      this.presentToast('Cadastrado com sucesso'); 
-      console.log('success', data); 
+    this.usrService.cadastrar(usuario).subscribe( res => { 
+      console.log('success', res); 
+      this.usrService.login(usuario.Email, usuario.Senha).subscribe( (data:any) => {
+        if(data.token){
+          console.log('successo', data); 
+          this.router.navigate(['/home' ]); 
+          loading.dismiss();
+        }
+      });
     },
     (error) => { 
       loading.dismiss();

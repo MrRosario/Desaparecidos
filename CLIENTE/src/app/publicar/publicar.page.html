@@ -8,17 +8,17 @@
 <ion-content padding>
 
   <ion-item>
-    <ion-label position="stacked">Titulo*</ion-label>
+    <ion-label position="stacked">Titulo</ion-label>
     <ion-input [(ngModel)]="Titulo" name="Titulo"> </ion-input>
   </ion-item>
 
   <ion-item>
-    <ion-label position="stacked">Descrição*</ion-label>
+    <ion-label position="stacked">Descrição</ion-label>
     <ion-textarea rows="5" cols="20" [(ngModel)]="Descricao" name="Descricao"> </ion-textarea>
   </ion-item>
 
   <ion-item>
-    <ion-label position="stacked">Visto ultima vez</ion-label>
+    <ion-label position="stacked">Visto ultima vez / Encontrado (Endereço)</ion-label>
     <ion-input [(ngModel)]="Visto_encontrado" name="Visto_encontrado"> </ion-input>
   </ion-item>
 
@@ -32,13 +32,14 @@
     <ion-input [(ngModel)]="Email" name="Email"> </ion-input>
   </ion-item>
 
-  <ion-item>
+  <!-- <ion-item>
     <ion-label position="stacked">
       Imagens
     </ion-label>
-  </ion-item>
+  </ion-item> -->
   
   <div id="container-imagens">
+
     <div class="imagens" (click)="presentActionSheet()"> 
       <ion-icon style="height: 68px; width: 68px;" *ngIf="imageSrc == null" class="icone" name="person"></ion-icon> 
       <img *ngIf="imageSrc != null" [src]="imageSrc"> 
@@ -55,9 +56,7 @@
     </div>
     
     <!-- <input style="position:absolute" type='file' (change)="onSelectFile($event)">
-    
     <input style="position:absolute; left: 160px;" type='file' (change)="onSelectFile2($event)"> -->
-
   </div>
 
   <ion-button (click)="Publicar()" color="success" expand="block">

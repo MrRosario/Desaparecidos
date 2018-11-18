@@ -110,7 +110,7 @@ export class AppComponent {
       this.router.navigate(['/pesquisar']);
     }
     else{
-      this.presentToast('Faça o login para acessar esta funcionalidade');
+      this.presentToast('Faça o login para acessar esta opção');
     }
   }
 

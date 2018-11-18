@@ -12,10 +12,11 @@
     z-index: 1;
     object-fit: cover;
 }
-#container-imagens .imagens:hover{
-    background-color: grey;
-}
-#container-imagens{
-    display: flex;
-    margin-bottom: 10px;
-}
+
+ #container-imagens{
+     display: flex;
+     margin-top: 10px;
+ }
+//  #container-imagens .imagens:hover{
+//      background-color: grey;
+//  }

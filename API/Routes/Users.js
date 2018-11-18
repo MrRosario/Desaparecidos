@@ -5,7 +5,7 @@ process.env.SECRET_KEY = "jsehmagico";
 
 exports.all = function(req, res){
 
-    let sql = `SELECT Posts.PostId, Usuarios.UsuarioID as Usuario, Posts.Titulo, Posts.Descricao, Posts.Imagem1, Posts.Imagem2, 
+    let sql = `SELECT Posts.PostId, Usuarios.UsuarioID as Usuario, Posts.Titulo, CONCAT(SUBSTRING(Descricao, 1, 300) , " ") as Descricao, Posts.Imagem1, Posts.Imagem2, 
     Posts.Imagem3 FROM Posts INNER JOIN Usuarios ON Usuarios.UsuarioID = Posts.UsuarioID ORDER BY Posts.Criado_aos DESC`;
     database.query(sql, (err, result) => {
         if(err){
