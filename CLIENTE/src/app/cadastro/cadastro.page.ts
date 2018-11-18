@@ -16,7 +16,6 @@ export class CadastroPage implements OnInit {
   sobre_nome: string;
   email: string;
   senha: string;
-  isChecked: boolean = true;
   btnAtivo: boolean = false;
 
   constructor(
@@ -31,12 +30,7 @@ export class CadastroPage implements OnInit {
   
   botao(evento){
     console.log(evento);
-    if(evento.detail == true){
-      this.btnAtivo = false; 
-    }
-    else if(evento.detail == false){
-      this.btnAtivo = true;
-    }
+    this.btnAtivo = !this.btnAtivo;
   }
 
   async presentToast(mensagem) {
@@ -48,39 +42,42 @@ export class CadastroPage implements OnInit {
   }
 
   async cadastrar(){
-
-    const loading = await this.loadingController.create({
-      message: 'Cadastrando...',
-      spinner: 'bubbles',
-    });
-
-    await loading.present();
-
-    let usuario = {
-      Nome: this.nome,
-      Sobre_nome: this.sobre_nome,
-      Email: this.email,
-      Senha: this.senha,
-      Criado_aos: new Date().toISOString().slice(0, 19).replace('T', ' ')
-    };
-
-    console.log(JSON.stringify(usuario));
-
-    this.usrService.cadastrar(usuario).subscribe( res => { 
-      console.log('success', res); 
-      this.usrService.login(usuario.Email, usuario.Senha).subscribe( (data:any) => {
-        if(data.token){
-          console.log('successo', data); 
-          this.router.navigate(['/home' ]); 
-          loading.dismiss();
-        }
+    if(this.nome == undefined || this.sobre_nome == undefined || this.email == undefined || this.senha == undefined){
+      this.presentToast('Por favor preencha todos os campos!')
+    }else{
+      const loading = await this.loadingController.create({
+        message: 'Cadastrando...',
+        spinner: 'bubbles',
       });
-    },
-    (error) => { 
-      loading.dismiss();
-      this.presentToast('Erro ao fazer o cadastro');
-      console.log('Erro', error); 
-    });
+  
+      await loading.present();
+  
+      let usuario = {
+        Nome: this.nome,
+        Sobre_nome: this.sobre_nome,
+        Email: this.email,
+        Senha: this.senha,
+        Criado_aos: new Date().toISOString().slice(0, 19).replace('T', ' ')
+      };
+  
+      console.log(JSON.stringify(usuario));
+  
+      this.usrService.cadastrar(usuario).subscribe( res => { 
+        console.log('success', res); 
+        this.usrService.login(usuario.Email, usuario.Senha).subscribe( (data:any) => {
+          if(data.token){
+            console.log('successo', data); 
+            this.router.navigate(['/home' ]); 
+            loading.dismiss();
+          }
+        });
+      },
+      (error) => { 
+        loading.dismiss();
+        this.presentToast('Erro ao fazer o cadastro');
+        console.log('Erro', error); 
+      });
+    }
   }
 
   async termos(){
