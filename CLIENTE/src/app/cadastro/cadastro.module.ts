@@ -23,8 +23,8 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   declarations: [
-    CadastroPage, 
-    TermosPage
+    CadastroPage 
+    //TermosPage
   ],
   entryComponents:[TermosPage]
 })

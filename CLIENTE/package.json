@@ -1,8 +1,8 @@
 {
-  "name": "CLIENTE",
+  "name": "Desaparecidos",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "author": "Eugenio Rosario",
+  "homepage": "http://github.com/mrrosario",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
