@@ -13,14 +13,12 @@ export class PublicacaoPage implements OnInit {
   @ViewChild('comment_input') commentInput: ElementRef;
 
   dados: any = [];
-
   comments: any = [];
-
   comentario: string;
-
   usrDestID: number;
-
+  usrID: number;
   LoggedIn: boolean = false;
+  euOnlineID: boolean = false;
 
   slideOpts = {
     effect: 'slide',
@@ -29,24 +27,23 @@ export class PublicacaoPage implements OnInit {
 
   Imagens: any = [];
   
-  constructor(private _Activatedroute: ActivatedRoute, 
-              private _router: Router, 
-              private http: HttpClient,
-              public usrService: UsuariosService, activeRoute: ActivatedRoute) { }
+  constructor( 
+      private _router: Router, 
+      private http: HttpClient,
+      private _Activatedroute: ActivatedRoute,
+      public usrService: UsuariosService, 
+      activeRoute: ActivatedRoute
+  ) { }
 
   ngOnInit() {
-    console.log(this.usrDestID);
 
-    const user = JSON.parse(localStorage.getItem('Usuario'));
-        
-    if(user){
-      this.LoggedIn = true;
-     }
+    let meuOnlineID;
 
     this.usrService.getPost(this._Activatedroute.snapshot.params['id'])
       .subscribe((resultado: any) => {
           this.dados = resultado;
           this.usrDestID = resultado[0].Usuario;
+             meuOnlineID = resultado[0].Usuario;
           this.Imagens.push(resultado[0].Imagem1);
           this.Imagens.push(resultado[0].Imagem2);
           this.Imagens.push(resultado[0].Imagem3);
@@ -63,6 +60,23 @@ export class PublicacaoPage implements OnInit {
           console.log(this.Imagens);
           console.log(resultado);
       });
+
+      const user = JSON.parse(localStorage.getItem('Usuario'));
+      let myID = user.results[0].UsuarioID;
+      
+      console.log(myID);
+
+      if(user){
+        this.LoggedIn = true;
+      }
+      
+      console.log(meuOnlineID);
+
+      if(meuOnlineID == myID){
+        console.log("sou eu");
+      }else{
+        console.log("Nao sou eu");
+      }
 
     this.obterComentario();
     this.caixaComentario();

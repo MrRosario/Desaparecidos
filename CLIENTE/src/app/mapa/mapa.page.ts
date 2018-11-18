@@ -32,6 +32,7 @@ export class MapaPage implements OnInit {
                 id: res[i].PostId,
                 Titulo: res[i].Titulo,
                 Imagem: res[i].Imagem1,
+                Descricao: res[i].Descricao,
                 lat: latitude,
                 long: longitude
               }
@@ -76,7 +77,7 @@ export class MapaPage implements OnInit {
       google.maps.event.addListener(marker, 'click', (function(marker, i) {
         return function() {
           infowindow.setContent(`<img id="myPostIMG" style="width: 200px; height: 150px; object-fit: cover;" 
-          src="${that.localizacao[i].Imagem}"> <p>${that.localizacao[i].Titulo}</p>`);
+          src="${that.localizacao[i].Imagem}"> <p>${that.localizacao[i].Descricao}</p>`);
           infowindow.open(Map, marker);
         }
       })(marker, i));

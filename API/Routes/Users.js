@@ -24,7 +24,7 @@ exports.all = function(req, res){
 
 exports.postMap = function(req, res){
 
-    let sql = `SELECT PostId, Titulo, Visto_encontrado, Imagem1 
+    let sql = `SELECT PostId, Titulo, Visto_encontrado, Descricao, Imagem1 
         FROM Posts ORDER BY Criado_aos DESC`;
     database.query(sql, (err, result) => {
         if(err){
