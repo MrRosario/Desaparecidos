@@ -39,12 +39,6 @@ export class AppComponent {
       loggedIn: this.valor
     },
     {
-      title: 'Chats',
-      url: '/sala',
-      icon: 'text',
-      loggedIn: this.valor
-    },
-    {
       title: 'Mapa',
       url: '/mapa',
       icon: 'map'
