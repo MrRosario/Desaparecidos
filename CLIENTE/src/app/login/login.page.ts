@@ -57,6 +57,9 @@ export class LoginPage implements OnInit {
     );
   }
 
+  esqueciSenha(){
+    this.router.navigateByUrl('/senha');
+  }
   criarConta(){
     this.router.navigateByUrl('/cadastro');
   }

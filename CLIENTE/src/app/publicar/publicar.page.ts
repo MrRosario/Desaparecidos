@@ -422,13 +422,10 @@ export class PublicarPage implements OnInit {
       this.usrService.publicar(Publicacao).subscribe( (data) => { 
         loading.dismiss();
         this.presentToast('Publicação feita com sucesso!');
-        
-        setInterval( () => {
-          this.router.navigateByUrl('/home');
-        },3000); 
-
+        this.router.navigateByUrl('/home');
         console.log('success', data); 
-      },(error) => { 
+      },
+      (error) => { 
         loading.dismiss();
         this.presentToast('Erro ao fazer o cadastro!');
         console.log('Erro', error); 

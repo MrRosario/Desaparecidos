@@ -22,9 +22,9 @@
 
 <ion-content padding>
     
-  <div *ngIf="dados.length == 0" style=" display: flex; justify-content: center; align-items: center;">
+  <!-- <div *ngIf="dados.length == 0" style=" display: flex; justify-content: center; align-items: center;">
     <h2 style="font-size: 18px;">Você ainda fez nehuma publicação</h2>
-  </div>
+  </div> -->
     
   <div *ngIf="dados.length > 0">
     <ion-card *ngFor="let dado of dados">
@@ -39,9 +39,9 @@
         <ion-button color="success" (click)="presentModal(dado.PostID)" slot="start" fill="clear" size="small">
           Editar
         </ion-button>
-        <!-- <ion-button color="danger" (click)="excluirPost(dado.PostID)" slot="start" fill="clear" size="small">
+        <ion-button color="danger" (click)="excluirPost(dado.PostID)" slot="start" fill="clear" size="small">
           Excluir
-        </ion-button> -->
+        </ion-button> 
       </div>  
     </ion-card>
   </div>

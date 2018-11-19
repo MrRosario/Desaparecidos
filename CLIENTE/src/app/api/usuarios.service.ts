@@ -106,6 +106,11 @@ export class UsuariosService {
   getPerfilEdit(id){
     return this._http.get(this.url + 'dadosPerfil/' + id, httpOptions);
   }
+
+  verificarEmail(email){
+    return this._http.get(this.url + 'verificar/' + email, httpOptions);
+  }
+
   atualizarPost(dados){
     return this._http.put(this.url + "atualizarPost/", dados, httpOptions);
   }
@@ -117,6 +122,9 @@ export class UsuariosService {
   }
   atualizarPerfil(dados){
     return this._http.put(this.url + "atualizarPerfil", dados, httpOptions)
+  }
+  criarNovaSenha(dado){
+    return this._http.put(this.url + "novaSenha", dado, httpOptions)
   }
   postComentario(comentario){
     return this._http.post(this.url + 'comentar/', comentario, httpOptions);

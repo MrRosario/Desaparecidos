@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-icon slot="start" class="icone" (click)="paginaAnterior()" name="arrow-round-back">Voltar</ion-icon>
+    <ion-title>Esqueci senha</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+<div *ngIf="checkEmailBox">
+    <h3>Primeiro vamos localizar a sua conta</h3>
+    <ion-input [(ngModel)]="Email" style=" border: 1px solid #000000;" placeholder="Insira seu e-mail"> </ion-input>
+    <ion-button color="success" (click)="localizar()">Localizar</ion-button>
+</div>
+
+<div *ngIf="putEmailBox">
+    <h3>Nova senha</h3>
+    <ion-input [(ngModel)]="Senha" type="password" style=" border: 1px solid #000000;" placeholder="Insira a nova senha"> 
+    </ion-input>
+    <ion-input [(ngModel)]="VerificarSenha" type="password" style=" border: 1px solid #000000; margin-top: 10px;" placeholder="Insira novamente"> 
+    </ion-input>
+    <ion-button color="success" (click)="criarSenha()">Criar</ion-button>
+</div>
+
+<div *ngIf="erroMSG">
+  <p style="color:brown">Desculpe mas esse email nao existe</p>
+</div>
+
+</ion-content>

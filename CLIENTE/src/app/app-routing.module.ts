@@ -15,7 +15,8 @@ const routes: Routes = [
   { path: 'publicar', loadChildren: './publicar/publicar.module#PublicarPageModule' },
   { path: 'chat/:id', loadChildren: './chat/chat.module#ChatPageModule' },
   { path: 'sala', loadChildren: './sala/sala.module#SalaPageModule' },
-  { path: 'termos', loadChildren: './termos/termos.module#TermosPageModule' }
+  { path: 'termos', loadChildren: './termos/termos.module#TermosPageModule' },
+  { path: 'senha', loadChildren: './senha/senha.module#SenhaPageModule' }
 ];
 
 @NgModule({

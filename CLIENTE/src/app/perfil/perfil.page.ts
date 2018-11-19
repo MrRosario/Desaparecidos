@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsuariosService } from '../api/usuarios.service';
-import { PopoverController, ModalController, AlertController } from '@ionic/angular';
+import { PopoverController, ModalController, AlertController, ToastController } from '@ionic/angular';
 import { EditPerfilPage } from '../edit-perfil/edit-perfil.page';
 import { EditUserPage } from '../edit-user/edit-user.page';
 
@@ -15,12 +15,14 @@ export class PerfilPage implements OnInit {
   user = JSON.parse(localStorage.getItem('Usuario'));
   id = this.user.results[0].UsuarioID;
 
-  dados: any = this.usrService.perfil(this.id).subscribe((res:any) => {
-    if(res != null){
-      this.dados = res;
-      console.log(this.dados);
-    }  
-  });
+  dados: any = [];
+
+  // this.usrService.perfil(this.id).subscribe((res:any) => {
+  //   if(res != null){
+  //     this.dados = res;
+  //     console.log(this.dados);
+  //   }  
+  // });
   
   nome: string;
   email: string;
@@ -28,10 +30,12 @@ export class PerfilPage implements OnInit {
   mostrar: boolean = false;
 
   constructor(private router: Router, 
-              public usrService: UsuariosService,
-              public popoverController: PopoverController, 
-              public modalController: ModalController,
-              private alertController: AlertController) {  }
+      public usrService: UsuariosService, 
+      public toastController: ToastController, 
+      public modalController: ModalController,
+      private alertController: AlertController,
+      public popoverController: PopoverController
+    ) {  }
 
   ngOnInit() {
     this.usuario();
@@ -66,9 +70,25 @@ export class PerfilPage implements OnInit {
         this.userID = res[0].UsuarioID;
       }
     });
+
+    this.usrService.perfil(this.id).subscribe((res:any) => {
+      if(res != null){
+        this.dados = res;
+        console.log(this.dados);
+      }  
+    });
+
   }
   paginaAnterior(){
     this.router.navigateByUrl('/home');
+  }
+
+  async presentToast(mensagem) {
+    const toast = await this.toastController.create({
+      message: mensagem,
+      duration: 3000
+    });
+    toast.present();
   }
 
   async excluirPost(PostID) {
@@ -86,6 +106,7 @@ export class PerfilPage implements OnInit {
           text: 'SIM',
           handler: () => {
             this.usrService.apagarPost(PostID).subscribe( (res:any) => {
+              this.presentToast("Publicação excluida com sucesso!");
               this.usuario();
               console.log('success', res);
             })
@@ -97,6 +118,7 @@ export class PerfilPage implements OnInit {
     await alert.present();
   }
 
+  
   async presentModal(PostId) {
     const modal = await this.modalController.create({
       component: EditPerfilPage,

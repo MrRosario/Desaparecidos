@@ -42,6 +42,22 @@ exports.postMap = function(req, res){
     });
 }
 
+exports.checkEmail = function(req, res){
+    
+    let email = req.params.email;
+
+    //let sql = `SELECT Email FROM Usuarios where Email = ${email}`;
+    database.query("SELECT Email FROM Usuarios where Email = '" + email + "' ", (err, result) => {
+        if(err){
+            throw err;
+        } 
+        else{ 
+            return res.send(result);
+        }
+        
+    });
+}
+
 exports.pesquisar = function(req, res){
     let titulo = req.params.titulo;
     
@@ -119,6 +135,34 @@ exports.excluir = function(req, res){
             return res.send(result);
         }
         
+    });
+}
+
+exports.novaSenha = function(req, res){
+
+    //console.log("req",req.body); 
+    let Senha = req.body.Senha;
+    let Email = req.body.Email;
+
+
+    database.query('UPDATE Usuarios SET Senha = ? WHERE Email = ?',
+        [Senha, Email], 
+        function (error, results, fields) {
+
+            if (error) {
+                console.log("Ocorreu um erro",error);
+                res.send({
+                    "code":400,
+                    "failed":"erro"
+                })
+            }
+            else{
+                console.log('Resultado: ', results);
+                res.send({
+                    "code":200,
+                    "success":"Email atualizado com sucesso"
+                });
+            }
     });
 }
 
@@ -381,7 +425,7 @@ exports.login = function(req,res){
 }
 
 exports.tokenAuthorize = function(req, res, next) {
-    const token = req.body.token || req.headers['x-access-token'];
+    const token = req.body.token || req.query.token || req.headers['x-access-token'];
      if (token) {
         jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
             if (err) {
