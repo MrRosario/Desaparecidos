@@ -15,7 +15,7 @@ export class HomePage {
 
   usuarios: any = [];
   private sub: Subscription;
-  sharedUrl: string = "https://facebook.com/"
+  sharedUrl: string = "https://desaparecidos.org.br/"
   meuID: any = null;
 
   constructor(

@@ -3,7 +3,7 @@
     <ion-menu>
       <ion-header>
         <ion-toolbar class="cabecalho-menu" color="success">
-          <!-- <ion-title>Ola</ion-title> -->
+          <ion-title>Menu</ion-title> 
           <!-- <div style="display:flex; justify-content:start; align-items:center; height:100px;">
             <ion-avatar slot="start">
               <ion-img src="../assets/Pessoas/pessoa-geral.jpg"></ion-img>
@@ -27,6 +27,16 @@
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
+
+          <ion-item (click)="bo()">
+            <ion-icon slot="start" name="walk"></ion-icon>
+            <ion-label>Boletim online </ion-label>
+          </ion-item>
+
+          <ion-item (click)="dicas()">
+            <ion-icon slot="start" name="help"></ion-icon>
+            <ion-label> Dicas </ion-label>
+          </ion-item>
 
           <ion-item (click)="logout()">
             <ion-icon slot="start" name="log-out"></ion-icon>

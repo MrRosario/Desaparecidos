@@ -12,31 +12,21 @@ import { ToastController } from '@ionic/angular';
 })
 export class AppComponent {
 
-  usuario = JSON.parse(localStorage.getItem('Usuario'));
-  valor:boolean = false;
-
-  if(usuario){
-    //this.meuID = usuario.results[0].UsuarioID.toString();
-    this.valor = true;
-  }
   public appPages = [
     {
       title: 'Minhas publicações',
       url: '/perfil',
-      icon: 'person',
-      loggedIn: this.valor
+      icon: 'person'
     },
     {
       title: 'Pesquisar',
       url: '/pesquisar',
-      icon: 'search',
-      loggedIn: this.valor
+      icon: 'search'
     },
     {
       title: 'Publicar',
       url: '/publicar',
-      icon: 'globe',
-      loggedIn: this.valor
+      icon: 'globe'
     },
     {
       title: 'Mapa',
@@ -89,6 +79,14 @@ export class AppComponent {
       duration: 4000
     });
     toast.present();
+  }
+
+  bo(){
+    window.open("http://www.ssp.sp.gov.br/servicos/pessoas_desaparecidas_foto.aspx",'_system', 'location=yes');
+  }
+
+  dicas(){
+    window.open("http://www.ssp.sp.gov.br/servicos/pessoas_desaparecidas.aspx",'_system', 'location=yes');
   }
 
   abrirPagina(pagina){
