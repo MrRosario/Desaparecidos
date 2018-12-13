@@ -10,12 +10,12 @@ App "desaparecidos" frontend e backend
 </p>
 
 **Tecnoligias usadas (Backend)**
-Nodejs <br/>
-Expressjs <br/>
-MySQL <br/>
+<p>Nodejs </p>
+<p>Expressjs </p>
+<p>MySQL </p>
 
 **Tecnoligias usadas (Frontend)**
-Ionic 4 <br/>
-Angular 6 <br/>
-CSS 3 <br/>
+<p>Ionic 4</p>
+<p>Angular 6</p>
+<p>CSS 3 </p>
 
