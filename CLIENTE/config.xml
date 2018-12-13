@@ -2,7 +2,7 @@
 <widget id="com.app.desaparecidos" version="0.1.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Desaparecidos</name>
     <description>Localizacao de pessoas desaparecidas</description>
-    <author email="eugenio.dorosario@hotmail.com" href="http://ionicframework.com/">Eugenio Rosario</author>
+    <author email="eugenio.dorosario@hotmail.com" href="https://github.com/MrRosario">Eugenio Rosario</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -19,6 +19,7 @@
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="3000" />
+    <preference name="ShowSplashScreenSpinner" value="false" />
     <platform name="android">
         <allow-intent href="market:*" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
