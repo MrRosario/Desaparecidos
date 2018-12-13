@@ -3,7 +3,7 @@ App "desaparecidos" frontend e backend
 
 **App de busca de pessoas desaparecidas**
 
-![Pagina Home do aplicativo](https://drive.google.com/open?id=1J-8Vo498HG-XgOHt8pS578cTyzt6b6th)
+![Pagina Home do aplicativo](https://www.dropbox.com/s/x8xkjx9gw2gw3cw/DSC03022.JPG?dl=0)
 
 **Tecnoligias usadas (Backend)**
 Nodejs <br/>
