@@ -1,13 +1,5 @@
 const mysql = require('mysql');
 
-//   handleDisconnect();
-// const con = mysql.createConnection({
-//     host     : 'localhost',
-//     user     : 'root',
-//     database : 'Desaparecidos',
-//     password : 'mysql1994' 
-// });
-
 // Criar conexao
 const pool = mysql.createPool({
     connectionLimit : 10,
